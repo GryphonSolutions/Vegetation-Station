@@ -1,6 +1,9 @@
 import React from 'react';
+import { registerRootComponent } from 'expo';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import store from './store';
 import {
@@ -14,15 +17,22 @@ import {
   Submit,
 } from './components';
 
-const root = createRoot(document.getElementById('root'));
+const Stack = createNativeStackNavigator();
 
-root.render(
-  <Provider store={store}>
-    <Router>
-      {/* <NavBar /> */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </Router>
-  </Provider>,
-);
+const root = () => {
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false, title: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  );
+};
+
+registerRootComponent(root);
