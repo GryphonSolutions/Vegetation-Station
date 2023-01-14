@@ -1,4 +1,4 @@
-[
+export const data = [
   {
     Categories: 'Dracaena',
     Disease: 'N/A',
