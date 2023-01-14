@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Serving Compressed Bundle File to Client
-const clientDirPath = path.join(__dirname, '/../client/public');
+const clientDirPath = path.join(__dirname, '../client/public');
 const clientIndexHtml = path.join(clientDirPath, 'index.html');
 app.get('/*.js', (req, res, next) => {
   const pathToGzipFile = `${req.url}.gz`;
@@ -27,8 +27,8 @@ app.get('/*.js', (req, res, next) => {
 });
 
 // Serve the index.html file statically
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.static(clientDirPath));
-app.use(morgan('dev'));
 
 app.listen(PORT, console.log(`Now listening on ${process.env.HOST}:${PORT}`));
