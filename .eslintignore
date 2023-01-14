@@ -1,0 +1,4 @@
+node_modules
+/client/dist
+.env
+/client/src/__tests__
