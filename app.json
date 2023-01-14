@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Vegetation-Station",
+    "slug": "Vegetation-Station",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./client/public/favicon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./client/public/favicon.png"
+    },
+    "jsEngine": "hermes"
+  }
+}
