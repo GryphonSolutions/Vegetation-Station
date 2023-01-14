@@ -1,9 +1,9 @@
+client/public/bundle.js
+client/public/bundle.js.gz
 
 
 
 
-
-client/public
 # Logs
 logs
 *.log
