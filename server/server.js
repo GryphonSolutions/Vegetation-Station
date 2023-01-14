@@ -11,7 +11,6 @@ const PORT = process.env.PORT || 8080;
 
 // Serving Compressed Bundle File to Client
 const clientDirPath = path.join(__dirname, '../client/public');
-const clientIndexHtml = path.join(clientDirPath, 'index.html');
 app.get('/*.js', (req, res, next) => {
   const pathToGzipFile = `${req.url}.gz`;
   try {
