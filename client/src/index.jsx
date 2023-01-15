@@ -25,8 +25,8 @@ const root = () => {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
-            name="Home"
-            component={Home}
+            name="Messages"
+            component={Messages}
             options={{ headerShown: false, title: false }}
           />
         </Stack.Navigator>
