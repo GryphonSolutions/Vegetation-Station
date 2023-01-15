@@ -19,25 +19,15 @@ const app = initializeApp({
   measurementId: 'G-B0X72MKC6Q',
 });
 
-// Connection to Database
-const db = getFirestore(app);
-
-// References to Collections
-const usersCol = collection(db, 'users');
-const plantsCol = collection(db, 'plants');
-const catalogCol = collection(db, 'catalogue');
-const messagesCol = collection(db, 'messages');
-const offersCol = collection(db, 'offers');
+// Export Connection to Database
+module.exports.db = getFirestore(app);
 
 // Export Database and Collection references
-module.exports = {
-  db,
-  usersCol,
-  plantsCol,
-  catalogCol,
-  messagesCol,
-  offersCol,
-};
+module.exports.usersCol = collection(module.exports.db, 'users');
+module.exports.plantsCol = collection(module.exports.db, 'plants');
+module.exports.catalogCol = collection(module.exports.db, 'catalogue');
+module.exports.messagesCol = collection(module.exports.db, 'messages');
+module.exports.offersCol = collection(module.exports.db, 'offers');
 
 // Get User
 // Create User - Also create a messages document based on UserID
