@@ -6,16 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import store from './store';
-import {
-  Details,
-  Home,
-  Login,
-  Chat,
-  Messages,
-  Offers,
-  Post,
-  Submit,
-} from './components';
+import { Details, Home, Login, Chat, Messages, Offers, Post, Submit } from '.';
 
 const Stack = createNativeStackNavigator();
 
