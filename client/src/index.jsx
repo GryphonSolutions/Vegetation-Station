@@ -7,14 +7,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import store from './store';
 import {
-  // Details,
+  Details,
   Home,
-  // Login,
-  // Chat,
-  // Messages,
-  // Offers,
-  // Post,
-  // Submit,
+  Login,
+  Chat,
+  Messages,
+  Offers,
+  Post,
+  Submit,
 } from './components';
 
 const Stack = createNativeStackNavigator();
