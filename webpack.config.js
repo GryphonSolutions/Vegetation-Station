@@ -1,49 +1,54 @@
-require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
-const CompressionPlugin = require('compression-webpack-plugin');
+
+const appDirectory = path.resolve(__dirname, './client');
+
+const babelLoaderConfiguration = {
+  test: /\.(js|jsx)$/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      cacheDirectory: true,
+      presets: [
+        'module:metro-react-native-babel-preset',
+        '@babel/preset-env',
+        '@babel/preset-react',
+      ],
+      plugins: [
+        'react-native-web',
+        ['@babel/plugin-proposal-private-methods', { loose: true }],
+        ['@babel/plugin-proposal-class-properties', { loose: true }],
+        ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
+      ],
+    },
+  },
+};
+
+const imageLoaderConfiguration = {
+  test: /\.(gif|jpeg|png|svg)$/,
+  use: {
+    loader: 'url-loader',
+    options: {
+      name: '[name].[ext]',
+      esModule: false,
+    },
+  },
+};
 
 module.exports = {
-  mode: process.env.WEBPACK_MODE || 'development',
-  entry: path.join(__dirname, '/client/src', 'index.jsx'),
+  entry: [path.join(appDirectory, '/src/index.jsx')],
   output: {
-    path: path.join(__dirname, 'client/public'),
     filename: 'bundle.js',
-  },
-  performance: {
-    hints: false,
+    path: path.join(appDirectory, '/public/bundle.js'),
   },
   module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-          },
-        },
-      },
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
-      },
-    ],
+    rules: [babelLoaderConfiguration, imageLoaderConfiguration],
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        API_TOKEN: JSON.stringify(process.env.API_TOKEN),
-      },
-    }),
-    new CompressionPlugin({
-      algorithm: 'gzip',
-      test: /\.js$|\.css$|\.html$/,
-    }),
-  ],
+  mode: 'development',
+  resolve: {
+    alias: {
+      'react-native$': 'react-native-web',
+    },
+    extensions: ['.web.js', '.js', '.jsx'],
+  },
 };

@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
-const Login = ({ navigation }) => {
+const Profile = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Login</Text>
+      <Text>Profile</Text>
     </View>
   );
 };
 
-export default Login;
+export default Profile;
