@@ -7,8 +7,7 @@ export default StyleSheet.create({
     backgroundColor: '#283618',
   },
 
-  item: {
-    backgroundColor: '#606C38',
+  plantImage: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 20,
@@ -45,8 +44,8 @@ export default StyleSheet.create({
 
   tinyLogo: {
     alignSelf: 'center',
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
   },
 
   title: {

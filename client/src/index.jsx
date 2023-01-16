@@ -7,7 +7,7 @@ import { NavBar } from './components/NavBar';
 const root = () => {
   return (
     <Provider store={store}>
-      <NavBar />
+      <NavBar />z
     </Provider>
   );
 };
