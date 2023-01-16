@@ -7,28 +7,30 @@ export default StyleSheet.create({
     backgroundColor: '#283618',
   },
 
-  plantImage: {
+  item: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
-    marginVertical: 8,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 20,
+    paddingRigth: 20,
+    marginVertical: 2,
   },
 
-  innerItem1: {
+  yourItem: {
     textAlign: 'center',
     paddingLeft: '10%',
     width: '40%',
   },
 
-  innerItem2: {
+  arrows: {
     textAlign: 'center',
-    marginVertical: '5%',
-    width: '10%',
+    marginVertical: '15%',
+    width: '15%',
   },
 
-  innerItem3: {
+  otherItem: {
     textAlign: 'center',
-
     paddingRight: '10%',
     width: '40%',
   },
@@ -42,13 +44,16 @@ export default StyleSheet.create({
     backgroundColor: '#49632a',
   },
 
-  tinyLogo: {
+  plantImage: {
     alignSelf: 'center',
     width: 100,
     height: 100,
   },
 
-  title: {
+  user: {
+    fontSize: 20,
+    fontWeight: 600,
+    paddingBottom: 5,
     color: '#FEFAE0',
     textAlign: 'center',
   },
@@ -59,7 +64,7 @@ export default StyleSheet.create({
     border: '1px solid green',
     borderRadius: '5%',
     alignSelf: 'center',
-    marginTop: '5%',
+    marginTop: '10%',
     width: '70%',
     alignItems: 'center',
   },
@@ -70,7 +75,7 @@ export default StyleSheet.create({
     border: '1px solid red',
     borderRadius: '5%',
     alignSelf: 'center',
-    marginTop: '5%',
+    marginTop: '10%',
     width: '70%',
     alignItems: 'center',
   },
@@ -81,7 +86,7 @@ export default StyleSheet.create({
     border: '1px solid orange',
     borderRadius: '5%',
     alignSelf: 'center',
-    marginTop: '5%',
+    marginTop: '10%',
     width: '70%',
     alignItems: 'center',
   },
@@ -92,7 +97,7 @@ export default StyleSheet.create({
     border: '1px solid lightgrey',
     borderRadius: '5%',
     alignSelf: 'center',
-    marginTop: '5%',
+    marginTop: '10%',
     width: '70%',
     alignItems: 'center',
   },

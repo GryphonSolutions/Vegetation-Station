@@ -17,8 +17,8 @@ const Offers = ({ navigation }) => (
       keyExtractor={(item, index) => item + index}
       renderItem={({ item }) => (
         <View style={styles.item}>
-          <View style={styles.innerItem1}>
-            <Text style={styles.title}>{user}</Text>
+          <View style={styles.yourItem}>
+            <Text style={styles.user}>{user}</Text>
             <Image style={styles.plantImage} source={{ uri: image }} />
             {item.buyer === user
               ? (
@@ -32,11 +32,11 @@ const Offers = ({ navigation }) => (
                 </TouchableOpacity>
               )}
           </View>
-          <View style={styles.innerItem2}>
+          <View style={styles.arrows}>
             <Ionicons name="swap-horizontal" size="40px" color={isDarkMode ? 'white' : 'white'} />
           </View>
-          <View style={styles.innerItem3}>
-            <Text style={styles.title}>{item.seller === user ? item.buyer : item.seller}</Text>
+          <View style={styles.otherItem}>
+            <Text style={styles.user}>{item.seller === user ? item.buyer : item.seller}</Text>
             <Image style={styles.plantImage} source={{ uri: image }} />
             {item.buyer === user
               ? (
