@@ -52,7 +52,7 @@ export default StyleSheet.create({
 
   user: {
     fontSize: 20,
-    fontWeight: 600,
+    // fontWeight: 600,
     paddingBottom: 5,
     color: '#FEFAE0',
     textAlign: 'center',

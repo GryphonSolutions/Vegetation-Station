@@ -28,7 +28,7 @@ export default StyleSheet.create({
   headerText: {
     fontSize: 30,
     color: 'white',
-    fontWeight: 600,
+    // fontWeight: 600,
     marginLeft: -10,
     alignSelf: 'center',
     display: 'inline-block',
@@ -67,7 +67,7 @@ export default StyleSheet.create({
   name: {
     color: 'white',
     fontSize: 20,
-    fontWeight: 500,
+    // fontWeight: 500,
     paddingBottom: 5,
   },
 
@@ -93,7 +93,7 @@ export default StyleSheet.create({
   header2: {
     color: 'white',
     fontSize: 20,
-    fontWeight: 600,
+    // fontWeight: 600,
     paddingLeft: '5%',
     paddingBottom: 4,
   },
