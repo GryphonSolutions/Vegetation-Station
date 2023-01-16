@@ -23,10 +23,17 @@ const root = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
+        {/* <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
             name="Home"
             component={Home}
+            options={{ headerShown: false, title: false }}
+          />
+        </Stack.Navigator> */}
+        <Stack.Navigator initialRouteName="Submit">
+          <Stack.Screen
+            name="Submit"
+            component={Submit}
             options={{ headerShown: false, title: false }}
           />
         </Stack.Navigator>
