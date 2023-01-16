@@ -12,11 +12,13 @@ import {
   Button,
   SafeAreaView,
 } from 'react-native';
+import { updateSearchMessages } from '../../../reducers/index.js';
 import ChatList from './ChatList.jsx';
 
 const Messages = () => {
-  const { isDarkMode } = useSelector((state) => state.app);
-  const [searchMessages, setSearchMessages] = useState(false);
+  const { isDarkMode, searchMessages } = useSelector((state) => state.app);
+  const dispatch = useDispatch();
+  // const [searchMessages, setSearchMessages] = useState(false);
 
   const styles = StyleSheet.create({
     border: {
@@ -159,10 +161,12 @@ const Messages = () => {
         <View style={styles.titleSearchCont}>
           <Text style={styles.title}>Messages</Text>
           <Ionicons
-            name="search-circle-outline"
+            name={
+              searchMessages ? 'close-circle-outline' : 'search-circle-outline'
+            }
             size="40"
             color={isDarkMode ? 'white' : 'black'}
-            onPress={() => setSearchMessages(true)}
+            onPress={() => dispatch(updateSearchMessages())}
           />
         </View>
         {searchMessages && (
@@ -170,7 +174,7 @@ const Messages = () => {
             style={styles.search}
             platform="ios"
             placeholder="search users..."
-            onCancel={() => setSearchMessages(false)}
+            onCancel={() => dispatch(updateSearchMessages())}
           />
         )}
       </View>
@@ -184,42 +188,3 @@ const Messages = () => {
 };
 
 export default Messages;
-
-const messagesArr = {
-  123: {
-    userInfo: {
-      displayName: 'Mo',
-      image: '',
-      id: 1,
-    },
-    lastMessage: 'I love the fern, but you live too far.',
-    date: '6:00pm',
-  },
-  125: {
-    userInfo: {
-      displayName: 'Matt',
-      image: '',
-      id: 10,
-    },
-    lastMessage: 'I love pink princesses.',
-    date: '5:00pm',
-  },
-  129: {
-    userInfo: {
-      displayName: 'Thomas',
-      image: '',
-      id: 2,
-    },
-    lastMessage: "Plants don't grow amongst shadows.",
-    date: '12:00am',
-  },
-  151: {
-    userInfo: {
-      displayName: 'Brian',
-      image: '',
-      id: 3,
-    },
-    lastMessage: 'Thanks so much for the plant!!!',
-    date: '7:00pm',
-  },
-};
