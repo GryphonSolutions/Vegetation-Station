@@ -1,14 +1,43 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useDispatch, useSelector } from 'react-redux';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { Header } from 'react-native-elements';
+import {
+  StyleSheet,
+  ScrollView,
+  Text,
+  View,
+  Button,
+  SafeAreaView,
+} from 'react-native';
+import ChatList from './ChatList.jsx';
 
 const Messages = () => {
+  const styles = StyleSheet.create({
+    header: {
+      backgroundColor: '#fff',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderBottomColor: 'gray',
+      borderBottomStyles: 'solid',
+      borderBottomWidth: 1,
+    },
+    title: {
+      fontWeight: '800',
+      fontSize: 30,
+    },
+  });
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Messages</Text>
-    </View>
+    <SafeAreaView>
+      <View style={styles.header}>
+        <Text style={styles.title}>Messages</Text>
+      </View>
+      <ScrollView>
+        <ChatList />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
