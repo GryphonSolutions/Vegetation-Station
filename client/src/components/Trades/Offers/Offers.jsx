@@ -10,16 +10,16 @@ const { user } = testData;
 const DATA = [{ title: 'Your Offers', data: testData.offers }, { title: 'Your Requests', data: testData.requests }];
 const isDarkMode = false;
 
-const Offers = () => (
+const Offers = ({ navigation }) => (
   <SafeAreaView style={styles.container}>
     <SectionList
       sections={DATA}
       keyExtractor={(item, index) => item + index}
       renderItem={({ item }) => (
         <View style={styles.item}>
-          <View style={styles.innerItem1}>
-            <Text style={styles.title}>{user}</Text>
-            <Image style={styles.tinyLogo} source={{ uri: image }} />
+          <View style={styles.yourItem}>
+            <Text style={styles.user}>{user}</Text>
+            <Image style={styles.plantImage} source={{ uri: image }} />
             {item.buyer === user
               ? (
                 <TouchableOpacity style={styles.accept} onPress={() => Alert.alert('Accept Button Pressed')}>
@@ -32,12 +32,12 @@ const Offers = () => (
                 </TouchableOpacity>
               )}
           </View>
-          <View style={styles.innerItem2}>
+          <View style={styles.arrows}>
             <Ionicons name="swap-horizontal" size="40px" color={isDarkMode ? 'white' : 'white'} />
           </View>
-          <View style={styles.innerItem3}>
-            <Text style={styles.title}>{item.seller === user ? item.buyer : item.seller}</Text>
-            <Image style={styles.tinyLogo} source={{ uri: image }} />
+          <View style={styles.otherItem}>
+            <Text style={styles.user}>{item.seller === user ? item.buyer : item.seller}</Text>
+            <Image style={styles.plantImage} source={{ uri: image }} />
             {item.buyer === user
               ? (
                 <TouchableOpacity style={styles.decline} onPress={() => Alert.alert('Decline Button Pressed')}>
@@ -45,7 +45,7 @@ const Offers = () => (
                 </TouchableOpacity>
               )
               : (
-                <TouchableOpacity style={styles.message} onPress={() => Alert.alert('Message Button Pressed')}>
+                <TouchableOpacity style={styles.message} onPress={() => navigation.navigate('Post')}>
                   <Text>Message</Text>
                 </TouchableOpacity>
               )}
