@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 
-const ChatList = () => {
+const ChatList = ({ chat }) => {
   const styles = StyleSheet.create({
     border: {
       borderStyle: 'solid',
@@ -34,11 +34,13 @@ const ChatList = () => {
       />
       <ListItem.Content>
         <View style={styles.titleCont}>
-          <ListItem.Title style={styles.name}>Mo Money</ListItem.Title>
-          <ListItem.Title style={styles.time}>6:00pm</ListItem.Title>
+          <ListItem.Title style={styles.name}>
+            {chat[1].userInfo.displayName}
+          </ListItem.Title>
+          <ListItem.Title style={styles.time}>{chat[1].date}</ListItem.Title>
         </View>
         <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
-          I love the fern, but you live too far away.
+          {chat[1].lastMessage}
         </ListItem.Subtitle>
       </ListItem.Content>
     </ListItem>
