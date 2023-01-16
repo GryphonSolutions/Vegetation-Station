@@ -25,7 +25,7 @@ module.exports.db = getFirestore(app);
 // Export Database and Collection references
 module.exports.usersCol = collection(module.exports.db, 'users');
 module.exports.plantsCol = collection(module.exports.db, 'plants');
-module.exports.catalogCol = collection(module.exports.db, 'catalogue');
+module.exports.catalogCol = collection(module.exports.db, 'catalog');
 module.exports.messagesCol = collection(module.exports.db, 'messages');
 module.exports.offersCol = collection(module.exports.db, 'offers');
 
