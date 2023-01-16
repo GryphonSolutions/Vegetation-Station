@@ -10,9 +10,9 @@ const {
 const { db, plantsCol } = require('../database');
 
 module.exports.getFromPlantsDB = async (parameters) => {
+  const allDocs = [];
   try {
     const snapshot = await getDocs(plantsCol);
-    const allDocs = [];
     snapshot.forEach((document) => {
       allDocs.push(document.data());
     });

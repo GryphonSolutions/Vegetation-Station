@@ -24,7 +24,6 @@
     },
     "web": {
       "favicon": "./client/public/favicon.png"
-    },
-    "jsEngine": "hermes"
+    }
   }
 }
