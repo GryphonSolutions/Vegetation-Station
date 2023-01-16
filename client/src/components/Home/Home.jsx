@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 const Home = () => {
   return (
     <View style={styles.container}>
-      <Text>bark bark</Text>
+      <Text>This is the home page</Text>
       <StatusBar style="auto" />
     </View>
   );
