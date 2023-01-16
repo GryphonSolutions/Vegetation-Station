@@ -12,13 +12,18 @@ import {
   Button,
   SafeAreaView,
 } from 'react-native';
-import { updateSearchMessages } from '../../../reducers/index.js';
+import {
+  updateSearchMessages,
+  updateUserMessageSearch,
+} from '../../../reducers/messagesActions.js';
 import ChatList from './ChatList.jsx';
 
 const Messages = () => {
-  const { isDarkMode, searchMessages } = useSelector((state) => state.app);
+  const { isDarkMode } = useSelector((state) => state.app);
+  const { searchMessages, userMessageSearch } = useSelector(
+    (state) => state.messages,
+  );
   const dispatch = useDispatch();
-  // const [searchMessages, setSearchMessages] = useState(false);
 
   const styles = StyleSheet.create({
     border: {
@@ -174,6 +179,9 @@ const Messages = () => {
             style={styles.search}
             platform="ios"
             placeholder="search users..."
+            value={userMessageSearch}
+            lightTheme={isDarkMode}
+            onChangeText={(newVal) => dispatch(updateUserMessageSearch(newVal))}
             onCancel={() => dispatch(updateSearchMessages())}
           />
         )}

@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isDarkMode: false,
-  searchMessages: false,
 };
 
 const appSlice = createSlice({
@@ -12,13 +11,10 @@ const appSlice = createSlice({
     updateIsDarkMode: (state, action) => {
       state.isDarkMode = !state.isDarkMode;
     },
-    updateSearchMessages: (state) => {
-      state.searchMessages = !state.searchMessages;
-    },
   },
   extraReducers: (builder) => {},
 });
 
-export const { updateIsDarkMode, updateSearchMessages } = appSlice.actions;
+export const { updateIsDarkMode } = appSlice.actions;
 
 export default appSlice.reducer;
