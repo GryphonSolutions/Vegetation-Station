@@ -189,7 +189,7 @@ const Messages = () => {
       {!searchMessages && (
         <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
           {Object.entries(messagesArr).map((chat) => {
-            return <ChatList chat={chat} />;
+            return <ChatList key={chat[0]} chat={chat} />;
           })}
         </ScrollView>
       )}
@@ -198,7 +198,7 @@ const Messages = () => {
           <Text>Start a New Conversation</Text>
           <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
             {[].map((chat) => {
-              return <ChatList chat={chat} />;
+              return <ChatList key={chat[0]} chat={chat} />;
             })}
           </ScrollView>
           <Text>Your Conversations</Text>
@@ -209,8 +209,9 @@ const Messages = () => {
                   .toLowerCase()
                   .includes(userMessageSearch.toLowerCase())
               ) {
-                return <ChatList chat={chat} />;
+                return <ChatList key={chat[0]} chat={chat} />;
               }
+              return <></>;
             })}
           </ScrollView>
         </>
