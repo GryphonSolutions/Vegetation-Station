@@ -1,4 +1,4 @@
-export const data = [
+module.exports = [
   {
     Categories: 'Dracaena',
     Disease: 'N/A',

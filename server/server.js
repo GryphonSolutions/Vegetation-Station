@@ -4,30 +4,27 @@ const cors = require('cors');
 const path = require('path');
 const morgan = require('morgan');
 const fs = require('fs');
+const {
+  catalogRouter,
+  messagesRouter,
+  offersRouter,
+  plantsRouter,
+  usersRouter,
+} = require('./routers');
 
-// Initialize Server
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-// Serving Compressed Bundle File to Client
-const clientDirPath = path.join(__dirname, '../client/public');
-app.get('/*.js', (req, res, next) => {
-  const pathToGzipFile = `${req.url}.gz`;
-  try {
-    if (fs.existsSync(path.join(clientDirPath, pathToGzipFile))) {
-      req.url += '.gz';
-      res.set('Content-Encoding', 'gzip');
-      res.set('Content-Type', 'text/javascript');
-    }
-  } catch (err) {
-    console.error(err);
-  }
-  next();
-});
-
-// Serve the index.html file statically
+// Middleware
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.static(clientDirPath));
 
+// Routers
+app.use('/api/catalog', catalogRouter);
+app.use('/api/messages', messagesRouter);
+app.use('/api/offers', offersRouter);
+app.use('/api/plants', plantsRouter);
+app.use('/api/users', usersRouter);
+
+// Tell app to listen on specific port
 app.listen(PORT, console.log(`Now listening on ${process.env.HOST}:${PORT}`));
