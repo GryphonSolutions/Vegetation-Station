@@ -19,7 +19,13 @@ import {
 const Tab = createBottomTabNavigator();
 
 const IoniconsRender = (iconName, size, color, isDarkMode) => {
-  return <Ionicons name={iconName} size={size} color={isDarkMode ? 'white' : 'black'} />;
+  return (
+    <Ionicons
+      name={iconName}
+      size={size}
+      color={isDarkMode ? 'white' : 'black'}
+    />
+  );
 };
 
 const routes = {
@@ -49,26 +55,11 @@ const NavBar = () => {
           },
         })}
       >
-        <Tab.Screen
-          name="Home"
-          component={Home}
-        />
-        <Tab.Screen
-          name="Offers"
-          component={Offers}
-        />
-        <Tab.Screen
-          name="Post"
-          component={Post}
-        />
-        <Tab.Screen
-          name="Messages"
-          component={Messages}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-        />
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Offers" component={Offers} />
+        <Tab.Screen name="Post" component={Post} />
+        <Tab.Screen name="Messages" component={Messages} />
+        <Tab.Screen name="Profile" component={Profile} />
       </Tab.Navigator>
     </NavigationContainer>
   );
