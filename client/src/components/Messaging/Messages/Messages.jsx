@@ -1,11 +1,13 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useDispatch, useSelector } from 'react-redux';
-import { Header } from 'react-native-elements';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Header, SearchBar } from 'react-native-elements';
 import {
   StyleSheet,
   ScrollView,
   Text,
+  TextInput,
   View,
   Button,
   SafeAreaView,
@@ -27,12 +29,20 @@ const Messages = () => {
       fontWeight: '800',
       fontSize: 30,
     },
+    search: {
+      alignSelf: 'stretch',
+    },
   });
 
   return (
     <SafeAreaView>
       <View style={styles.header}>
         <Text style={styles.title}>Messages</Text>
+        <SearchBar
+          style={styles.search}
+          platform="ios"
+          placeholder="search users..."
+        />
       </View>
       <ScrollView>
         <ChatList />
