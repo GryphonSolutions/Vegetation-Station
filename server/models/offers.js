@@ -10,20 +10,25 @@ const {
 const { db, offersCol } = require('../database');
 
 module.exports.getFromOffersDB = async (parameters) => {
+  const allDocs = [];
   try {
-    // Query Here
-    const data = await getDocs();
-    return Promise.resolve(data);
+    const snapshot = await getDocs(offersCol);
+    snapshot.forEach((document) => {
+      allDocs.push(document.data());
+    });
+    return Promise.resolve(allDocs);
   } catch (err) {
     console.error(err);
     return Promise.reject(err);
   }
 };
 
-module.exports.postToOffersDB = async (parameters) => {
+module.exports.postToOffersDB = async ({ buyer, seller, buyerPlant, sellerPlant }) => {
   try {
-    // Query Here
-    await setDoc();
+    await setDoc(
+      doc(offersCol),
+      { buyer, seller, buyerPlant, sellerPlant, isOpen: true, reason: '' },
+    );
     return Promise.resolve();
   } catch (err) {
     console.error(err);
@@ -31,10 +36,9 @@ module.exports.postToOffersDB = async (parameters) => {
   }
 };
 
-module.exports.updateOffersDB = async (parameters) => {
+module.exports.updateOffersDB = async ({ id, reason }) => {
   try {
-    // Query Here
-    await updateDoc();
+    await updateDoc(doc(offersCol, id), { reason });
     return Promise.resolve();
   } catch (err) {
     console.error(err);
@@ -42,10 +46,9 @@ module.exports.updateOffersDB = async (parameters) => {
   }
 };
 
-module.exports.deleteFromOffersDB = async (parameters) => {
+module.exports.deleteFromOffersDB = async ({ id }) => {
   try {
-    // Query Here
-    await deleteDoc();
+    await deleteDoc(doc(offersCol, id));
     return Promise.resolve();
   } catch (err) {
     console.error(err);

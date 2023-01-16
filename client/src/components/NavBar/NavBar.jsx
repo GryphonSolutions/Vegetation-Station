@@ -19,15 +19,24 @@ import {
 const Tab = createBottomTabNavigator();
 
 const IoniconsRender = (iconName, size, color, isDarkMode) => {
-  return <Ionicons name={iconName} size={size} color={isDarkMode ? 'white' : 'black'} />;
+  return (
+    <Ionicons
+      name={iconName}
+      size={size}
+      color={isDarkMode ? 'white' : 'black'}
+    />
+  );
 };
 
 const routes = {
+  Login: ['phone-portrait', 'phone-portrait-outline'],
   Home: ['home', 'home-outline'],
   Offers: ['cart', 'cart-outline'],
   Post: ['add-circle', 'add-circle-outline'],
   Messages: ['chatbox', 'chatbox-outline'],
   Profile: ['person', 'person-outline'],
+  Details: ['ios-bookmarks', 'ios-bookmarks-outline'],
+  Chat: ['notifications', 'notifications-outline'],
 };
 
 const NavBar = () => {
@@ -49,26 +58,14 @@ const NavBar = () => {
           },
         })}
       >
-        <Tab.Screen
-          name="Home"
-          component={Home}
-        />
-        <Tab.Screen
-          name="Offers"
-          component={Offers}
-        />
-        <Tab.Screen
-          name="Post"
-          component={Post}
-        />
-        <Tab.Screen
-          name="Messages"
-          component={Messages}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-        />
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Offers" component={Offers} />
+        <Tab.Screen name="Post" component={Post} />
+        <Tab.Screen name="Messages" component={Messages} />
+        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="Details" component={Details} />
+        <Tab.Screen name="Chat" component={Chat} />
+        <Tab.Screen name="Login" component={Login} />
       </Tab.Navigator>
     </NavigationContainer>
   );

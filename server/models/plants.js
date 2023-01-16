@@ -10,10 +10,13 @@ const {
 const { db, plantsCol } = require('../database');
 
 module.exports.getFromPlantsDB = async (parameters) => {
+  const allDocs = [];
   try {
-    // Query Here
-    const data = await getDocs();
-    return Promise.resolve(data);
+    const snapshot = await getDocs(plantsCol);
+    snapshot.forEach((document) => {
+      allDocs.push(document.data());
+    });
+    return Promise.resolve(allDocs);
   } catch (err) {
     console.error(err);
     return Promise.reject(err);
