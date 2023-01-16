@@ -26,7 +26,7 @@ const root = () => {
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
             name="Home"
-            component={Home}
+            component={Login}
             options={{ headerShown: false, title: false }}
           />
         </Stack.Navigator>
