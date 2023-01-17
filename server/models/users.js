@@ -9,21 +9,28 @@ const {
 } = require('firebase/firestore');
 const { db, usersCol } = require('../database');
 
-module.exports.getFromUsersDB = async (parameters) => {
+// Currently querying all data, refactor if need to specify data
+module.exports.getFromUsersDB = async (params) => {
+  const allDocs = [];
   try {
-    // Query Here
-    const data = await getDocs();
-    return Promise.resolve(data);
+    const data = await getDocs(usersCol);
+    data.forEach((document) => {
+      allDocs.push(document.data());
+    });
+    return Promise.resolve(allDocs);
   } catch (err) {
     console.error(err);
     return Promise.reject(err);
   }
 };
 
-module.exports.postToUsersDB = async (parameters) => {
+// Pass in Users object exculde id
+module.exports.postToUsersDB = async (params) => {
+  const user = String(new Date().getTime());
+  const id = user.slice(user.length / 2, user.length) + 1;
+  params.id = id;
   try {
-    // Query Here
-    await setDoc();
+    await setDoc(doc(usersCol, id), params);
     return Promise.resolve();
   } catch (err) {
     console.error(err);
@@ -31,10 +38,10 @@ module.exports.postToUsersDB = async (parameters) => {
   }
 };
 
-module.exports.updateUsersDB = async (parameters) => {
+// Pass in Users object
+module.exports.updateUsersDB = async (params) => {
   try {
-    // Query Here
-    await updateDoc();
+    await updateDoc(doc(usersCol, params.id), params);
     return Promise.resolve();
   } catch (err) {
     console.error(err);
@@ -42,10 +49,10 @@ module.exports.updateUsersDB = async (parameters) => {
   }
 };
 
-module.exports.deleteFromUsersDB = async (parameters) => {
+// Pass in Users object
+module.exports.deleteFromUsersDB = async (params) => {
   try {
-    // Query Here
-    await deleteDoc();
+    await deleteDoc(doc(usersCol, params.id));
     return Promise.resolve();
   } catch (err) {
     console.error(err);
