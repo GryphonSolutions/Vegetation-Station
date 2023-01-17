@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar } from 'react-native-elements';
 import {
   Button,
+  Keyboard,
   KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
@@ -12,6 +13,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 
@@ -58,7 +60,12 @@ const Chat = ({ navigation }) => {
     },
   });
 
-  const sendMessage = () => {};
+  const sendMessage = () => {
+    Keyboard.dismiss();
+    console.log(input);
+    // update database
+    setInput('');
+  };
 
   return (
     <SafeAreaView>
@@ -89,24 +96,27 @@ const Chat = ({ navigation }) => {
             color={isDarkMode ? 'black' : 'white'}
           />
         </View>
-        <>
-          <ScrollView>{/* {chat goes here} */}</ScrollView>
-          <View style={styles.footer}>
-            <TextInput
-              value={input}
-              onChangeText={(text) => setInput(text)}
-              placeholder="message"
-              style={styles.textInput}
-            />
-            <TouchableOpacity onPress={sendMessage} activeOpacity={0.5}>
-              <Ionicons
-                name="arrow-up-circle-outline"
-                size="34"
-                color={isDarkMode ? 'white' : 'black'}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <>
+            <ScrollView>{/* {chat goes here} */}</ScrollView>
+            <View style={styles.footer}>
+              <TextInput
+                value={input}
+                onChangeText={(text) => setInput(text)}
+                onSubmitEditing={sendMessage}
+                placeholder="message"
+                style={styles.textInput}
               />
-            </TouchableOpacity>
-          </View>
-        </>
+              <TouchableOpacity onPress={sendMessage} activeOpacity={0.5}>
+                <Ionicons
+                  name="arrow-up-circle-outline"
+                  size="34"
+                  color={isDarkMode ? 'white' : 'black'}
+                />
+              </TouchableOpacity>
+            </View>
+          </>
+        </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
