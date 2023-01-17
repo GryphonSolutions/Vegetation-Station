@@ -2,21 +2,23 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Header, SearchBar } from 'react-native-elements';
+import { Avatar, Header, ListItem, SearchBar } from 'react-native-elements';
 import {
-  StyleSheet,
+  Button,
+  KeyboardAvoidingView,
+  SafeAreaView,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   View,
-  Button,
-  SafeAreaView,
 } from 'react-native';
 import {
   updateSearchMessages,
   updateUserMessageSearch,
 } from '../../../reducers/messagesActions.js';
 import ChatList from './ChatList.jsx';
+import NewChatList from './NewChatList.jsx';
 
 const Messages = () => {
   const { isDarkMode } = useSelector((state) => state.app);
@@ -160,6 +162,42 @@ const Messages = () => {
     },
   };
 
+  const usersArr = {
+    document: [
+      { id: 123, userName: 'paul' },
+      { id: 123, userName: 'steve' },
+      { id: 123, userName: 'stacy' },
+      { id: 123, userName: 'resida' },
+      { id: 123, userName: 'bravo' },
+      { id: 123, userName: 'champ' },
+      { id: 123, userName: 'ash' },
+      { id: 123, userName: 'lilly' },
+      { id: 123, userName: 'lucas' },
+      { id: 123, userName: 'veronica' },
+      { id: 123, userName: 'xenia' },
+      { id: 123, userName: 'zach' },
+      { id: 123, userName: 'wilson' },
+      { id: 123, userName: 'arrow' },
+      { id: 123, userName: 'misty' },
+      { id: 123, userName: 'pam' },
+    ],
+  };
+  const searchResultsChats = Object.entries(messagesArr).filter((chat) => {
+    if (
+      chat[1].userInfo.displayName
+        .toLowerCase()
+        .includes(userMessageSearch.toLowerCase())
+    ) {
+      return chat;
+    }
+  });
+  const searchResultsUsers = usersArr.document.filter((user) => {
+    if (user.userName.toLowerCase().includes(userMessageSearch.toLowerCase())) {
+      return user;
+    }
+  });
+  const check = searchResultsUsers.length !== 0;
+
   return (
     <SafeAreaView>
       <View style={styles.header}>
@@ -194,27 +232,34 @@ const Messages = () => {
         </ScrollView>
       )}
       {searchMessages && (
-        <>
-          <Text>Start a New Conversation</Text>
-          <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
-            {[].map((chat) => {
-              return <ChatList key={chat[0]} chat={chat} />;
-            })}
-          </ScrollView>
-          <Text>Your Conversations</Text>
-          <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
-            {Object.entries(messagesArr).map((chat) => {
-              if (
-                chat[1].userInfo.displayName
-                  .toLowerCase()
-                  .includes(userMessageSearch.toLowerCase())
-              ) {
+        <KeyboardAvoidingView behavior="padding" style={{ marginBottom: 118 }}>
+          <View style={{ maxHeight: '50%' }}>
+            <Text>Start a New Conversation</Text>
+            <ScrollView>
+              {!check && (
+                <ListItem>
+                  <ListItem.Content>
+                    <ListItem.Title style={styles.name}>
+                      No Users Found.
+                    </ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+              )}
+              {check &&
+                searchResultsUsers.map((chat) => {
+                  return <NewChatList key={chat[1]} chat={chat} />;
+                })}
+            </ScrollView>
+          </View>
+          <View style={{ height: '50%' }}>
+            <Text>Your Conversations</Text>
+            <ScrollView>
+              {searchResultsChats.map((chat) => {
                 return <ChatList key={chat[0]} chat={chat} />;
-              }
-              return <></>;
-            })}
-          </ScrollView>
-        </>
+              })}
+            </ScrollView>
+          </View>
+        </KeyboardAvoidingView>
       )}
     </SafeAreaView>
   );
