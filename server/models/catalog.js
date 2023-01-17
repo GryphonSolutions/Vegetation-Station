@@ -9,21 +9,28 @@ const {
 } = require('firebase/firestore');
 const { db, catalogCol } = require('../database');
 
-module.exports.getFromCatalogDB = async (parameters) => {
+// Currently querying all data, refactor if need to specify data
+module.exports.getFromCatalogDB = async (params) => {
+  const allDocs = [];
   try {
-    // Query Here
-    const data = await getDocs();
-    return Promise.resolve(data);
+    const data = await getDocs(catalogCol);
+    data.forEach((document) => {
+      allDocs.push(document.data());
+    });
+    return Promise.resolve(allDocs);
   } catch (err) {
     console.error(err);
     return Promise.reject(err);
   }
 };
 
-module.exports.postToCatalogDB = async (parameters) => {
+// Pass in Catalog object exclude id
+module.exports.postToCatalogDB = async (params) => {
+  const user = String(new Date().getTime());
+  const id = user.slice(user.length / 2, user.length) + 1;
+  params.id = id;
   try {
-    // Query Here
-    await setDoc();
+    await setDoc(doc(catalogCol, id), params);
     return Promise.resolve();
   } catch (err) {
     console.error(err);
@@ -31,10 +38,10 @@ module.exports.postToCatalogDB = async (parameters) => {
   }
 };
 
-module.exports.updateCatalogDB = async (parameters) => {
+// Pass in Catalog object
+module.exports.updateCatalogDB = async (params) => {
   try {
-    // Query Here
-    await updateDoc();
+    await updateDoc(doc(catalogCol, params.id), params);
     return Promise.resolve();
   } catch (err) {
     console.error(err);
@@ -42,10 +49,10 @@ module.exports.updateCatalogDB = async (parameters) => {
   }
 };
 
-module.exports.deleteFromCatalogDB = async (parameters) => {
+// Pass in Catalog object
+module.exports.deleteFromCatalogDB = async (params) => {
   try {
-    // Query Here
-    await deleteDoc();
+    await deleteDoc(doc(catalogCol, params.id));
     return Promise.resolve();
   } catch (err) {
     console.error(err);
