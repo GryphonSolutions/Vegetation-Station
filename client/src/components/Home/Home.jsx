@@ -13,6 +13,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -56,6 +57,7 @@ const Home = () => {
               <FlatList
                 data={data}
                 numColumns={3}
+                ListEmptyComponent={<Text>There are no plants to show</Text>}
                 renderItem={({ item }) => (
                   <Pressable>
                     <Image
