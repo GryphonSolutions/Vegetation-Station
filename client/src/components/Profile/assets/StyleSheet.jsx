@@ -95,6 +95,16 @@ export default StyleSheet.create({
   header2: {
     color: 'white',
     fontSize: 20,
+    flex: 2,
+    // fontWeight: 600,
+    paddingLeft: '5%',
+    paddingBottom: 4,
+  },
+
+  header3: {
+    color: 'white',
+    fontSize: 20,
+    flex: 2,
     // fontWeight: 600,
     paddingLeft: '5%',
     paddingBottom: 4,

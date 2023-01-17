@@ -1,7 +1,7 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet, Text, TouchableOpacity, View, Button, Image, Alert } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Button, Image, Alert } from 'react-native';
 import { updateSelectedUser } from '../../reducers';
 import styles from './assets/StyleSheet.jsx';
 
@@ -9,9 +9,9 @@ const topTrader = true;
 const plant = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-m6_9tWJNGZNP4ISvhI52ea-AGvKD2gXx9w&usqp=CAU';
 const allTrades = [
   { isOpen: true },
-  // { isOpen: true },
-  // { isOpen: true },
-  // { isOpen: false },
+  { isOpen: true },
+  { isOpen: false },
+  { isOpen: false },
   { isOpen: false },
   { isOpen: false },
   { isOpen: false },
@@ -32,8 +32,6 @@ const newUser = {
   tradeCount: 9,
   location: { city: 'San Jose', state: 'CA', longitude: 37.7701, latitude: 88.1937, zip: 90111 },
 };
-
-
 
 const Profile = ({ navigation }) => {
   const { activeUser } = useSelector((state) => state.app);
@@ -60,7 +58,7 @@ const Profile = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Ionicons style={styles.backButton} name="arrow-undo" size="25px" onPress={() => navigation.navigate('Details')} />
         {username === activeUser.username
@@ -94,12 +92,12 @@ const Profile = ({ navigation }) => {
         return i % 3 === 0
           && renderRow(i, openTrades[i], openTrades[i + 1], openTrades[i + 2]);
       })}
-      <Text style={styles.header2}>Closed Trades</Text>
+      <Text style={styles.header3}>Closed Trades</Text>
       {closedTrades.map((item, i) => {
         return i % 3 === 0
           && renderRow(i, closedTrades[i], closedTrades[i + 1], closedTrades[i + 2]);
       })}
-    </View>
+    </SafeAreaView>
   );
 };
 
