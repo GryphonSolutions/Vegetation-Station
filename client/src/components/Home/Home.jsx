@@ -13,7 +13,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   FlatList,
-  Dimensions,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -24,6 +23,15 @@ const Home = () => {
   const [text, setText] = React.useState('');
   const { isDarkMode } = useSelector((state) => state.app);
 
+  const renderImage = (item) => (
+    <Pressable>
+      <Image
+        style={styles.itemImage}
+        source={{ uri: item.images[0] }}
+        resizeMode="cover"
+      />
+    </Pressable>
+  );
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={{ flex: 1 }}>
@@ -58,15 +66,7 @@ const Home = () => {
                 data={data}
                 numColumns={3}
                 ListEmptyComponent={<Text>There are no plants to show</Text>}
-                renderItem={({ item }) => (
-                  <Pressable>
-                    <Image
-                      style={styles.itemImage}
-                      source={{ uri: item.images[0] }}
-                      resizeMode="cover"
-                    />
-                  </Pressable>
-                )}
+                renderItem={({ item }) => renderImage(item)}
               />
             </View>
           </View>

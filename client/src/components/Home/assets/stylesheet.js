@@ -1,4 +1,7 @@
-import { StyleSheet, StatusBar, PixelRatio } from 'react-native';
+import { StyleSheet, StatusBar, PixelRatio, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const imageWidth = (screenWidth - 30) / 3.5;
 
 export default StyleSheet.create({
   headerContainer: {
@@ -36,10 +39,14 @@ export default StyleSheet.create({
     backgroundColor: '#283618',
   },
   itemsContainer: {
-    margin: 10,
+    margin: 15,
+    alignItems: 'center',
+    // backgroundColor: 'red',
   },
   itemImage: {
-    width: 100,
-    height: 100,
+    width: imageWidth,
+    height: imageWidth,
+    borderRadius: imageWidth / 15,
+    margin: 5,
   },
 });
