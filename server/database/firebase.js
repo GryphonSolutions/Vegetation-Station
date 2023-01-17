@@ -6,6 +6,7 @@ const {
   doc,
   setDoc,
   deleteDoc,
+  query,
 } = require('firebase/firestore');
 
 // Initialize our Application with config settings
@@ -26,7 +27,8 @@ module.exports.db = getFirestore(app);
 module.exports.usersCol = collection(module.exports.db, 'users');
 module.exports.plantsCol = collection(module.exports.db, 'plants');
 module.exports.catalogCol = collection(module.exports.db, 'catalog');
-module.exports.messagesCol = collection(module.exports.db, 'messages');
+module.exports.chatsCol = collection(module.exports.db, 'chats');
+module.exports.chatMessagesCol = collection(module.exports.db, 'chatMessages');
 module.exports.offersCol = collection(module.exports.db, 'offers');
 
 // Get User
