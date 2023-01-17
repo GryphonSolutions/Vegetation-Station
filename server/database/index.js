@@ -3,7 +3,8 @@ const {
   usersCol,
   plantsCol,
   catalogCol,
-  messagesCol,
+  chatsCol,
+  chatMessagesCol,
   offersCol,
 } = require('./firebase');
 
@@ -12,6 +13,7 @@ module.exports = {
   usersCol,
   plantsCol,
   catalogCol,
-  messagesCol,
+  chatsCol,
+  chatMessagesCol,
   offersCol,
 };
