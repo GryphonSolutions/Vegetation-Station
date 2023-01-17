@@ -3,7 +3,6 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import DropDownPicker from 'react-native-dropdown-picker';
-
 import { data } from '../../../../../server/data/exampleData.js';
 
 const styles = StyleSheet.create({
@@ -14,8 +13,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
 
 const Submit = () => {
   const [open, setOpen] = useState(false);
