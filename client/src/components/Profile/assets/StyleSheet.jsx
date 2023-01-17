@@ -36,6 +36,7 @@ export default StyleSheet.create({
 
   accountInfo: {
     display: 'inline',
+    flex: -1,
     paddingTop: 10,
     paddingBottom: 10,
   },
@@ -52,15 +53,16 @@ export default StyleSheet.create({
   details: {
     float: 'left',
     marginLeft: '5%',
+    // display: 'inline-block',
   },
 
-  message: {
+  button: {
     color: 'black',
     backgroundColor: '#dda15e',
     border: '1px solid #dda15e',
     borderRadius: '5%',
     marginTop: '2%',
-    width: '100%',
+    // width: '100%',
     alignItems: 'center',
   },
 
@@ -100,13 +102,15 @@ export default StyleSheet.create({
 
   row: {
     flexDirection: 'row',
+    marginLeft: '6%',
+    marginRight: '6%',
   },
 
   col: {
     borderWidth: 1,
-    flex: 1,
-    width: 120,
-    height: 120,
+    flex: -1,
+    width: 80,
+    height: 80,
     marginLeft: '5%',
     marginRight: '5%',
     marginBottom: '3%',
