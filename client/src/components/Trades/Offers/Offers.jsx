@@ -1,25 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, SafeAreaView, SectionList, StatusBar, Image, TouchableOpacity, Alert, FlatList, Pressable } from 'react-native';
+import { Text, View, SafeAreaView, SectionList, Image, TouchableOpacity, Alert } from 'react-native';
+import { getOffers, getCatalog, getPlants, getUsers } from '../../../actions';
 import styles from './assets/StyleSheet.jsx';
 import testData from './testData.js';
 
 const image = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt1WmVyuYaItZbybhamm-BZv7TAniCg-qONA&usqp=CAU';
-const { user } = testData;
 const offers = [{ title: 'Your Offers', data: testData.offers }];
 const requests = [{ title: 'Your Requests', data: testData.requests }];
-const isDarkMode = false;
-
 
 const Offers = ({ navigation }) => {
+  const { activeUser, selectedUser, isDarkMode } = useSelector((state) => state.app);
+  const { username, profilePicture, tradeCount, location } = selectedUser;
+  const dispatch = useDispatch();
+
   const renderTrade = (item) => {
     return (
       <View style={styles.trade}>
         <View style={styles.yourItem}>
-          <Text style={styles.user}>{user}</Text>
+          <Text style={styles.user}>{activeUser.username}</Text>
           <Image style={styles.plantImage} source={{ uri: image }} />
-          {item.buyer === user
+          {item.buyer === selectedUser.username
             ? (
               <TouchableOpacity style={styles.accept} onPress={() => Alert.alert('Accept Button Pressed')}>
                 <Text style={styles.buttonText}>Accept</Text>
@@ -35,9 +38,11 @@ const Offers = ({ navigation }) => {
           <Ionicons name="swap-horizontal" size="40px" color={isDarkMode ? 'white' : 'white'} />
         </View>
         <View style={styles.otherItem}>
-          <Text style={styles.user}>{item.seller === user ? item.buyer : item.seller}</Text>
+          <Text style={styles.user}>
+            {item.seller === activeUser.username ? item.buyer : item.seller}
+          </Text>
           <Image style={styles.plantImage} source={{ uri: image }} />
-          {item.buyer === user
+          {item.buyer === selectedUser.username
             ? (
               <TouchableOpacity style={styles.decline} onPress={() => Alert.alert('Decline Button Pressed')}>
                 <Text style={styles.buttonText}>Decline</Text>
@@ -77,15 +82,16 @@ const Offers = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 0, backgroundColor: '#606C38' }}>
-        <StatusBar style="auto" />
         <View style={styles.headerContainer}>
           <Text style={styles.headerText}>Trade Proposals</Text>
         </View>
         <View style={styles.itemsContainer}>
-          <SectionList
-            sections={[{ data: [1] }]}
-            renderItem={({ item }) => renderBody()}
-          />
+          {offers.length && (
+            <SectionList
+              sections={[{ data: [1] }]}
+              renderItem={({ item }) => renderBody()}
+            />
+          )}
         </View>
       </SafeAreaView>
     </View>

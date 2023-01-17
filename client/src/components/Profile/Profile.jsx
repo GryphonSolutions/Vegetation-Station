@@ -58,10 +58,10 @@ const Profile = ({ navigation }) => {
     navigation.navigate('Messages');
   };
 
-  useEffect(() => {
-    dispatch(getOffers({ url: 'offers/archive' }));
-  }, []);
-  console.log('Offers: ', offers);
+  // useEffect(() => {
+  //   dispatch(getOffers({ url: 'offers/archive' }));
+  // }, []);
+  // console.log('Offers: ', offers);
 
   return (
     <SafeAreaView style={styles.container}>
