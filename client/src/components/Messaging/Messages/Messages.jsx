@@ -188,13 +188,15 @@ const Messages = () => {
         .toLowerCase()
         .includes(userMessageSearch.toLowerCase())
     ) {
-      return chat;
+      return true;
     }
+    return false;
   });
   const searchResultsUsers = usersArr.document.filter((user) => {
     if (user.userName.toLowerCase().includes(userMessageSearch.toLowerCase())) {
-      return user;
+      return true;
     }
+    return false;
   });
   const check = searchResultsUsers.length !== 0;
 

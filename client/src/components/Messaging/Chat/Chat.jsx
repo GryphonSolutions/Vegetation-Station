@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -36,12 +36,14 @@ const Chat = ({ navigation }) => {
       borderBottomStyles: 'solid',
       borderBottomWidth: 1,
       paddingBottom: 3,
+      paddingRight: 10,
+      paddingLeft: 10,
     },
     footer: {
       flexDirection: 'row',
       alignItems: 'center',
       width: '100%',
-      padding: 15,
+      padding: 10,
     },
     container: {
       height: '100%',
@@ -58,6 +60,36 @@ const Chat = ({ navigation }) => {
       color: 'grey',
       borderRadius: 30,
     },
+    receiver: {
+      padding: 10,
+      backgroundColor: '#ECECEC',
+      alignSelf: 'flex-start',
+      borderRadius: 20,
+      marginRight: 15,
+      marginBottom: 10,
+      maxWidth: '80%',
+      position: 'relative',
+    },
+    recieverText: {
+      color: 'black',
+      fontWeight: '500',
+      marginLeft: 10,
+    },
+    sender: {
+      padding: 10,
+      backgroundColor: '#2B68E6',
+      alignSelf: 'flex-end',
+      borderRadius: 20,
+      marginRight: 15,
+      marginBottom: 10,
+      maxWidth: '80%',
+      position: 'relative',
+    },
+    senderText: {
+      color: 'white',
+      fontWeight: '500',
+      marginLeft: 10,
+    },
   });
 
   const sendMessage = () => {
@@ -67,6 +99,48 @@ const Chat = ({ navigation }) => {
     setInput('');
   };
 
+  const backToMessages = () => {
+    console.log('Go back to messages');
+  };
+
+  const messages = [
+    {
+      12: {
+        messages: [
+          { id: 1, text: 'hello', senderID: 2 },
+          { id: 2, text: 'Can we trade plants?', senderID: 2 },
+          { id: 3, text: "Possibly, what's your address?", senderID: 1 },
+          { id: 4, text: "Whoa...let's meet at costco in LA", senderID: 2 },
+          { id: 5, text: 'Nah', senderID: 1 },
+          { id: 6, text: 'ight', senderID: 2 },
+          { id: 7, text: 'Good luck with the next guy.', senderID: 1 },
+          {
+            id: 8,
+            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
+            senderID: 1,
+          },
+          {
+            id: 9,
+            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
+            senderID: 2,
+          },
+          {
+            id: 10,
+            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
+            senderID: 1,
+          },
+          {
+            id: 11,
+            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
+            senderID: 2,
+          },
+        ],
+      },
+    },
+  ];
+
+  const scrollViewRef = useRef();
+
   return (
     <SafeAreaView>
       <KeyboardAvoidingView
@@ -75,11 +149,13 @@ const Chat = ({ navigation }) => {
         // keyboardVerticalOffset={90}
       >
         <View style={styles.header}>
-          <Ionicons
-            name="arrow-back-circle-outline"
-            size="40"
-            color={isDarkMode ? 'white' : 'black'}
-          />
+          <TouchableOpacity onPress={backToMessages} activeOpacity={0.5}>
+            <Ionicons
+              name="arrow-back-circle-outline"
+              size="40"
+              color={isDarkMode ? 'white' : 'black'}
+            />
+          </TouchableOpacity>
           <View style={{ alignItems: 'center' }}>
             <Avatar
               rounded
@@ -91,14 +167,32 @@ const Chat = ({ navigation }) => {
             <Text style={{ fontSize: 20 }}>Kyle</Text>
           </View>
           <Ionicons
-            name="arrow-back-circle-open"
+            name="arrow-back-circle-outline"
             size="40"
             color={isDarkMode ? 'black' : 'white'}
           />
         </View>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <>
-            <ScrollView>{/* {chat goes here} */}</ScrollView>
+            <ScrollView
+              contentContainerStyle={{ paddingTop: 10 }}
+              ref={scrollViewRef}
+              onContentSizeChange={() => {
+                scrollViewRef.current.scrollToEnd({ animated: true });
+              }}
+            >
+              {messages[0]['12'].messages.map((data) => {
+                return data.senderID === 1 ? (
+                  <View key={data.id} style={styles.sender}>
+                    <Text style={styles.senderText}>{data.text}</Text>
+                  </View>
+                ) : (
+                  <View key={data.id} style={styles.receiver}>
+                    <Text style={styles.recieverText}>{data.text}</Text>
+                  </View>
+                );
+              })}
+            </ScrollView>
             <View style={styles.footer}>
               <TextInput
                 value={input}
