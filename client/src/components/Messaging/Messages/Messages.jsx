@@ -198,7 +198,8 @@ const Messages = () => {
     }
     return false;
   });
-  const check = searchResultsUsers.length !== 0;
+  const checkUsersLength = searchResultsUsers.length !== 0;
+  const checkChatsLength = searchResultsChats.length !== 0;
 
   return (
     <SafeAreaView>
@@ -238,16 +239,16 @@ const Messages = () => {
           <View style={{ maxHeight: '50%' }}>
             <Text>Start a New Conversation</Text>
             <ScrollView>
-              {!check && (
+              {!checkUsersLength && (
                 <ListItem>
                   <ListItem.Content>
                     <ListItem.Title style={styles.name}>
-                      No Users Found.
+                      No users named {userMessageSearch}.
                     </ListItem.Title>
                   </ListItem.Content>
                 </ListItem>
               )}
-              {check &&
+              {checkUsersLength &&
                 searchResultsUsers.map((chat) => {
                   return <NewChatList key={chat.id} chat={chat} />;
                 })}
@@ -256,9 +257,19 @@ const Messages = () => {
           <View style={{ height: '50%' }}>
             <Text>Your Conversations</Text>
             <ScrollView>
-              {searchResultsChats.map((chat) => {
-                return <ChatList key={chat[0]} chat={chat} />;
-              })}
+              {!checkChatsLength && (
+                <ListItem>
+                  <ListItem.Content>
+                    <ListItem.Title style={styles.name}>
+                      No chats with {userMessageSearch}.
+                    </ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+              )}
+              {checkChatsLength &&
+                searchResultsChats.map((chat) => {
+                  return <ChatList key={chat[0]} chat={chat} />;
+                })}
             </ScrollView>
           </View>
         </KeyboardAvoidingView>

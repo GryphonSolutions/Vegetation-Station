@@ -65,7 +65,7 @@ const Chat = ({ navigation }) => {
       backgroundColor: '#ECECEC',
       alignSelf: 'flex-start',
       borderRadius: 20,
-      marginRight: 15,
+      marginLeft: 10,
       marginBottom: 10,
       maxWidth: '80%',
       position: 'relative',
@@ -73,14 +73,15 @@ const Chat = ({ navigation }) => {
     recieverText: {
       color: 'black',
       fontWeight: '500',
-      marginLeft: 10,
+      marginLeft: 0,
+      marginRight: 0,
     },
     sender: {
       padding: 10,
       backgroundColor: '#2B68E6',
       alignSelf: 'flex-end',
       borderRadius: 20,
-      marginRight: 15,
+      marginRight: 10,
       marginBottom: 10,
       maxWidth: '80%',
       position: 'relative',
@@ -88,7 +89,8 @@ const Chat = ({ navigation }) => {
     senderText: {
       color: 'white',
       fontWeight: '500',
-      marginLeft: 10,
+      marginRight: 0,
+      marginLeft: 0,
     },
   });
 
