@@ -1,44 +1,45 @@
-import { StyleSheet, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar, PixelRatio } from 'react-native';
 
 export default StyleSheet.create({
-  container: {
+  headerContainer: {
+    flex: 0,
+    backgroundColor: '#606C38',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerText: {
+    color: '#FEFAE0',
+    fontSize: 30,
+    fontFamily: 'Helvetica-Bold',
+    paddingVertical: 20,
+  },
+  searchBarContainer: {
+    flex: 0,
+    height: 40,
+    flexDirection: 'row',
+    margin: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'red',
+  },
+  searchBar: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
+    fontSize: 20,
+    padding: 10,
+    marginRight: 8,
+    color: 'red',
+    backgroundColor: '#FEFAE0',
+  },
+  contentContainer: {
+    flex: 1,
     backgroundColor: '#283618',
   },
-
-  header: {
-    fontSize: 32,
-    textAlign: 'center',
-    marginLeft: '-10%',
-    marginRight: '-10%',
-    color: '#FEFAE0',
-    backgroundColor: '#49632a',
+  itemsContainer: {
+    margin: 10,
   },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#fff',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  tinyReact: {
-    width: '100%',
-    height: '50%',
-  },
-  practice: {
-    // top: 100,
-    // left: '30%',
-    width: 200,
+  itemImage: {
+    width: 100,
     height: 100,
-    backgroundColor: 'brown',
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
 });
