@@ -61,7 +61,7 @@ const Messages = () => {
   });
 
   const messagesArr = {
-    123: {
+    1: {
       userInfo: {
         displayName: 'Mo',
         image: '',
@@ -70,7 +70,7 @@ const Messages = () => {
       lastMessage: 'I love the fern, but you live too far.',
       date: '6:00pm',
     },
-    125: {
+    2: {
       userInfo: {
         displayName: 'Matt',
         image: '',
@@ -79,7 +79,7 @@ const Messages = () => {
       lastMessage: 'I love pink princesses.',
       date: '5:00pm',
     },
-    129: {
+    3: {
       userInfo: {
         displayName: 'Thomas',
         image: '',
@@ -88,7 +88,7 @@ const Messages = () => {
       lastMessage: "Plants don't grow amongst shadows.",
       date: '12:00am',
     },
-    151: {
+    4: {
       userInfo: {
         displayName: 'Brian',
         image: '',
@@ -97,7 +97,7 @@ const Messages = () => {
       lastMessage: 'Thanks so much for the plant!!!',
       date: '7:00pm',
     },
-    51: {
+    5: {
       userInfo: {
         displayName: 'Brian',
         image: '',
@@ -106,7 +106,43 @@ const Messages = () => {
       lastMessage: 'Thanks so much for the plant!!!',
       date: '7:00pm',
     },
-    15: {
+    6: {
+      userInfo: {
+        displayName: 'Brian',
+        image: '',
+        id: 3,
+      },
+      lastMessage: 'Thanks so much for the plant!!!',
+      date: '7:00pm',
+    },
+    7: {
+      userInfo: {
+        displayName: 'Brian',
+        image: '',
+        id: 3,
+      },
+      lastMessage: 'Thanks so much for the plant!!!',
+      date: '7:00pm',
+    },
+    8: {
+      userInfo: {
+        displayName: 'Brian',
+        image: '',
+        id: 3,
+      },
+      lastMessage: 'Thanks so much for the plant!!!',
+      date: '7:00pm',
+    },
+    9: {
+      userInfo: {
+        displayName: 'Brian',
+        image: '',
+        id: 3,
+      },
+      lastMessage: 'Thanks so much for the plant!!!',
+      date: '7:00pm',
+    },
+    10: {
       userInfo: {
         displayName: 'Brian',
         image: '',
@@ -124,62 +160,26 @@ const Messages = () => {
       lastMessage: 'Thanks so much for the plant!!!',
       date: '7:00pm',
     },
-    153: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
-    133: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
-    131: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
-    1253: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
   };
 
   const usersArr = {
     document: [
-      { id: 123, userName: 'paul' },
-      { id: 123, userName: 'steve' },
-      { id: 123, userName: 'stacy' },
-      { id: 123, userName: 'resida' },
-      { id: 123, userName: 'bravo' },
-      { id: 123, userName: 'champ' },
-      { id: 123, userName: 'ash' },
-      { id: 123, userName: 'lilly' },
-      { id: 123, userName: 'lucas' },
-      { id: 123, userName: 'veronica' },
-      { id: 123, userName: 'xenia' },
-      { id: 123, userName: 'zach' },
-      { id: 123, userName: 'wilson' },
-      { id: 123, userName: 'arrow' },
-      { id: 123, userName: 'misty' },
-      { id: 123, userName: 'pam' },
+      { id: 1, userName: 'paul' },
+      { id: 2, userName: 'steve' },
+      { id: 3, userName: 'stacy' },
+      { id: 4, userName: 'resida' },
+      { id: 5, userName: 'bravo' },
+      { id: 6, userName: 'champ' },
+      { id: 7, userName: 'ash' },
+      { id: 8, userName: 'lilly' },
+      { id: 9, userName: 'lucas' },
+      { id: 10, userName: 'veronica' },
+      { id: 11, userName: 'xenia' },
+      { id: 12, userName: 'zach' },
+      { id: 13, userName: 'wilson' },
+      { id: 14, userName: 'arrow' },
+      { id: 15, userName: 'misty' },
+      { id: 16, userName: 'pam' },
     ],
   };
   const searchResultsChats = Object.entries(messagesArr).filter((chat) => {
@@ -249,7 +249,7 @@ const Messages = () => {
               )}
               {check &&
                 searchResultsUsers.map((chat) => {
-                  return <NewChatList key={chat[1]} chat={chat} />;
+                  return <NewChatList key={chat.id} chat={chat} />;
                 })}
             </ScrollView>
           </View>
@@ -257,7 +257,7 @@ const Messages = () => {
             <Text>Your Conversations</Text>
             <ScrollView>
               {searchResultsChats.map((chat) => {
-                return <ChatList key={chat[0]} chat={chat} />;
+                return <ChatList key={chat.id} chat={chat} />;
               })}
             </ScrollView>
           </View>
