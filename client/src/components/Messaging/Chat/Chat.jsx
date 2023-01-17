@@ -65,7 +65,7 @@ const Chat = ({ navigation }) => {
       <KeyboardAvoidingView
         behavior="padding"
         style={styles.container}
-        keyboardVerticalOffset={90}
+        // keyboardVerticalOffset={90}
       >
         <View style={styles.header}>
           <Ionicons
