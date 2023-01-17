@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Button, Image, Alert } from 'react-native';
 import { updateSelectedUser } from '../../reducers';
+import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
 
 const topTrader = true;
@@ -34,8 +35,7 @@ const newUser = {
 };
 
 const Profile = ({ navigation }) => {
-  const { activeUser } = useSelector((state) => state.app);
-  const { selectedUser } = useSelector((state) => state.app);
+  const { activeUser, selectedUser, offers } = useSelector((state) => state.app);
   const { username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
 
@@ -49,6 +49,7 @@ const Profile = ({ navigation }) => {
     );
   };
 
+
   const signOut = () => {
     dispatch(updateSelectedUser(newUser));
   };
@@ -56,6 +57,11 @@ const Profile = ({ navigation }) => {
   const navMessage = () => {
     navigation.navigate('Messages');
   };
+
+  useEffect(() => {
+    dispatch(getOffers({ url: 'offers/archive' }));
+  }, []);
+  console.log('Offers: ', offers);
 
   return (
     <SafeAreaView style={styles.container}>
