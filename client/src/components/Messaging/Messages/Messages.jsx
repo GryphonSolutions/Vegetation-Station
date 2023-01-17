@@ -257,7 +257,7 @@ const Messages = () => {
             <Text>Your Conversations</Text>
             <ScrollView>
               {searchResultsChats.map((chat) => {
-                return <ChatList key={chat.id} chat={chat} />;
+                return <ChatList key={chat[0]} chat={chat} />;
               })}
             </ScrollView>
           </View>
