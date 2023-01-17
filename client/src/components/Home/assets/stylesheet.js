@@ -39,14 +39,17 @@ export default StyleSheet.create({
     backgroundColor: '#283618',
   },
   itemsContainer: {
+    flex: 1,
     margin: 15,
+    marginBottom: 0,
     alignItems: 'center',
     // backgroundColor: 'red',
   },
   itemImage: {
     width: imageWidth,
-    height: imageWidth,
+    height: undefined,
+    aspectRatio: 1,
     borderRadius: imageWidth / 15,
-    margin: 5,
+    margin: (screenWidth - 30) / 45,
   },
 });
