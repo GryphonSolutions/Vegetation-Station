@@ -1,74 +1,103 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet, Text, TouchableOpacity, View, Button, Image, Alert } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, TouchableOpacity, View, Button, Image, Alert } from 'react-native';
+import { updateSelectedUser } from '../../reducers';
 import styles from './assets/StyleSheet.jsx';
 
-const image = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu9Phe4zkjG0oyvuH5rGMSl1vpKHyXzqquqg&usqp=CAU';
-const trades = 12;
 const topTrader = true;
 const plant = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-m6_9tWJNGZNP4ISvhI52ea-AGvKD2gXx9w&usqp=CAU';
-const openTrades = [0, 0, 0];
-const closedTrades = [0, 0, 0, 0, 0, 0, 0, 0];
+const allTrades = [
+  { isOpen: true },
+  { isOpen: true },
+  { isOpen: false },
+  { isOpen: false },
+  { isOpen: false },
+  { isOpen: false },
+  { isOpen: false },
+  { isOpen: false },
+  { isOpen: false },
+  { isOpen: false },
+  { isOpen: false },
+  { isOpen: false },
+];
 
-const renderOpenRow = () => {
-  return (
-    <View style={styles.row}>
-      <Image style={styles.col} source={{ uri: plant }} />
-      <Image style={styles.col} source={{ uri: plant }} />
-      <Image style={styles.col} source={{ uri: plant }} />
-    </View>
-  );
-};
+const openTrades = allTrades.filter(item => item.isOpen === true);
+const closedTrades = allTrades.filter(item => item.isOpen === false);
 
-const renderClosedRow = () => {
-  return (
-    <View style={styles.row}>
-      <Image style={styles.col} source={{ uri: plant }} />
-      <Image style={styles.col} source={{ uri: plant }} />
-      <Image style={styles.col} source={{ uri: plant }} />
-    </View>
-  );
+const newUser = {
+  id: 2,
+  username: 'Thomas',
+  profilePicture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnZm2ZatubBeYhnkaOyzP49RKwTbB85jO0UA&usqp=CAU',
+  tradeCount: 9,
+  location: { city: 'San Jose', state: 'CA', longitude: 37.7701, latitude: 88.1937, zip: 90111 },
 };
 
 const Profile = ({ navigation }) => {
+  const { activeUser } = useSelector((state) => state.app);
+  const { selectedUser } = useSelector((state) => state.app);
+  const { username, profilePicture, tradeCount, location } = selectedUser;
+  const dispatch = useDispatch();
+
+  const renderRow = (index, item1, item2, item3) => {
+    return (
+      <View key={`View ${index}`} style={styles.row}>
+        {item1 && <Image key={index} style={styles.col} source={{ uri: plant }} />}
+        {item2 && <Image key={index + 1} style={styles.col} source={{ uri: plant }} />}
+        {item3 && <Image key={index + 2} style={styles.col} source={{ uri: plant }} />}
+      </View>
+    );
+  };
+
+  const signOut = () => {
+    dispatch(updateSelectedUser(newUser));
+  };
+
+  const navMessage = () => {
+    navigation.navigate('Messages');
+  };
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Ionicons style={styles.backButton} name="arrow-undo" size="25px" onPress={() => navigation.navigate('Details')} />
-        <Text style={styles.headerText}>Profile</Text>
+        {username === activeUser.username
+          ? <Text style={styles.headerText}>User Profile</Text>
+          : <Text style={styles.headerText}>Profile</Text>}
       </View>
       <View style={styles.accountInfo}>
-        <Image style={styles.profile} source={{ uri: image }} />
+        <Image style={styles.profile} source={{ uri: profilePicture }} />
         <View style={styles.details}>
-          <Text style={styles.name}>WHEN I KILL GOD</Text>
-          <Text style={styles.subHeader}>Long Beach, CA</Text>
+          <Text style={styles.name}>{username}</Text>
+          <Text style={styles.subHeader}>{`${location.city}, ${location.state}`}</Text>
           <Text style={styles.subHeader}>
-            {topTrader ? <Ionicons style={styles.starIcon} size="15px" name="md-star" /> : null}
-            12 Trades
+            {tradeCount > 10 ? <Ionicons style={styles.starIcon} size="15px" name="md-star" /> : null}
+            {`${tradeCount} Trades`}
           </Text>
-          <TouchableOpacity style={styles.message} onPress={() => Alert.alert('Send Message')}>
-            <Text>Message</Text>
-          </TouchableOpacity>
+          {username === activeUser.username
+            ? (
+              <TouchableOpacity style={styles.button} onPress={signOut}>
+                <Text>Sign Out</Text>
+              </TouchableOpacity>
+            )
+            : (
+              <TouchableOpacity style={styles.button} onPress={navMessage}>
+                <Text>Message</Text>
+              </TouchableOpacity>
+            )}
         </View>
       </View>
       <Text style={styles.header2}>Open Trades</Text>
-      {openTrades.length > 0
-        ? renderOpenRow(openTrades.pop(), openTrades.pop(), openTrades.pop)
-        : null}
-      <Text style={styles.header2}>Closed Trades</Text>
-      <View style={styles.rows}>
-        {closedTrades.length > 0
-          ? renderClosedRow(closedTrades.pop(), closedTrades.pop(), closedTrades.pop)
-          : null}
-        {closedTrades.length > 0
-          ? renderClosedRow(closedTrades.pop(), closedTrades.pop(), closedTrades.pop)
-          : null}
-        {closedTrades.length > 0
-          ? renderClosedRow(closedTrades.pop(), closedTrades.pop(), closedTrades.pop)
-          : null}
-      </View>
-    </View>
+      {openTrades.map((item, i) => {
+        return i % 3 === 0
+          && renderRow(i, openTrades[i], openTrades[i + 1], openTrades[i + 2]);
+      })}
+      <Text style={styles.header3}>Closed Trades</Text>
+      {closedTrades.map((item, i) => {
+        return i % 3 === 0
+          && renderRow(i, closedTrades[i], closedTrades[i + 1], closedTrades[i + 2]);
+      })}
+    </SafeAreaView>
   );
 };
 
