@@ -57,9 +57,6 @@ const NavBar = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Tab.Navigator
-        tabBarOptions={{
-          showLabel: false,
-        }}
         initialRouteName="Home"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -76,6 +73,7 @@ const NavBar = () => {
             // height: '9%',
             // paddingTop: 10,
           },
+          tabBarShowLabel: false,
         })}
       >
         <Tab.Screen name="Home" component={Home} />
