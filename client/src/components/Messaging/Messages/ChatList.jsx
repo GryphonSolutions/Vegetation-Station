@@ -1,8 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
+import { updateCurrentChat } from '../../../reducers/messagesReducer.js';
+import * as RootNavigation from '../../NavBar/navigation.js';
 
-const ChatList = ({ chat }) => {
+const ChatList = ({ chat, navigation }) => {
+  const dispatch = useDispatch();
+
   const styles = StyleSheet.create({
     border: {
       borderStyle: 'solid',
@@ -24,8 +29,20 @@ const ChatList = ({ chat }) => {
     },
   });
 
+  const navigateTo = (chatRoomID) => {
+    console.log(chatRoomID);
+    dispatch(updateCurrentChat(chatRoomID));
+    RootNavigation.navigate('Chat');
+    // pull chat data from collection chats based on the combinedId
+    // update state for chats
+  };
+
   return (
-    <ListItem>
+    <ListItem
+      onPress={() => {
+        navigateTo(chat[0]);
+      }}
+    >
       <Avatar
         rounded
         source={{
