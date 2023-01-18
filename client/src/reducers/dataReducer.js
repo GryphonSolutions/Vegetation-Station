@@ -53,29 +53,25 @@ const dataSlice = createSlice({
         state.catalog = action.payload;
       })
       .addCase(getCatalog.rejected, (state, action) => {
-        state.catalog = [];
-        console.log('Catalog Rejected');
+        console.log(`Catalog rejected with error: ${action.payload.message}`);
       })
       .addCase(getOffers.fulfilled, (state, action) => {
         state.offers = action.payload;
       })
       .addCase(getOffers.rejected, (state, action) => {
-        state.offers = [];
-        console.log('Offers Rejected');
+        console.log(`Offers rejected with error: ${action.payload.message}`);
       })
       .addCase(getPlants.fulfilled, (state, action) => {
         state.plants = action.payload;
       })
       .addCase(getPlants.rejected, (state, action) => {
-        state.plants = [];
-        console.log('Plants Rejected');
+        console.log(`Plants rejected with error: ${action.payload.message}`);
       })
       .addCase(getUsers.fulfilled, (state, action) => {
         state.users = action.payload;
       })
       .addCase(getUsers.rejected, (state, action) => {
-        state.users = [];
-        console.log('Users Rejected');
+        console.log(`Users rejected with error: ${action.payload.message}`);
       });
   },
 });

@@ -31,7 +31,17 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [REHYDRATE, PERSIST, REGISTER],
+        ignoredActions: [
+          REHYDRATE,
+          PERSIST,
+          REGISTER,
+          'offers/archive/rejected',
+          'catalog/listings/rejected',
+          'offers/archive/rejected',
+          'plants/details/rejected',
+          'users/info/rejected',
+          'messages/data/rejected',
+        ],
       },
     });
   },
