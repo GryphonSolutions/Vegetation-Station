@@ -1,23 +1,29 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import Header from './Header';
+import Body from './Body';
 
 const Home = () => {
   return (
-    <View style={styles.container}>
-      <Text>bark bark</Text>
-      <StatusBar style="auto" />
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 0, backgroundColor: '#606C38' }} />
+        <View style={{ flex: 1 }}>
+          <StatusBar style="auto" />
+          <Header />
+          <Body />
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

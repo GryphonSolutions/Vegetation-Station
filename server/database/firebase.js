@@ -1,4 +1,6 @@
 const { initializeApp } = require('firebase/app');
+const { getAuth } = require('firebase/auth');
+
 const {
   getFirestore,
   collection,
@@ -19,6 +21,9 @@ const app = initializeApp({
   appId: '1:142925851754:web:f72932ba1ae13743a8ee13',
   measurementId: 'G-B0X72MKC6Q',
 });
+
+// Export Authorization Library
+module.exports.auth = getAuth(app);
 
 // Export Connection to Database
 module.exports.db = getFirestore(app);

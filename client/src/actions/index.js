@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const getData = async ({ url, params = {} }, options) => {
+const getData = async ({ url, params = {} }, { rejectWithValue }) => {
   try {
     const results = await axios({
       url: `http://localhost:3000/api/${url}`,
@@ -9,8 +9,7 @@ const getData = async ({ url, params = {} }, options) => {
     });
     return results.data;
   } catch (err) {
-    console.error(err);
-    return err;
+    return rejectWithValue(err);
   }
 };
 
