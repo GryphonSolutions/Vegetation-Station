@@ -21,17 +21,15 @@ export default StyleSheet.create({
     flex: 0,
     height: 40,
     flexDirection: 'row',
-    margin: 20,
+    margin: 30,
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'red',
   },
   searchBar: {
     flex: 1,
     fontSize: 20,
     padding: 10,
     marginRight: 8,
-    color: 'red',
     backgroundColor: '#FEFAE0',
   },
   contentContainer: {
@@ -43,7 +41,6 @@ export default StyleSheet.create({
     margin: 15,
     marginBottom: 0,
     alignItems: 'center',
-    // backgroundColor: 'red',
   },
   itemImage: {
     width: imageWidth,
