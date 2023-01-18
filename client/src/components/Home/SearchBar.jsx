@@ -36,7 +36,7 @@ export default function SearchBar() {
         <MaterialIcons
           name="sort"
           size={40}
-          color={isDarkMode ? 'white' : 'black'}
+          color={isDarkMode ? 'white' : '#f3b736'}
         />
       </Pressable>
     </View>

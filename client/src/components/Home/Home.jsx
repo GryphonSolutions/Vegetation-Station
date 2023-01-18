@@ -16,7 +16,7 @@ const Home = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={{ flex: 1 }}>
-        <SafeAreaView style={{ flex: 0, backgroundColor: '#606C38' }} />
+        <SafeAreaView style={{ flex: 0, backgroundColor: '#f0f4f1' }} />
         <View style={{ flex: 1 }}>
           <StatusBar style="auto" />
           <Header />

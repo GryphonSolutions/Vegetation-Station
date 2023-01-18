@@ -6,15 +6,18 @@ const imageWidth = (screenWidth - 30) / 3.5;
 export default StyleSheet.create({
   headerContainer: {
     flex: 0,
-    backgroundColor: '#606C38',
+    backgroundColor: '#f0f4f1',
     flexDirection: 'row',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 60,
   },
   headerText: {
-    color: '#FEFAE0',
-    fontSize: 30,
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: 'AnonymousPro-Bold',
+    fontSize: 35,
+    letterSpacing: 1,
+    color: '#283618',
+    paddingLeft: 30,
     paddingVertical: 20,
   },
   searchBarContainer: {
@@ -28,13 +31,17 @@ export default StyleSheet.create({
   searchBar: {
     flex: 1,
     fontSize: 20,
+    fontFamily: 'JosefinSans',
     padding: 10,
     marginRight: 8,
-    backgroundColor: '#FEFAE0',
+    color: '#224722',
+    backgroundColor: '#d5dec6',
+    borderRadius: imageWidth / 15,
   },
   contentContainer: {
     flex: 1,
-    backgroundColor: '#283618',
+    // backgroundColor: '#FEFAE0',
+    backgroundColor: '#f0f4f1',
   },
   itemsContainer: {
     flex: 1,

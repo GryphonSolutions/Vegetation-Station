@@ -7,7 +7,10 @@ import styles from './assets/stylesheet';
 export default function Header() {
   return (
     <View style={styles.headerContainer}>
-      <Text style={styles.headerText}>Vegetation Station</Text>
+      <Text style={styles.headerText}>
+        Vegetation{'\n'}
+        Station
+      </Text>
     </View>
   );
 }
