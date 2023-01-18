@@ -7,7 +7,12 @@ import {
   REGISTER,
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { appReducer, messagesReducer, dataReducer } from '../reducers';
+import {
+  appReducer,
+  messagesReducer,
+  dataReducer,
+  homeReducer,
+} from '../reducers';
 
 const persistAppConfig = {
   key: 'app',
@@ -27,6 +32,7 @@ const store = configureStore({
     app: persistedApp,
     messages: messagesReducer,
     data: persistedData,
+    home: homeReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({
