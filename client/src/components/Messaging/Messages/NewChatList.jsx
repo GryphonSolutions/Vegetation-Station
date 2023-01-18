@@ -1,8 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
+import { NavigationContainer } from '@react-navigation/native';
+import { updateCurrentChat } from '../../../reducers/messagesActions.js';
 
-const NewChatList = ({ chat }) => {
+const NewChatList = ({ chat, navigation }) => {
+  const dispatch = useDispatch();
+
   const styles = StyleSheet.create({
     border: {
       borderStyle: 'solid',
@@ -24,8 +29,21 @@ const NewChatList = ({ chat }) => {
     },
   });
 
+  const navigateTo = (name) => {
+    console.log(name);
+    dispatch(updateCurrentChat(name));
+    navigation.navigate('Chat');
+    // if chat with this user exists, enter chats
+    // if chat doesn't exist, create chat and then enter chat
+  };
+
   return (
-    <ListItem>
+    <ListItem
+      onPress={() => {
+        navigation.navigate('Chat');
+        navigateTo(chat.userName);
+      }}
+    >
       <Avatar
         rounded
         source={{

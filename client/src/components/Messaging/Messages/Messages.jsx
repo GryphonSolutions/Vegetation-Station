@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar, Header, ListItem, SearchBar } from 'react-native-elements';
 import {
@@ -20,8 +21,8 @@ import {
 import ChatList from './ChatList.jsx';
 import NewChatList from './NewChatList.jsx';
 
-const Messages = () => {
-  const { isDarkMode } = useSelector((state) => state.app);
+const Messages = ({ navigation }) => {
+  const { isDarkMode, users } = useSelector((state) => state.app);
   const { searchMessages, userMessageSearch } = useSelector(
     (state) => state.messages,
   );
@@ -230,7 +231,9 @@ const Messages = () => {
       {!searchMessages && (
         <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
           {Object.entries(messagesArr).map((chat) => {
-            return <ChatList key={chat[0]} chat={chat} />;
+            return (
+              <ChatList key={chat[0]} chat={chat} navigation={navigation} />
+            );
           })}
         </ScrollView>
       )}
@@ -250,7 +253,13 @@ const Messages = () => {
               )}
               {checkUsersLength &&
                 searchResultsUsers.map((chat) => {
-                  return <NewChatList key={chat.id} chat={chat} />;
+                  return (
+                    <NewChatList
+                      key={chat.id}
+                      chat={chat}
+                      navigation={navigation}
+                    />
+                  );
                 })}
             </ScrollView>
           </View>
@@ -268,7 +277,13 @@ const Messages = () => {
               )}
               {checkChatsLength &&
                 searchResultsChats.map((chat) => {
-                  return <ChatList key={chat[0]} chat={chat} />;
+                  return (
+                    <ChatList
+                      key={chat[0]}
+                      chat={chat}
+                      navigation={navigation}
+                    />
+                  );
                 })}
             </ScrollView>
           </View>

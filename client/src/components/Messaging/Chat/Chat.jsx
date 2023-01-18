@@ -16,9 +16,12 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { updateSenderInput } from '../../../reducers/messagesActions.js';
 
 const Chat = ({ navigation }) => {
   const { isDarkMode } = useSelector((state) => state.app);
+  const { senderInput, currentChat } = useSelector((state) => state.messages);
+  const dispatch = useDispatch();
   const [input, setInput] = useState('');
 
   const styles = StyleSheet.create({
@@ -96,13 +99,14 @@ const Chat = ({ navigation }) => {
 
   const sendMessage = () => {
     Keyboard.dismiss();
-    console.log(input);
+    console.log(senderInput);
     // update database
-    setInput('');
+    dispatch(updateSenderInput(''));
   };
 
   const backToMessages = () => {
     console.log('Go back to messages');
+    navigation.navigate('Messages');
   };
 
   const messages = [
@@ -166,7 +170,7 @@ const Chat = ({ navigation }) => {
                 uri: 'https://media.istockphoto.com/id/1214428300/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=vftMdLhldDx9houN4V-g3C9k0xl6YeBcoB_Rk6Trce0=',
               }}
             />
-            <Text style={{ fontSize: 20 }}>Kyle</Text>
+            <Text style={{ fontSize: 20 }}>{currentChat}</Text>
           </View>
           <Ionicons
             name="arrow-back-circle-outline"
@@ -197,8 +201,8 @@ const Chat = ({ navigation }) => {
             </ScrollView>
             <View style={styles.footer}>
               <TextInput
-                value={input}
-                onChangeText={(text) => setInput(text)}
+                value={senderInput}
+                onChangeText={(text) => dispatch(updateSenderInput(text))}
                 onSubmitEditing={sendMessage}
                 placeholder="message"
                 style={styles.textInput}
