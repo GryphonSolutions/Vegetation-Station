@@ -8,7 +8,6 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import testProfilePic from './assets/testProfilePic.png';
 import styles from './assets/StyleSheet';
 
 const ProfileRibbon = () => {
@@ -16,7 +15,10 @@ const ProfileRibbon = () => {
     <View style={styles.profileRibbon}>
       <View style={styles.profileInfoContainer}>
         {/* <ScrollView> */}
-        <Image source={testProfilePic} style={styles.profileImage} />
+        <Image
+          source="https://media.licdn.com/dms/image/C5603AQGHgFnr465Dog/profile-displayphoto-shrink_800_800/0/1587145003818?e=1679529600&v=beta&t=tnUMlYlb4LHhRjSs71DwDUKubfMw9-tVrbgYzPCGI1g"
+          style={styles.profileImage}
+        />
         {/* </ScrollView> */}
         <View style={styles.usernameContainer}>
           <Text style={styles.profileUsername}>{'Korriga'.toUpperCase()}</Text>

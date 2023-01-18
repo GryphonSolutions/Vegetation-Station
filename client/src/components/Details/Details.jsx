@@ -12,7 +12,6 @@ import {
 import Header from './Header';
 import Location from './Location';
 import ProfileRibbon from './ProfileRibbon';
-import TestPic from './assets/testPic.png';
 import styles from './assets/StyleSheet';
 
 const Details = () => {
@@ -21,7 +20,10 @@ const Details = () => {
     <View style={styles.container}>
       <Header />
       <View style={styles.imageContainer}>
-        <Image style={styles.plantPic} source={TestPic} />
+        <Image
+          style={styles.plantPic}
+          source="https://www.domino.com/uploads/2020/08/24/00-FEATURE-pink-princess-philodendron-domino.jpg"
+        />
       </View>
       <View style={styles.postContainer}>
         <Text style={styles.postTitle}>Dethrone Me, the Pink Princess</Text>
