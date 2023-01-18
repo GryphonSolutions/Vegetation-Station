@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, SafeAreaView, SectionList, Text, TouchableOpacity, View, Button, Image, Alert } from 'react-native';
+import { persistor } from '../../store';
 import { updateSelectedUser } from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
@@ -25,11 +26,15 @@ const Profile = ({ navigation }) => {
   const { username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
 
+
+
   const signOut = () => {
     dispatch(updateSelectedUser(activeUser));
+    persistor.purge();
   };
 
   const navMessage = () => {
+    persistor.purge();
     navigation.navigate('Messages');
   };
 
@@ -55,7 +60,7 @@ const Profile = ({ navigation }) => {
               {tradeCount > 10 ? <Ionicons style={styles.starIcon} size="15px" name="md-star" /> : null}
               {`${tradeCount} Trades`}
             </Text>
-            {username === activeUser.username
+            {username !== activeUser.username
               ? (
                 <TouchableOpacity style={styles.button} onPress={signOut}>
                   <Text style={styles.buttonText}>Sign Out</Text>

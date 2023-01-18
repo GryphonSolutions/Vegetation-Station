@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import {
   Details,
   Home,
@@ -42,6 +43,7 @@ const routes = {
 
 const NavBar = () => {
   const { isDarkMode } = useSelector((state) => state.app);
+
   return (
     <NavigationContainer ref={navigationRef}>
       <Tab.Navigator

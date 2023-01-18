@@ -7,23 +7,49 @@ import { getOffers, getCatalog, getPlants, getUsers } from '../../../actions';
 import styles from './assets/StyleSheet.jsx';
 import testData from './testData.js';
 
-const image = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt1WmVyuYaItZbybhamm-BZv7TAniCg-qONA&usqp=CAU';
-const offers = [{ title: 'Your Offers', data: testData.offers }];
-const requests = [{ title: 'Your Requests', data: testData.requests }];
-
 const Offers = ({ navigation }) => {
-  const { activeUser, selectedUser, isDarkMode } = useSelector((state) => state.data);
+  const {
+    activeUser,
+    selectedUser,
+    users,
+    catalog,
+    currentOffers,
+    isDarkMode,
+  } = useSelector((state) => state.data);
+
   const { username, profilePicture, tradeCount, location } = selectedUser;
+  const offers = [{
+    title: 'Your Offers',
+    data: currentOffers.filter((item) => activeUser.id === item.seller.id),
+  }];
+  const requests = [{
+    title: 'Your Requests',
+    data: currentOffers.filter((item) => activeUser.id === item.buyer.id),
+  }];
   const dispatch = useDispatch();
 
-  console.log(username);
+  const findBuyer = (item) => {
+    const target = users.filter((user) => item.seller.id === user.id);
+    return target[0]?.username;
+  };
+
+  const findSeller = (item) => {
+    const target = users.filter((user) => item.buyer.id === user.id);
+    return target[0]?.username;
+  };
+
+  const findPhoto = (item) => {
+    const target = catalog.filter((plant) => item === plant.id);
+    return target[0]?.images[0];
+  };
+
   const renderTrade = (item) => {
     return (
       <View style={styles.trade}>
         <View style={styles.yourItem}>
-          <Text style={styles.user}>{activeUser.username}</Text>
-          <Image style={styles.plantImage} source={{ uri: image }} />
-          {item.buyer === selectedUser.username
+          <Text style={styles.user}>{activeUser?.username}</Text>
+          <Image style={styles.plantImage} source={{ uri: findPhoto(item?.seller?.listing) }} />
+          {activeUser?.id === item?.seller?.id
             ? (
               <TouchableOpacity style={styles.accept} onPress={() => Alert.alert('Accept Button Pressed')}>
                 <Text style={styles.buttonText}>Accept</Text>
@@ -40,10 +66,12 @@ const Offers = ({ navigation }) => {
         </View>
         <View style={styles.otherItem}>
           <Text style={styles.user}>
-            {item.seller === activeUser.username ? item.buyer : item.seller}
+            {activeUser?.id === item?.buyer?.id
+              ? findBuyer(item)
+              : findSeller(item)}
           </Text>
-          <Image style={styles.plantImage} source={{ uri: image }} />
-          {item.buyer === selectedUser.username
+          <Image style={styles.plantImage} source={{ uri: findPhoto(item?.buyer?.listing) }} />
+          {activeUser?.id === item?.seller?.id
             ? (
               <TouchableOpacity style={styles.decline} onPress={() => Alert.alert('Decline Button Pressed')}>
                 <Text style={styles.buttonText}>Decline</Text>
@@ -87,7 +115,7 @@ const Offers = ({ navigation }) => {
           <Text style={styles.headerText}>Trade Proposals</Text>
         </View>
         <View style={styles.itemsContainer}>
-          {offers.length && (
+          {currentOffers.length && catalog.length && (
             <SectionList
               sections={[{ data: [1] }]}
               renderItem={({ item }) => renderBody()}
