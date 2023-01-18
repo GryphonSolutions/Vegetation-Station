@@ -7,12 +7,19 @@ export default StyleSheet.create({
     backgroundColor: '#283618',
   },
 
-  header: {
-    display: 'inline',
-    fontSize: 32,
-    textAlign: 'center',
+  headerContainer: {
+    flex: 0,
+    backgroundColor: '#606C38',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  headerText: {
     color: '#FEFAE0',
-    backgroundColor: '#49632a',
+    fontSize: 30,
+    fontFamily: 'Helvetica-Bold',
+    paddingVertical: 20,
   },
 
   backButton: {
@@ -25,18 +32,14 @@ export default StyleSheet.create({
     display: 'inline-block',
   },
 
-  headerText: {
-    fontSize: 30,
-    color: 'white',
-    // fontWeight: 600,
-    marginLeft: -10,
-    alignSelf: 'center',
-    display: 'inline-block',
+  itemsContainer: {
+    backgroundColor: '#283618',
   },
 
   accountInfo: {
     display: 'inline',
     flex: -1,
+    flexDirection: 'row',
     paddingTop: 10,
     paddingBottom: 10,
   },
@@ -51,7 +54,8 @@ export default StyleSheet.create({
   },
 
   details: {
-    float: 'left',
+    float: 'right',
+    display: 'inline-block',
     marginLeft: '5%',
     // display: 'inline-block',
   },
@@ -62,8 +66,14 @@ export default StyleSheet.create({
     border: '1px solid #dda15e',
     borderRadius: '5%',
     marginTop: '2%',
-    // width: '100%',
-    alignItems: 'center',
+    width: 100,
+    padding: 5,
+    alignSelf: 'center',
+  },
+
+  buttonText: {
+    textAlign: 'center',
+    color: 'white',
   },
 
   name: {
