@@ -8,9 +8,9 @@ export default StyleSheet.create({
     flex: 0,
     backgroundColor: '#f0f4f1',
     flexDirection: 'row',
-    // justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 60,
+    paddingTop: '5%',
+    paddingBottom: '8%',
   },
   headerText: {
     fontFamily: 'AnonymousPro-Bold',
@@ -18,13 +18,12 @@ export default StyleSheet.create({
     letterSpacing: 1,
     color: '#283618',
     paddingLeft: 30,
-    paddingVertical: 20,
   },
   searchBarContainer: {
     flex: 0,
     height: 40,
     flexDirection: 'row',
-    margin: 30,
+    marginHorizontal: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -45,8 +44,8 @@ export default StyleSheet.create({
   },
   itemsContainer: {
     flex: 1,
-    margin: 15,
-    marginBottom: 0,
+    marginHorizontal: 15,
+    marginTop: 18,
     alignItems: 'center',
   },
   itemImage: {

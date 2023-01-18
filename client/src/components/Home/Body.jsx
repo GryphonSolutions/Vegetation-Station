@@ -17,6 +17,7 @@ import data from './fakeData';
 import SearchBar from './SearchBar';
 
 export default function Body() {
+  const { isDarkMode } = useSelector((state) => state.app);
   const renderImage = (item) => (
     <Pressable
       style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
@@ -33,7 +34,12 @@ export default function Body() {
   );
 
   return (
-    <View style={styles.contentContainer}>
+    <View
+      style={[
+        styles.contentContainer,
+        { backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' },
+      ]}
+    >
       <SearchBar />
       <View style={styles.itemsContainer}>
         <FlatList

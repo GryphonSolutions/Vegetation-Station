@@ -26,7 +26,7 @@ const IoniconsRender = (iconName, size, color, isDarkMode) => {
     <Ionicons
       name={iconName}
       size={size}
-      color={isDarkMode ? 'white' : '#224722'}
+      color={isDarkMode ? '#d39b52' : '#224722'}
     />
   );
 };
@@ -70,7 +70,11 @@ const NavBar = () => {
           tabBarActiveTintColor: isDarkMode ? '#dda15e' : '#dda15e',
           tabBarInactiveTintColor: isDarkMode ? '#FFF' : '#000',
           tabBarStyle: {
-            backgroundColor: isDarkMode ? '#000' : '#d5dec6',
+            backgroundColor: isDarkMode ? '#2F2E2D' : '#d5dec6',
+            borderTopWidth: 0,
+            height: '10%',
+            // height: '9%',
+            // paddingTop: 10,
           },
         })}
       >
