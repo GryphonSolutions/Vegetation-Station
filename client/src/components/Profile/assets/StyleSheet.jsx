@@ -83,7 +83,13 @@ export default StyleSheet.create({
     paddingBottom: 5,
   },
 
-  subHeader: {
+  location: {
+    color: 'white',
+    fontSize: 16,
+    paddingBottom: 5,
+  },
+
+  trades: {
     color: 'white',
     fontSize: 16,
     paddingBottom: 5,
@@ -107,7 +113,7 @@ export default StyleSheet.create({
     fontSize: 20,
     flex: 2,
     // fontWeight: 600,
-    paddingLeft: '5%',
+    paddingLeft: '14%',
     paddingBottom: 4,
   },
 
@@ -116,14 +122,15 @@ export default StyleSheet.create({
     fontSize: 20,
     flex: 2,
     // fontWeight: 600,
-    paddingLeft: '5%',
+    paddingLeft: '14%',
+    paddingTop: 4,
     paddingBottom: 4,
   },
 
   row: {
     flexDirection: 'row',
-    marginLeft: '6%',
-    marginRight: '6%',
+    marginLeft: '10%',
+    marginRight: '10%',
   },
 
   col: {
