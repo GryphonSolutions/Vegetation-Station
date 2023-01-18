@@ -15,6 +15,7 @@ import {
   Submit,
   Profile,
 } from '..';
+import { navigationRef } from './navigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,7 +43,7 @@ const routes = {
 const NavBar = () => {
   const { isDarkMode } = useSelector((state) => state.app);
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Tab.Navigator
         initialRouteName="Home"
         screenOptions={({ route }) => ({

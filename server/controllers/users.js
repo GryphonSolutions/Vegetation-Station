@@ -4,6 +4,7 @@ const {
     postToUsersDB,
     updateUsersDB,
     deleteFromUsersDB,
+    getOneUser,
   },
 } = require('../models');
 
@@ -13,6 +14,17 @@ module.exports.getFromUsers = async (req, res) => {
     res.send(data);
   } catch (err) {
     console.log(err);
+    res.sendStatus(400);
+  }
+};
+
+module.exports.getOneUser = async (req, res) => {
+  const { username } = req.params;
+  try {
+    const oneUser = await getOneUser(username);
+    res.send(oneUser);
+  } catch (err) {
+    console.error(err);
     res.sendStatus(400);
   }
 };
