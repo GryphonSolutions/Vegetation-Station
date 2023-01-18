@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
-import { NavigationContainer } from '@react-navigation/native';
-import { updateCurrentChat } from '../../../reducers/messagesActions.js';
+import { updateCurrentChat } from '../../../reducers/messagesReducer.js';
+import * as RootNavigation from '../../NavBar/navigation.js';
 
-const NewChatList = ({ chat, navigation }) => {
+const NewChatList = ({ chat }) => {
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
@@ -32,15 +32,15 @@ const NewChatList = ({ chat, navigation }) => {
   const navigateTo = (name) => {
     console.log(name);
     dispatch(updateCurrentChat(name));
-    navigation.navigate('Chat');
-    // if chat with this user exists, enter chats
-    // if chat doesn't exist, create chat and then enter chat
+    RootNavigation.navigate('Chat');
+    // search userChats to see if this combined exists in the currentUser's chats
+    //  if chat doesn't exist, create chat for both the sender and reciever
+    //  if chat does exist, grab the messages from the chat collection
   };
 
   return (
     <ListItem
       onPress={() => {
-        navigation.navigate('Chat');
         navigateTo(chat.userName);
       }}
     >

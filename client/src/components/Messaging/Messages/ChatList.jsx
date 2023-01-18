@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
-import { updateCurrentChat } from '../../../reducers/messagesActions.js';
+import { updateCurrentChat } from '../../../reducers/messagesReducer.js';
+import * as RootNavigation from '../../NavBar/navigation.js';
 
 const ChatList = ({ chat, navigation }) => {
   const dispatch = useDispatch();
@@ -31,7 +32,9 @@ const ChatList = ({ chat, navigation }) => {
   const navigateTo = (chatRoomID) => {
     console.log(chatRoomID);
     dispatch(updateCurrentChat(chatRoomID));
-    navigation.navigate('Chat');
+    RootNavigation.navigate('Chat');
+    // pull chat data from collection chats based on the combinedId
+    // update state for chats
   };
 
   return (

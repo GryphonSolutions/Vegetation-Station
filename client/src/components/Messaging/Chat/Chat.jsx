@@ -16,9 +16,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { updateSenderInput } from '../../../reducers/messagesActions.js';
+import { updateSenderInput } from '../../../reducers/messagesReducer.js';
+import * as RootNavigation from '../../NavBar/navigation.js';
 
-const Chat = ({ navigation }) => {
+const Chat = () => {
   const { isDarkMode } = useSelector((state) => state.app);
   const { senderInput, currentChat } = useSelector((state) => state.messages);
   const dispatch = useDispatch();
@@ -106,7 +107,7 @@ const Chat = ({ navigation }) => {
 
   const backToMessages = () => {
     console.log('Go back to messages');
-    navigation.navigate('Messages');
+    RootNavigation.navigate('Messages');
   };
 
   const messages = [
