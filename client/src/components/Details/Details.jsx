@@ -8,6 +8,7 @@ import {
   Button,
   SafeAreaView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import Header from './Header';
 import Location from './Location';
@@ -42,7 +43,7 @@ const Details = () => {
         </View>
         <View style={styles.LocationContainer}>
           <Text style={styles.plantNameText}>Trader's General Location:</Text>
-          <Location />
+          {/* {Platform.OS === 'web' ? <Location /> : null} */}
         </View>
         <TouchableOpacity>
           <ProfileRibbon />
