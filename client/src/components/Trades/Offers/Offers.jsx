@@ -115,7 +115,7 @@ const Offers = ({ navigation }) => {
           <Text style={styles.headerText}>Trade Proposals</Text>
         </View>
         <View style={styles.itemsContainer}>
-          {currentOffers.length && catalog.length && (
+          {currentOffers.length && catalog.length && users.length && (
             <SectionList
               sections={[{ data: [1] }]}
               renderItem={({ item }) => renderBody()}
