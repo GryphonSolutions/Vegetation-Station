@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
 import {
   updateCurrentCombinedId,
-  updateCurrentChat,
+  updateChatHeaderInfo,
 } from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
-const ChatList = ({ chat, navigation }) => {
+const ChatList = ({ chat }) => {
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
@@ -33,22 +33,12 @@ const ChatList = ({ chat, navigation }) => {
     },
   });
 
-  const navigateTo = (chatRoomID) => {
+  const navigateTo = (chatRoomID, username, profilePicture) => {
     console.log(chatRoomID);
+    dispatch(updateChatHeaderInfo({ username, profilePicture }));
     dispatch(updateCurrentCombinedId(chatRoomID));
     // pull chat data from collection chats based on the combinedId
     // update state for chats
-    axios
-      .get('http://localhost:8080/api/chats/data', {
-        params: { combinedId: chatRoomID },
-      })
-      .then((res) => {
-        console.log('response from chats: ', res);
-        updateCurrentChat(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
     RootNavigation.navigate('Chat');
   };
@@ -56,24 +46,28 @@ const ChatList = ({ chat, navigation }) => {
   return (
     <ListItem
       onPress={() => {
-        navigateTo(chat[0]);
+        navigateTo(
+          chat.combinedId,
+          chat.chattingWith.username,
+          chat.chattingWith.profilePicture,
+        );
       }}
     >
       <Avatar
         rounded
         source={{
-          uri: 'https://media.istockphoto.com/id/1214428300/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=vftMdLhldDx9houN4V-g3C9k0xl6YeBcoB_Rk6Trce0=',
+          uri: `${chat.chattingWith.profilePicture}`,
         }}
       />
       <ListItem.Content>
         <View style={styles.titleCont}>
           <ListItem.Title style={styles.name}>
-            {chat[1].userInfo.displayName}
+            {chat.chattingWith.username}
           </ListItem.Title>
-          <ListItem.Title style={styles.time}>{chat[1].date}</ListItem.Title>
+          <ListItem.Title style={styles.time}>{chat.date}</ListItem.Title>
         </View>
         <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
-          {chat[1].lastMessage}
+          {chat.lastMessage}
         </ListItem.Subtitle>
       </ListItem.Content>
     </ListItem>

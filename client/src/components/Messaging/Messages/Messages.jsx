@@ -22,8 +22,9 @@ import ChatList from './ChatList.jsx';
 import NewChatList from './NewChatList.jsx';
 
 const Messages = () => {
-  const { isDarkMode, users } = useSelector((state) => state.app);
-  const { searchMessages, userMessageSearch } = useSelector(
+  const { isDarkMode } = useSelector((state) => state.app);
+  // const { activeUser } = useSelector((state) => state.data);
+  const { activeUser, searchMessages, userMessageSearch } = useSelector(
     (state) => state.messages,
   );
   const dispatch = useDispatch();
@@ -61,146 +62,183 @@ const Messages = () => {
     },
   });
 
-  const messagesArr = {
-    1: {
-      userInfo: {
-        displayName: 'Mo',
-        image: '',
-        id: 1,
+  const userChats = [
+    {
+      id: 89621280,
+      combinedId: 8962128089621281,
+      chattingWith: {
+        id: 89621281,
+        username: 'SaldanaThomas',
+        profilePicture: 'https://i.imgur.com/br9bWAp.png',
       },
-      lastMessage: 'I love the fern, but you live too far.',
-      date: '6:00pm',
+      lastMessage: 'Are you trying to scam me?',
+      date: JSON.stringify(new Date()),
     },
-    2: {
-      userInfo: {
-        displayName: 'Matt',
-        image: '',
-        id: 10,
+    {
+      id: 89621280,
+      combinedId: 8962128089621282,
+      chattingWith: {
+        id: 89621282,
+        username: 'JustDatGuy',
+        profilePicture: 'https://i.imgur.com/br9bWAp.png',
       },
-      lastMessage: 'I love pink princesses.',
-      date: '5:00pm',
+      lastMessage: 'Where did you go?',
+      date: JSON.stringify(new Date()),
     },
-    3: {
-      userInfo: {
-        displayName: 'Thomas',
-        image: '',
-        id: 2,
+    {
+      id: 89621285,
+      combinedId: 8962128589621280,
+      chattingWith: {
+        id: 89621280,
+        username: 'akbarimo',
+        profilePicture: 'https://i.imgur.com/br9bWAp.png',
       },
-      lastMessage: "Plants don't grow amongst shadows.",
-      date: '12:00am',
+      lastMessage: "Your plant isn't even nice",
+      date: JSON.stringify(new Date()),
     },
-    4: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
+    {
+      id: 89621281,
+      combinedId: 8962128189621286,
+      chattingWith: {
+        id: 89621286,
+        username: 'WhenIKillGod',
+        profilePicture: 'https://i.imgur.com/br9bWAp.png',
       },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
+      lastMessage: 'Can I kill God with this plant?',
+      date: JSON.stringify(new Date()),
     },
-    5: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
-    6: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
-    7: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
-    8: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
-    9: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
-    10: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
-    11: {
-      userInfo: {
-        displayName: 'Brian',
-        image: '',
-        id: 3,
-      },
-      lastMessage: 'Thanks so much for the plant!!!',
-      date: '7:00pm',
-    },
-  };
+  ];
 
-  const usersArr = {
-    document: [
-      { id: 1, userName: 'paul' },
-      { id: 2, userName: 'steve' },
-      { id: 3, userName: 'stacy' },
-      { id: 4, userName: 'resida' },
-      { id: 5, userName: 'bravo' },
-      { id: 6, userName: 'champ' },
-      { id: 7, userName: 'ash' },
-      { id: 8, userName: 'lilly' },
-      { id: 9, userName: 'lucas' },
-      { id: 10, userName: 'veronica' },
-      { id: 11, userName: 'xenia' },
-      { id: 12, userName: 'zach' },
-      { id: 13, userName: 'wilson' },
-      { id: 14, userName: 'arrow' },
-      { id: 15, userName: 'misty' },
-      { id: 16, userName: 'pam' },
-    ],
-  };
-  const searchResultsChats = Object.entries(messagesArr).filter((chat) => {
-    if (
-      chat[1].userInfo.displayName
-        .toLowerCase()
-        .includes(userMessageSearch.toLowerCase())
-    ) {
+  const users = [
+    {
+      id: String(new Date().getTime()),
+      username: 'akbarimo',
+      profilePicture: 'https://i.imgur.com/br9bWAp.png',
+      tradeCount: 1,
+      location: {
+        city: 'San Fransisco',
+        state: 'California',
+        zip: 94016,
+        longitude: 1,
+        latitude: 1,
+      },
+    },
+    {
+      id: String(new Date().getTime()),
+      username: 'SaldanaThomas',
+      profilePicture: 'https://i.imgur.com/br9bWAp.png',
+      tradeCount: 2,
+      location: {
+        city: 'San Mateo',
+        state: 'California',
+        zip: 94010,
+        longitude: 1,
+        latitude: 1,
+      },
+    },
+    {
+      id: String(new Date().getTime()),
+      username: 'JustDatGuy',
+      profilePicture: 'https://i.imgur.com/br9bWAp.png',
+      tradeCount: 15,
+      location: {
+        city: 'Los Angeles',
+        state: 'California',
+        zip: 90001,
+        longitude: 1,
+        latitude: 1,
+      },
+    },
+    {
+      id: String(new Date().getTime()),
+      username: 'kylemartinelli',
+      profilePicture: 'https://i.imgur.com/br9bWAp.png',
+      tradeCount: 20,
+      location: {
+        city: 'Los Angeles',
+        state: 'California',
+        zip: 90005,
+        longitude: 1,
+        latitude: 1,
+      },
+    },
+    {
+      id: String(new Date().getTime()),
+      username: 'officiallywilly',
+      profilePicture: 'https://i.imgur.com/br9bWAp.png',
+      tradeCount: 1,
+      location: {
+        city: 'Los Angeles',
+        state: 'California',
+        zip: 90001,
+        longitude: 1,
+        latitude: 1,
+      },
+    },
+    {
+      id: String(new Date().getTime()),
+      username: 'RyanGehris',
+      profilePicture: 'https://i.imgur.com/br9bWAp.png',
+      tradeCount: 4,
+      location: {
+        city: 'Los Angeles',
+        state: 'California',
+        zip: 90006,
+        longitude: 1,
+        latitude: 1,
+      },
+    },
+    {
+      id: String(new Date().getTime()),
+      username: 'WhenIKillGod',
+      profilePicture: 'https://i.imgur.com/br9bWAp.png',
+      tradeCount: 23,
+      location: {
+        city: 'Dublin',
+        state: 'California',
+        zip: 94568,
+        longitude: 1,
+        latitude: 1,
+      },
+    },
+    {
+      id: String(new Date().getTime()),
+      username: 'PeaceLilyMilly',
+      profilePicture: 'https://i.imgur.com/br9bWAp.png',
+      tradeCount: 69,
+      location: {
+        city: 'Reno',
+        state: 'Nevada',
+        zip: 89433,
+        longitude: 1,
+        latitude: 1,
+      },
+    },
+  ];
+
+  const activeUserChats = userChats.filter((chat) => {
+    if (chat.id === activeUser.id) {
       return true;
     }
     return false;
   });
-  const searchResultsUsers = usersArr.document.filter((user) => {
-    if (user.userName.toLowerCase().includes(userMessageSearch.toLowerCase())) {
+  const checkChatsLength = activeUserChats.length > 0;
+
+  const searchResultsChats = activeUserChats.filter((chat) => {
+    if (chat.chattingWith.username.includes(userMessageSearch)) {
       return true;
     }
     return false;
   });
-  const checkUsersLength = searchResultsUsers.length !== 0;
-  const checkChatsLength = searchResultsChats.length !== 0;
+  const checkFilterChatsLength = searchResultsChats.length > 0;
+
+  const searchResultsUsers = users.filter((user) => {
+    if (user.username.includes(userMessageSearch)) {
+      return true;
+    }
+    return false;
+  });
+  const checkUsersLength = searchResultsUsers.length > 0;
 
   return (
     <SafeAreaView>
@@ -236,9 +274,19 @@ const Messages = () => {
       </View>
       {!searchMessages && (
         <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
-          {Object.entries(messagesArr).map((chat) => {
-            return <ChatList key={chat[0]} chat={chat} />;
-          })}
+          {!checkChatsLength && (
+            <ListItem>
+              <ListItem.Content>
+                <ListItem.Title style={styles.name}>
+                  No chats with {userMessageSearch}.
+                </ListItem.Title>
+              </ListItem.Content>
+            </ListItem>
+          )}
+          {checkChatsLength &&
+            activeUserChats.map((chat) => {
+              return <ChatList key={chat.chattingWith.id} chat={chat} />;
+            })}
         </ScrollView>
       )}
       {searchMessages && (
@@ -256,15 +304,15 @@ const Messages = () => {
                 </ListItem>
               )}
               {checkUsersLength &&
-                searchResultsUsers.map((chat) => {
-                  return <NewChatList key={chat.id} chat={chat} />;
+                searchResultsUsers.map((user) => {
+                  return <NewChatList key={user.username} user={user} />;
                 })}
             </ScrollView>
           </View>
           <View style={{ height: '50%' }}>
             <Text>Your Conversations</Text>
             <ScrollView>
-              {!checkChatsLength && (
+              {!checkFilterChatsLength && (
                 <ListItem>
                   <ListItem.Content>
                     <ListItem.Title style={styles.name}>
@@ -273,9 +321,9 @@ const Messages = () => {
                   </ListItem.Content>
                 </ListItem>
               )}
-              {checkChatsLength &&
+              {checkFilterChatsLength &&
                 searchResultsChats.map((chat) => {
-                  return <ChatList key={chat[0]} chat={chat} />;
+                  return <ChatList key={chat.chattingWithId} chat={chat} />;
                 })}
             </ScrollView>
           </View>
@@ -286,3 +334,145 @@ const Messages = () => {
 };
 
 export default Messages;
+
+// const messagesArr = {
+//   1: {
+//     userInfo: {
+//       displayName: 'Mo',
+//       image: '',
+//       id: 1,
+//     },
+//     lastMessage: 'I love the fern, but you live too far.',
+//     date: '6:00pm',
+//   },
+//   2: {
+//     userInfo: {
+//       displayName: 'Matt',
+//       image: '',
+//       id: 10,
+//     },
+//     lastMessage: 'I love pink princesses.',
+//     date: '5:00pm',
+//   },
+//   3: {
+//     userInfo: {
+//       displayName: 'Thomas',
+//       image: '',
+//       id: 2,
+//     },
+//     lastMessage: "Plants don't grow amongst shadows.",
+//     date: '12:00am',
+//   },
+//   4: {
+//     userInfo: {
+//       displayName: 'Brian',
+//       image: '',
+//       id: 3,
+//     },
+//     lastMessage: 'Thanks so much for the plant!!!',
+//     date: '7:00pm',
+//   },
+//   5: {
+//     userInfo: {
+//       displayName: 'Brian',
+//       image: '',
+//       id: 3,
+//     },
+//     lastMessage: 'Thanks so much for the plant!!!',
+//     date: '7:00pm',
+//   },
+//   6: {
+//     userInfo: {
+//       displayName: 'Brian',
+//       image: '',
+//       id: 3,
+//     },
+//     lastMessage: 'Thanks so much for the plant!!!',
+//     date: '7:00pm',
+//   },
+//   7: {
+//     userInfo: {
+//       displayName: 'Brian',
+//       image: '',
+//       id: 3,
+//     },
+//     lastMessage: 'Thanks so much for the plant!!!',
+//     date: '7:00pm',
+//   },
+//   8: {
+//     userInfo: {
+//       displayName: 'Brian',
+//       image: '',
+//       id: 3,
+//     },
+//     lastMessage: 'Thanks so much for the plant!!!',
+//     date: '7:00pm',
+//   },
+//   9: {
+//     userInfo: {
+//       displayName: 'Brian',
+//       image: '',
+//       id: 3,
+//     },
+//     lastMessage: 'Thanks so much for the plant!!!',
+//     date: '7:00pm',
+//   },
+//   10: {
+//     userInfo: {
+//       displayName: 'Brian',
+//       image: '',
+//       id: 3,
+//     },
+//     lastMessage: 'Thanks so much for the plant!!!',
+//     date: '7:00pm',
+//   },
+//   11: {
+//     userInfo: {
+//       displayName: 'Brian',
+//       image: '',
+//       id: 3,
+//     },
+//     lastMessage: 'Thanks so much for the plant!!!',
+//     date: '7:00pm',
+//   },
+// };
+
+// const usersArr = {
+//   document: [
+//     { id: 1, userName: 'paul' },
+//     { id: 2, userName: 'steve' },
+//     { id: 3, userName: 'stacy' },
+//     { id: 4, userName: 'resida' },
+//     { id: 5, userName: 'bravo' },
+//     { id: 6, userName: 'champ' },
+//     { id: 7, userName: 'ash' },
+//     { id: 8, userName: 'lilly' },
+//     { id: 9, userName: 'lucas' },
+//     { id: 10, userName: 'veronica' },
+//     { id: 11, userName: 'xenia' },
+//     { id: 12, userName: 'zach' },
+//     { id: 13, userName: 'wilson' },
+//     { id: 14, userName: 'arrow' },
+//     { id: 15, userName: 'misty' },
+//     { id: 16, userName: 'pam' },
+//   ],
+// };
+// const searchResultsChats = Object.entries(messagesArr).filter((chat) => {
+//   if (
+//     chat[1].userInfo.displayName
+//       .toLowerCase()
+//       .includes(userMessageSearch.toLowerCase())
+//   ) {
+//     return true;
+//   }
+//   return false;
+// });
+// const searchResultsUsers = usersArr.document.filter((user) => {
+//   if (user.userName.toLowerCase().includes(userMessageSearch.toLowerCase())) {
+//     return true;
+//   }
+//   return false;
+// });
+
+// const checkUsersLength = searchResultsUsers.length !== 0;
+// const checkChatsLength = searchResultsChats.length !== 0;

@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
 import {
   updateCurrentCombinedId,
-  updateCurrentChat,
+  updateChatHeaderInfo,
 } from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
-const NewChatList = ({ chat }) => {
+const NewChatList = ({ user }) => {
   const { activeUser } = useSelector((state) => state.data);
   const dispatch = useDispatch();
 
@@ -34,7 +34,7 @@ const NewChatList = ({ chat }) => {
     },
   });
 
-  const navigateTo = async (Id) => {
+  const navigateTo = async (Id, username, profilePicture) => {
     console.log(activeUser.id);
     console.log(Id);
     const activeUserId = activeUser.id.toString();
@@ -44,18 +44,8 @@ const NewChatList = ({ chat }) => {
     console.log(combinedId);
 
     dispatch(updateCurrentCombinedId(combinedId));
+    dispatch(updateChatHeaderInfo({ username, profilePicture }));
     // search userChats to see if this combined exists in the currentUser's chats
-    axios
-      .get('http://localhost:8080/api/chats/data', {
-        params: { combinedId },
-      })
-      .then((res) => {
-        console.log('response from chats: ', res);
-        updateCurrentChat(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     //  if chat doesn't exist, create chat for both the sender and reciever
     //  if chat does exist, grab the messages from the chat collection
 
@@ -65,17 +55,17 @@ const NewChatList = ({ chat }) => {
   return (
     <ListItem
       onPress={() => {
-        navigateTo(chat.id);
+        navigateTo(user.id, user.username, user.profilePicture);
       }}
     >
       <Avatar
         rounded
         source={{
-          uri: 'https://media.istockphoto.com/id/1214428300/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=vftMdLhldDx9houN4V-g3C9k0xl6YeBcoB_Rk6Trce0=',
+          uri: `${user.profilePicture}`,
         }}
       />
       <ListItem.Content>
-        <ListItem.Title style={styles.name}>{chat.userName}</ListItem.Title>
+        <ListItem.Title style={styles.name}>{user.username}</ListItem.Title>
       </ListItem.Content>
     </ListItem>
   );

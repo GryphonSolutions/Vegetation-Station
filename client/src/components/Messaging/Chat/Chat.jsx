@@ -16,14 +16,16 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { updateSenderInput } from '../../../reducers/messagesReducer.js';
+import {
+  updateSenderInput,
+  updateCurrentChat,
+} from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const Chat = () => {
   const { isDarkMode } = useSelector((state) => state.app);
-  const { senderInput, currentCombinedId } = useSelector(
-    (state) => state.messages,
-  );
+  const { senderInput, currentCombinedId, chatHeaderInfo, currentChat } =
+    useSelector((state) => state.messages);
   const dispatch = useDispatch();
   const [input, setInput] = useState('');
 
@@ -112,44 +114,89 @@ const Chat = () => {
     RootNavigation.navigate('Messages');
   };
 
+  const scrollViewRef = useRef();
+
   const messages = [
     {
-      12: {
-        messages: [
-          { id: 1, text: 'hello', senderID: 2 },
-          { id: 2, text: 'Can we trade plants?', senderID: 2 },
-          { id: 3, text: "Possibly, what's your address?", senderID: 1 },
-          { id: 4, text: "Whoa...let's meet at costco in LA", senderID: 2 },
-          { id: 5, text: 'Nah', senderID: 1 },
-          { id: 6, text: 'ight', senderID: 2 },
-          { id: 7, text: 'Good luck with the next guy.', senderID: 1 },
-          {
-            id: 8,
-            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
-            senderID: 1,
-          },
-          {
-            id: 9,
-            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
-            senderID: 2,
-          },
-          {
-            id: 10,
-            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
-            senderID: 1,
-          },
-          {
-            id: 11,
-            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
-            senderID: 2,
-          },
-        ],
-      },
+      combinedId: 8962128089621281,
+      messages: [
+        {
+          id: String(new Date().getTime()),
+          text: 'mo are you seriously doing this right now?',
+          senderID: 89621281,
+          date: JSON.stringify(new Date()),
+        },
+        {
+          id: String(new Date().getTime()),
+          text: 'Are you trying to scam me?',
+          senderID: 89621280,
+          date: JSON.stringify(new Date()),
+        },
+      ],
+    },
+    {
+      combinedId: 8962128089621282,
+      messages: [
+        {
+          id: String(new Date().getTime()),
+          text: 'Hold on I gotta do something',
+          senderID: 89621280,
+          date: JSON.stringify(new Date()),
+        },
+        {
+          id: String(new Date().getTime()),
+          text: 'Where did you go?',
+          senderID: 89621282,
+          date: JSON.stringify(new Date()),
+        },
+      ],
+    },
+    {
+      combinedId: 8962128589621280,
+      messages: [
+        {
+          id: String(new Date().getTime()),
+          text: 'So, what do you think?',
+          senderID: 89621285,
+          date: JSON.stringify(new Date()),
+        },
+        {
+          id: String(new Date().getTime()),
+          text: "Your plant isn't even nice",
+          senderID: 89621280,
+          date: JSON.stringify(new Date()),
+        },
+      ],
+    },
+    {
+      combinedId: 8962128189621286,
+      messages: [
+        {
+          id: String(new Date().getTime()),
+          text: 'Thoughts bro?',
+          senderID: 89621281,
+          date: JSON.stringify(new Date()),
+        },
+        {
+          id: String(new Date().getTime()),
+          text: 'Can I kill God with this plant?',
+          senderID: 89621286,
+          date: JSON.stringify(new Date()),
+        },
+      ],
     },
   ];
 
-  const scrollViewRef = useRef();
+  updateCurrentChat(
+    messages.filter((message) => {
+      if (message.combinedId === 8962128089621281) {
+        return true;
+      }
+      return false;
+    }),
+  );
 
+  console.log('current chat ', currentChat);
   return (
     <SafeAreaView>
       <KeyboardAvoidingView
@@ -170,10 +217,10 @@ const Chat = () => {
               rounded
               size="medium"
               source={{
-                uri: 'https://media.istockphoto.com/id/1214428300/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=vftMdLhldDx9houN4V-g3C9k0xl6YeBcoB_Rk6Trce0=',
+                uri: `${chatHeaderInfo.profilePicture}`,
               }}
             />
-            <Text style={{ fontSize: 20 }}>{currentCombinedId}</Text>
+            <Text style={{ fontSize: 20 }}>{chatHeaderInfo.username}</Text>
           </View>
           <Ionicons
             name="arrow-back-circle-outline"
@@ -190,17 +237,18 @@ const Chat = () => {
                 scrollViewRef.current.scrollToEnd({ animated: true });
               }}
             >
-              {messages[0]['12'].messages.map((data) => {
-                return data.senderID === 1 ? (
-                  <View key={data.id} style={styles.sender}>
-                    <Text style={styles.senderText}>{data.text}</Text>
-                  </View>
-                ) : (
-                  <View key={data.id} style={styles.receiver}>
-                    <Text style={styles.recieverText}>{data.text}</Text>
-                  </View>
-                );
-              })}
+              {currentChat[0] &&
+                currentChat[0].messages.map((data) => {
+                  return data.senderID === 89621281 ? (
+                    <View key={data.id} style={styles.sender}>
+                      <Text style={styles.senderText}>{data.text}</Text>
+                    </View>
+                  ) : (
+                    <View key={data.id} style={styles.receiver}>
+                      <Text style={styles.recieverText}>{data.text}</Text>
+                    </View>
+                  );
+                })}
             </ScrollView>
             <View style={styles.footer}>
               <TextInput
@@ -226,3 +274,19 @@ const Chat = () => {
 };
 
 export default Chat;
+
+// const messages = [
+//   {
+//     12: {
+//       messages: [
+//         { id: 1, text: 'hello', senderID: 2 },
+//         { id: 2, text: 'Can we trade plants?', senderID: 2 },
+//         { id: 3, text: "Possibly, what's your address?", senderID: 1 },
+//         { id: 4, text: "Whoa...let's meet at costco in LA", senderID: 2 },
+//         { id: 5, text: 'Nah', senderID: 1 },
+//         { id: 6, text: 'ight', senderID: 2 },
+//         { id: 7, text: 'Good luck with the next guy.', senderID: 1 },
+//       ],
+//     },
+//   },
+// ];
