@@ -1,11 +1,16 @@
 import React from 'react';
+import axios from 'axios';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
-import { updateCurrentCombinedId } from '../../../reducers/messagesReducer.js';
+import {
+  updateCurrentCombinedId,
+  updateCurrentChat,
+} from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const NewChatList = ({ chat }) => {
+  const { activeUser } = useSelector((state) => state.data);
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
@@ -29,19 +34,38 @@ const NewChatList = ({ chat }) => {
     },
   });
 
-  const navigateTo = (name) => {
-    console.log(name);
-    dispatch(updateCurrentCombinedId(name));
-    RootNavigation.navigate('Chat');
+  const navigateTo = async (Id) => {
+    console.log(activeUser.id);
+    console.log(Id);
+    const activeUserId = activeUser.id.toString();
+    const userId = Id.toString();
+    const combinedId =
+      activeUserId > userId ? activeUserId + userId : userId + activeUserId;
+    console.log(combinedId);
+
+    dispatch(updateCurrentCombinedId(combinedId));
     // search userChats to see if this combined exists in the currentUser's chats
+    axios
+      .get('http://localhost:8080/api/chats/data', {
+        params: { combinedId },
+      })
+      .then((res) => {
+        console.log('response from chats: ', res);
+        updateCurrentChat(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     //  if chat doesn't exist, create chat for both the sender and reciever
     //  if chat does exist, grab the messages from the chat collection
+
+    RootNavigation.navigate('Chat');
   };
 
   return (
     <ListItem
       onPress={() => {
-        navigateTo(chat.userName);
+        navigateTo(chat.id);
       }}
     >
       <Avatar

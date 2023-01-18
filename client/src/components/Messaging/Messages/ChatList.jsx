@@ -3,7 +3,10 @@ import axios from 'axios';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
-import { updateCurrentCombinedId } from '../../../reducers/messagesReducer.js';
+import {
+  updateCurrentCombinedId,
+  updateCurrentChat,
+} from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const ChatList = ({ chat, navigation }) => {
@@ -41,6 +44,7 @@ const ChatList = ({ chat, navigation }) => {
       })
       .then((res) => {
         console.log('response from chats: ', res);
+        updateCurrentChat(res.data);
       })
       .catch((err) => {
         console.log(err);

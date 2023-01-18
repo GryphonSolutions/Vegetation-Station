@@ -21,7 +21,9 @@ import * as RootNavigation from '../../NavBar/navigation.js';
 
 const Chat = () => {
   const { isDarkMode } = useSelector((state) => state.app);
-  const { senderInput, currentChat } = useSelector((state) => state.messages);
+  const { senderInput, currentCombinedId } = useSelector(
+    (state) => state.messages,
+  );
   const dispatch = useDispatch();
   const [input, setInput] = useState('');
 
@@ -171,7 +173,7 @@ const Chat = () => {
                 uri: 'https://media.istockphoto.com/id/1214428300/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=vftMdLhldDx9houN4V-g3C9k0xl6YeBcoB_Rk6Trce0=',
               }}
             />
-            <Text style={{ fontSize: 20 }}>{currentChat}</Text>
+            <Text style={{ fontSize: 20 }}>{currentCombinedId}</Text>
           </View>
           <Ionicons
             name="arrow-back-circle-outline"
