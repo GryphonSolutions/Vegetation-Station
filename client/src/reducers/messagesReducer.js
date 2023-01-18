@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   searchMessages: false,
   userMessageSearch: '',
+  senderInput: '',
+  currentChat: '',
 };
 
 const messagesSlice = createSlice({
@@ -15,11 +17,21 @@ const messagesSlice = createSlice({
     updateUserMessageSearch: (state, action) => {
       state.userMessageSearch = action.payload;
     },
+    updateSenderInput: (state, action) => {
+      state.senderInput = action.payload;
+    },
+    updateCurrentChat: (state, action) => {
+      state.currentChat = action.payload;
+    },
   },
   extraReducers: (builder) => {},
 });
 
-export const { updateSearchMessages, updateUserMessageSearch } =
-  messagesSlice.actions;
+export const {
+  updateSearchMessages,
+  updateUserMessageSearch,
+  updateSenderInput,
+  updateCurrentChat,
+} = messagesSlice.actions;
 
 export const messagesReducer = messagesSlice.reducer;
