@@ -17,7 +17,7 @@ import {
 import {
   updateSearchMessages,
   updateUserMessageSearch,
-} from '../../../reducers/messagesActions.js';
+} from '../../../reducers/messagesReducer.js';
 import ChatList from './ChatList.jsx';
 import NewChatList from './NewChatList.jsx';
 

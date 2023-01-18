@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const messagesSlice = createSlice({
-  name: 'Vegetation Station',
+  name: 'Station Messages',
   initialState,
   reducers: {
     updateSearchMessages: (state) => {
@@ -34,4 +34,4 @@ export const {
   updateCurrentChat,
 } = messagesSlice.actions;
 
-export default messagesSlice.reducer;
+export const messagesReducer = messagesSlice.reducer;

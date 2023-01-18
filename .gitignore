@@ -1,6 +1,7 @@
 client/public/bundle.js
 client/public/bundle.js.gz
 .expo/
+./client/public/src/components/Details/assets/testProfilePic.png
 
 
 

@@ -28,7 +28,7 @@ module.exports.getFromOffersDB = async (params) => {
 module.exports.postToOffersDB = async ({ buyer, seller }) => {
   try {
     await setDoc(
-      doc(offersCol, String(buyer.id) + String(seller.id)),
+      doc(offersCol, String(buyer.listing) + String(seller.listing)),
       { buyer, seller, isOpen: true, reason: '' },
     );
     return Promise.resolve();
