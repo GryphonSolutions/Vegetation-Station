@@ -8,13 +8,14 @@ const {
 } = require('../models');
 
 module.exports.getFromChats = async (req, res) => {
-  try {
-    const data = await getFromChatsDB();
-    res.send(data);
-  } catch (err) {
-    console.log(err);
-    res.sendStatus(400);
-  }
+  console.log('query ', req.query.combinedId);
+  // try {
+  //   const data = await getFromChatsDB();
+  //   res.send(data);
+  // } catch (err) {
+  //   console.log(err);
+  //   res.sendStatus(400);
+  // }
 };
 
 module.exports.postToChats = async (req, res) => {

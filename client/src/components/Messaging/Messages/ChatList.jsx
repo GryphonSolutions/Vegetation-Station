@@ -1,8 +1,9 @@
 import React from 'react';
+import axios from 'axios';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
-import { updateCurrentChat } from '../../../reducers/messagesReducer.js';
+import { updateCurrentCombinedId } from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const ChatList = ({ chat, navigation }) => {
@@ -31,10 +32,21 @@ const ChatList = ({ chat, navigation }) => {
 
   const navigateTo = (chatRoomID) => {
     console.log(chatRoomID);
-    dispatch(updateCurrentChat(chatRoomID));
-    RootNavigation.navigate('Chat');
+    dispatch(updateCurrentCombinedId(chatRoomID));
     // pull chat data from collection chats based on the combinedId
     // update state for chats
+    axios
+      .get('http://localhost:8080/api/chats/data', {
+        params: { combinedId: chatRoomID },
+      })
+      .then((res) => {
+        console.log('response from chats: ', res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    RootNavigation.navigate('Chat');
   };
 
   return (

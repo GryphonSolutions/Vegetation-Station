@@ -20,7 +20,7 @@ const messagesSlice = createSlice({
     updateSenderInput: (state, action) => {
       state.senderInput = action.payload;
     },
-    updateCurrentChat: (state, action) => {
+    updateCurrentCombinedId: (state, action) => {
       state.currentChat = action.payload;
     },
   },
@@ -31,7 +31,7 @@ export const {
   updateSearchMessages,
   updateUserMessageSearch,
   updateSenderInput,
-  updateCurrentChat,
+  updateCurrentCombinedId,
 } = messagesSlice.actions;
 
 export const messagesReducer = messagesSlice.reducer;
