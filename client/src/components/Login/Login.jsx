@@ -32,7 +32,7 @@ const Login = () => {
   ) : (
     <SafeAreaView style={styles.container}>
       <View>
-        <View>
+        <View style={{ border: '2px solid black' }}>
           <Text style={styles.regHeader}>Vegetation Station</Text>
         </View>
         <View style={styles.loginInputsContainer}>

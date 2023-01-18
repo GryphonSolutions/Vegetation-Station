@@ -12,7 +12,10 @@ import {
   SafeAreaView,
   Header,
 } from 'react-native';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from 'firebase/auth';
 import axios from 'axios';
 import { auth } from '../../../../server/database/firebase.js';
 import styles from './assets/StyleSheet.jsx';
@@ -45,25 +48,25 @@ const Registration = ({ setRegistration }) => {
         'BlakeGriffin@gmail.com',
         '1234567',
       );
-      // axios
-      //   .post('info/api/users', {
-      //     location: {
-      //       city: 'Agoura Hills',
-      //       latitude: 34.139713,
-      //       longitude: 118.75845,
-      //       state: 'California',
-      //       zip: 91301,
-      //     },
-      //     profilePicture:
-      //       'https://movietvtechgeeks.com/wp-content/uploads/2016/06/blake-griffin-reveals-nba-forced-him-to-jump-over-a-kia-optima-2016-images-e1465467645690.png',
-      //     username: 'BlakeGriffin',
-      //   })
-      //   .then((res) => {
-      //     console.log(res);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err.message);
-      //   });
+      axios
+        .post('http://localhost:8080/api/users/info', {
+          location: {
+            city: 'Agoura Hills',
+            latitude: 34.139713,
+            longitude: -118.75845,
+            state: 'California',
+            zip: 91301,
+          },
+          profilePicture:
+            'https://movietvtechgeeks.com/wp-content/uploads/2016/06/blake-griffin-reveals-nba-forced-him-to-jump-over-a-kia-optima-2016-images-e1465467645690.png',
+          username: 'BlakeGriffin',
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
     } catch (err) {
       console.error(err.message);
     }
@@ -122,7 +125,7 @@ const Registration = ({ setRegistration }) => {
               color="black"
               title="Submit"
               onPress={() => {
-                setRegistration(false);
+                register();
               }}
             />
             <Ionicons name="checkmark-done-circle-sharp" size="23px" />
