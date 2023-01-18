@@ -21,7 +21,7 @@ const openTrades = allTrades.filter(item => item.isOpen === true);
 const closedTrades = allTrades.filter(item => item.isOpen === false);
 
 const Profile = ({ navigation }) => {
-  const { activeUser, selectedUser, offers } = useSelector((state) => state.app);
+  const { activeUser, selectedUser, offers } = useSelector((state) => state.data);
   const { username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
 

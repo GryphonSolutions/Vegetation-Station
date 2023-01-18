@@ -12,10 +12,11 @@ const offers = [{ title: 'Your Offers', data: testData.offers }];
 const requests = [{ title: 'Your Requests', data: testData.requests }];
 
 const Offers = ({ navigation }) => {
-  const { activeUser, selectedUser, isDarkMode } = useSelector((state) => state.app);
+  const { activeUser, selectedUser, isDarkMode } = useSelector((state) => state.data);
   const { username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
 
+  console.log(username);
   const renderTrade = (item) => {
     return (
       <View style={styles.trade}>
