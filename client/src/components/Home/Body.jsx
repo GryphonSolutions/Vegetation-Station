@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallBack } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Text,
@@ -11,13 +11,19 @@ import {
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+import * as navigation from '../NavBar/navigation';
 import styles from './assets/stylesheet';
 import data from './fakeData';
 import SearchBar from './SearchBar';
 
 export default function Body() {
   const renderImage = (item) => (
-    <Pressable>
+    <Pressable
+      style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+      onPress={() => {
+        navigation.navigate('Details');
+      }}
+    >
       <Image
         style={styles.itemImage}
         source={{ uri: item.images[0] }}
