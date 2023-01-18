@@ -9,11 +9,12 @@ const {
 } = require('firebase/firestore');
 const { db, offersCol } = require('../database');
 
-module.exports.getFromOffersDB = async (parameters) => {
+// Currently querying all data, refactor if need to specify data
+module.exports.getFromOffersDB = async (params) => {
   const allDocs = [];
   try {
-    const snapshot = await getDocs(offersCol);
-    snapshot.forEach((document) => {
+    const data = await getDocs(offersCol);
+    data.forEach((document) => {
       allDocs.push(document.data());
     });
     return Promise.resolve(allDocs);
@@ -23,11 +24,12 @@ module.exports.getFromOffersDB = async (parameters) => {
   }
 };
 
-module.exports.postToOffersDB = async ({ buyer, seller, buyerPlant, sellerPlant }) => {
+// Pass in buyer object and seller object
+module.exports.postToOffersDB = async ({ buyer, seller }) => {
   try {
     await setDoc(
-      doc(offersCol),
-      { buyer, seller, buyerPlant, sellerPlant, isOpen: true, reason: '' },
+      doc(offersCol, String(buyer.listing) + String(seller.listing)),
+      { buyer, seller, isOpen: true, reason: '' },
     );
     return Promise.resolve();
   } catch (err) {
@@ -36,9 +38,10 @@ module.exports.postToOffersDB = async ({ buyer, seller, buyerPlant, sellerPlant 
   }
 };
 
-module.exports.updateOffersDB = async ({ id, reason }) => {
+// Pass in Offers object
+module.exports.updateOffersDB = async (params) => {
   try {
-    await updateDoc(doc(offersCol, id), { reason });
+    await updateDoc(doc(offersCol, String(params.buyer.id) + String(params.seller.id)), params);
     return Promise.resolve();
   } catch (err) {
     console.error(err);
@@ -46,9 +49,10 @@ module.exports.updateOffersDB = async ({ id, reason }) => {
   }
 };
 
-module.exports.deleteFromOffersDB = async ({ id }) => {
+// Pass in Offers object
+module.exports.deleteFromOffersDB = async (params) => {
   try {
-    await deleteDoc(doc(offersCol, id));
+    await deleteDoc(doc(offersCol, String(params.buyer.id) + String(params.seller.id)));
     return Promise.resolve();
   } catch (err) {
     console.error(err);

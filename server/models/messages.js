@@ -7,7 +7,7 @@ const {
   deleteDoc,
   updateDoc,
 } = require('firebase/firestore');
-const { db, messagesCol } = require('../database');
+const { db, chatsCol, chatMessagesCol } = require('../database');
 
 module.exports.getFromMessagesDB = async (parameters) => {
   try {

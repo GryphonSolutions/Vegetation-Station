@@ -1,100 +1,137 @@
-import { StyleSheet, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar, PixelRatio, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const imageWidth = (screenWidth - 30) / 3.5;
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
+  headerContainer: {
+    flex: 0,
+    backgroundColor: '#606C38',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  headerText: {
+    color: '#FEFAE0',
+    fontSize: 30,
+    fontFamily: 'Helvetica-Bold',
+    paddingVertical: 20,
+  },
+
+  itemsContainer: {
+    alignItems: 'center',
     backgroundColor: '#283618',
   },
 
-  item: {
-    backgroundColor: '#606C38',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 20,
-    marginVertical: 8,
-  },
-
-  innerItem1: {
-    textAlign: 'center',
-    paddingLeft: '10%',
-    width: '40%',
-  },
-
-  innerItem2: {
-    textAlign: 'center',
-    marginVertical: '5%',
-    width: '10%',
-  },
-
-  innerItem3: {
-    textAlign: 'center',
-
-    paddingRight: '10%',
-    width: '40%',
-  },
-
-  header: {
+  subHeader: {
     fontSize: 32,
     textAlign: 'center',
     marginLeft: '-10%',
     marginRight: '-10%',
     color: '#FEFAE0',
-    backgroundColor: '#49632a',
   },
 
-  tinyLogo: {
-    alignSelf: 'center',
-    width: 50,
-    height: 50,
+  itemImage: {
+    width: imageWidth,
+    height: imageWidth,
+    borderRadius: imageWidth / 15,
+    margin: 5,
   },
 
-  title: {
+  container: {
+    flex: 0,
+    paddingTop: StatusBar.currentHeight,
+    backgroundColor: '#283618',
+  },
+
+  trade: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 20,
+    paddingRigth: 20,
+    marginVertical: 2,
+  },
+
+  yourItem: {
+    textAlign: 'center',
+    paddingLeft: '5%',
+    width: '40%',
+  },
+
+  otherItem: {
+    textAlign: 'center',
+    paddingRight: '15%',
+    width: '40%',
+  },
+
+  user: {
+    fontSize: 20,
+    // fontWeight: 600,
+    paddingBottom: 5,
     color: '#FEFAE0',
     textAlign: 'center',
   },
 
-  accept: {
+  plantImage: {
+    alignSelf: 'center',
+    width: 100,
+    height: 100,
+  },
+
+  arrows: {
+    textAlign: 'center',
+    marginVertical: '15%',
+    width: '15%',
+  },
+
+  buttonText: {
     color: 'white',
+  },
+
+  accept: {
     backgroundColor: 'chartreuse',
     border: '1px solid green',
     borderRadius: '5%',
     alignSelf: 'center',
-    marginTop: '5%',
-    width: '70%',
+    marginTop: 10,
+    padding: 5,
+    width: 100,
     alignItems: 'center',
   },
 
   decline: {
-    color: 'white',
     backgroundColor: 'red',
     border: '1px solid red',
     borderRadius: '5%',
     alignSelf: 'center',
-    marginTop: '5%',
-    width: '70%',
+    marginTop: 10,
+    width: 100,
+    padding: 5,
     alignItems: 'center',
   },
 
   cancel: {
-    color: 'white',
     backgroundColor: 'orange',
     border: '1px solid orange',
     borderRadius: '5%',
     alignSelf: 'center',
-    marginTop: '5%',
-    width: '70%',
+    marginTop: 10,
+    width: 100,
+    padding: 5,
     alignItems: 'center',
   },
 
   message: {
-    color: 'white',
     backgroundColor: 'lightgrey',
     border: '1px solid lightgrey',
     borderRadius: '5%',
     alignSelf: 'center',
-    marginTop: '5%',
-    width: '70%',
+    marginTop: 10,
+    width: 100,
+    padding: 5,
     alignItems: 'center',
   },
 
