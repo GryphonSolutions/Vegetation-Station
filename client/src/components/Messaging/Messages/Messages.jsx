@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {
@@ -206,14 +207,20 @@ const Messages = () => {
       <View style={styles.header}>
         <View style={styles.titleSearchCont}>
           <Text style={styles.title}>Messages</Text>
-          <Ionicons
-            name={
-              searchMessages ? 'close-circle-outline' : 'search-circle-outline'
-            }
-            size="40"
-            color={isDarkMode ? 'white' : 'black'}
+          <TouchableOpacity
             onPress={() => dispatch(updateSearchMessages())}
-          />
+            activeOpacity={0.5}
+          >
+            <Ionicons
+              name={
+                searchMessages
+                  ? 'close-circle-outline'
+                  : 'search-circle-outline'
+              }
+              size="40"
+              color={isDarkMode ? 'white' : 'black'}
+            />
+          </TouchableOpacity>
         </View>
         {searchMessages && (
           <SearchBar
