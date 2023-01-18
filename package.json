@@ -24,6 +24,7 @@
   "homepage": "https://github.com/GryphonSolutions/Vegetation-Station#readme",
   "dependencies": {
     "@expo/webpack-config": "^0.17.4",
+    "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-navigation/bottom-tabs": "^6.5.3",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
@@ -46,7 +47,8 @@
     "react-native-screens": "~3.18.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.9",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
