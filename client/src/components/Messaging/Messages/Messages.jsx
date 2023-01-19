@@ -42,7 +42,7 @@ const Messages = () => {
   );
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const getChats = () => {
     axios
       .get('http://localhost:8080/api/chats/data', {
         params: { activeUser },
@@ -53,6 +53,10 @@ const Messages = () => {
       .catch((err) => {
         console.log(err, 'error when fetching chats');
       });
+  };
+
+  useEffect(() => {
+    getChats();
   }, [activeUser]);
 
   console.log(chats);

@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 import {
   updateSenderInput,
+  updateChats,
   updateCurrentChat,
   updateCurrentCombinedId,
   updateChatHeaderInfo,
@@ -179,8 +180,22 @@ const Chat = () => {
     dispatch(updateSenderInput(''));
   };
 
+  const getChats = () => {
+    axios
+      .get('http://localhost:8080/api/chats/data', {
+        params: { activeUser },
+      })
+      .then((res) => {
+        dispatch(updateChats(Object.entries(res.data)));
+      })
+      .catch((err) => {
+        console.log(err, 'error when fetching chats');
+      });
+  };
+
   const backToMessages = () => {
     console.log('Go back to messages');
+    getChats();
     dispatch(updateSenderInput(''));
     dispatch(updateCurrentCombinedId(''));
     dispatch(updateChatHeaderInfo({ username: '', profilePicture: '' }));
