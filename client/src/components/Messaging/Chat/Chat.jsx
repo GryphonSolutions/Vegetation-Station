@@ -251,7 +251,7 @@ const Chat = () => {
             >
               {currentChat.messages !== undefined &&
                 currentChat.messages.map((data) => {
-                  return String(data.senderID) === String(activeUser.id) ? (
+                  return String(data.senderId) === String(activeUser.id) ? (
                     <View key={data.id} style={styles.sender}>
                       <Text style={styles.senderText}>{data.text}</Text>
                     </View>
