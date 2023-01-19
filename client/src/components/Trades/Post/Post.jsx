@@ -19,6 +19,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
 import styles from './StyleSheet';
 import plantData from '../../../../../server/data/plants.js';
+import catalog from '../../../../../server/data/catalog.js';
 
 const Post = () => {
   // is this a trade
@@ -39,6 +40,7 @@ const Post = () => {
   const [dropdownValue, setDropdownValue] = useState([]);
   const [dropdownItems, setDropdownItems] = useState([]);
 
+  const { currentPlant } = useSelector((state) => state.data);
   useEffect(() => {
     const plantNames = plantData.map((plant) => {
       return {
@@ -47,6 +49,7 @@ const Post = () => {
       };
     });
     setDropdownItems(plantNames);
+    console.log(currentPlant.images[0]);
   }, []);
 
   // page is still checking camera priveledges
@@ -95,7 +98,21 @@ const Post = () => {
       {!showCamera && (
         <ScrollView style={styles.container}>
           <View style={styles.container}>
-            <Text style={styles.title}>Post A Plant</Text>
+            {!catalog[0].isTraded ? (
+              <View>
+                <Text style={styles.title}>Propose A Trade</Text>
+                <Image
+                  source={{ uri: currentPlant.images[0] }}
+                  style={styles.imageContainer}
+                />
+                <Text style={styles.plantTitle}>
+                  Request: {currentPlant.preferredTrade}
+                </Text>
+                <Text style={styles.plantDesription}>Offer:</Text>
+              </View>
+            ) : (
+              <Text style={styles.title}>Post A Plant</Text>
+            )}
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
@@ -159,7 +176,6 @@ const Post = () => {
           </View>
         </ScrollView>
       )}
-      {}
       {
         // show camera
         showCamera && isFocused && (

@@ -79,4 +79,15 @@ export default StyleSheet.create({
     minHeight: '20%',
     maxHeight: '20%',
   },
+  plantTitle: {
+    fontSize: 25,
+    alignSelf: 'center',
+    flex: 1,
+    marginBottom: 10,
+  },
+  plantDesription: {
+    fontSize: 18,
+    alignSelf: 'center',
+    flex: 1,
+  },
 });
