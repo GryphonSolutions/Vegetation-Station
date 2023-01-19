@@ -125,7 +125,6 @@ const Login = () => {
                   login();
                 }}
               />
-              <Ionicons name="checkmark-done-circle-sharp" size="23px" />
             </View>
             <View style={styles.logSubmitContainer}>
               <Button

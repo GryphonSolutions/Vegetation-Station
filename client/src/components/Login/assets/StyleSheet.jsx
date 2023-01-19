@@ -47,7 +47,7 @@ export default StyleSheet.create({
 
   backButton: {
     border: '1px solid black',
-    color: 'white',
+    color: '#283618',
     alignSelf: 'start',
     float: 'left',
     margin: 5,
@@ -57,9 +57,10 @@ export default StyleSheet.create({
     fontSize: 33,
     fontWeight: '500',
     alignSelf: 'center',
+    color: '#283618',
     paddingTop: 50,
-    color: 'black',
     fontFamily: 'JosefinSans',
+    marginBottom: 53,
     // anonymous pro for emailand pass --NO
     // padding in login -- YES
     // font for button smaller --NO
@@ -78,10 +79,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: 'black',
-    backgroundColor: 'grey',
-    width: 100,
+    backgroundColor: '#dda15e',
+    width: 85,
     borderRadius: 7,
   },
   logSubmitContainer: {
@@ -93,6 +92,7 @@ export default StyleSheet.create({
     marginTop: 25,
     marginLeft: 12,
     fontFamily: 'JosefinSans',
+    width: 82.5,
     borderRadius: 7,
   },
 });
