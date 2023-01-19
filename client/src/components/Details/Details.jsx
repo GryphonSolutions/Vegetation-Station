@@ -29,7 +29,7 @@ const Details = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      <ScrollView scrollEnabled="true" style={{ marginHorizontal: '8%' }}>
+      <ScrollView style={{ marginHorizontal: '8%', flex: 1 }}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.plantPic}
