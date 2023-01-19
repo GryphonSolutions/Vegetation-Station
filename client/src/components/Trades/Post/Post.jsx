@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StatusBar, setStatusBarHidden } from 'expo-status-bar';
 import {
@@ -13,7 +13,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
-import { Camera, CameraType } from 'expo-camera';
+import { Camera, CameraType, takePictureAsync } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
@@ -24,11 +24,13 @@ const Post = () => {
   // is this a trade
   const [isTrade, setIsTrade] = useState(false);
   // hooks for camera
+  const [camera, setCamera] = useState(null);
   const [type, setType] = useState(CameraType.back); // set to back camera by default
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [showCamera, setShowCamera] = useState(false);
   const [image, setImage] = useState(null); // to access image from photo library
-  const isFocused = useIsFocused(); // this is to unmount camera when it is not in focus
+  const isFocused = useIsFocused(); // to unmount camera when it is not in focus
+  const photoRef = useRef(null); // to create reference to take a photo
   // hooks for form data
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -72,6 +74,12 @@ const Post = () => {
     );
   }
 
+  // take picture
+  const takePhoto = async () => {
+    const data = await camera.takePictureAsync(null);
+    setImage(data.uri);
+    console.log('THIS IS DATA IN TAKEPHOTO: ', data.uri);
+  };
   //  read and photo from library
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -158,7 +166,11 @@ const Post = () => {
         // show camera
         showCamera && isFocused && (
           <View style={styles.page}>
-            <Camera style={styles.camera} type={type}>
+            <Camera
+              style={styles.camera}
+              type={type}
+              ref={(ref) => setCamera(ref)}
+            >
               <View style={styles.buttonContainer}>
                 <TouchableOpacity
                   style={styles.buttonCamera}
@@ -168,6 +180,16 @@ const Post = () => {
                 >
                   <Text style={styles.text}>Flip Camera</Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.buttonCamera}
+                  onPress={() => {
+                    takePhoto();
+                  }}
+                >
+                  <Text style={styles.text}>Take picture</Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity
                   style={styles.buttonCamera}
                   onPress={() => {
