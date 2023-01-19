@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
 import {
   updateCurrentCombinedId,
+  updateCurrentChat,
   updateChatHeaderInfo,
   updateSearchMessages,
   updateUserMessageSearch,
@@ -35,6 +36,20 @@ const ChatList = ({ chat }) => {
     },
   });
 
+  const getMessages = (combinedId) => {
+    axios
+      .get('http://localhost:8080/api/messages/data', {
+        params: { combinedId },
+      })
+      .then((res) => {
+        console.log('MESSAGES DATA ', res.data);
+        dispatch(updateCurrentChat(res.data));
+      })
+      .catch((err) => {
+        console.log(err, 'error fetching messages');
+      });
+  };
+
   const navigateTo = (combinedId, username, profilePicture) => {
     console.log(combinedId);
     dispatch(updateSearchMessages(false));
@@ -43,6 +58,7 @@ const ChatList = ({ chat }) => {
     dispatch(updateCurrentCombinedId(combinedId));
     // pull chat data from collection chats based on the combinedId
     // update state for chats
+    getMessages(combinedId);
 
     RootNavigation.navigate('Chat');
   };

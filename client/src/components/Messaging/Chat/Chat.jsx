@@ -110,14 +110,14 @@ const Chat = () => {
     },
   });
 
-  const getMessages = () => {
+  const getMessages = (combinedId) => {
     axios
       .get('http://localhost:8080/api/messages/data', {
-        params: { combinedId: currentCombinedId },
+        params: { combinedId },
       })
       .then((res) => {
         console.log('MESSAGES DATA ', res.data);
-        updateCurrentChat(res.data);
+        dispatch(updateCurrentChat(res.data));
       })
       .catch((err) => {
         console.log(err, 'error fetching messages');
@@ -126,7 +126,10 @@ const Chat = () => {
 
   useEffect(() => {
     console.log('USE EFFECT');
-    getMessages();
+    console.log(currentCombinedId);
+    if (currentCombinedId !== '') {
+      getMessages(currentCombinedId);
+    }
   }, [activeUser]);
 
   const sendMessage = () => {
@@ -143,7 +146,7 @@ const Chat = () => {
       })
       .then((res) => {
         console.log(res);
-        getMessages();
+        getMessages(currentCombinedId);
       })
       .catch((err) => {
         console.log(err);
@@ -210,7 +213,6 @@ const Chat = () => {
 
   const scrollViewRef = useRef();
 
-  console.log('current chat ', currentChat);
   return (
     <SafeAreaView>
       <KeyboardAvoidingView
