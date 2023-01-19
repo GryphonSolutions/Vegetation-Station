@@ -28,7 +28,7 @@ import * as RootNavigation from '../../NavBar/navigation.js';
 
 const Chat = () => {
   const { isDarkMode } = useSelector((state) => state.app);
-  const { activeUser } = useSelector((state) => state.data);
+  const { activeUser, selectedUser } = useSelector((state) => state.data);
   const { senderInput, currentCombinedId, chatHeaderInfo, currentChat } =
     useSelector((state) => state.messages);
   const dispatch = useDispatch();
@@ -135,7 +135,7 @@ const Chat = () => {
     axios
       .patch('http://localhost:8080/api/messages/data', {
         params: {
-          senderId: activeUser.id,
+          senderId: String(activeUser.id),
           text: senderInput,
           combinedId: currentCombinedId,
         },
@@ -151,7 +151,7 @@ const Chat = () => {
     axios
       .patch('http://localhost:8080/api/chats/data', {
         params: {
-          id: activeUser.id,
+          id: String(activeUser.id),
           currentCombinedId,
           read: true,
           text: senderInput,
@@ -168,7 +168,7 @@ const Chat = () => {
     axios
       .patch('http://localhost:8080/api/chats/data', {
         params: {
-          id: '11347755',
+          id: String(selectedUser.id),
           currentCombinedId,
           read: false,
           text: senderInput,
@@ -187,7 +187,7 @@ const Chat = () => {
   const getChats = () => {
     axios
       .get('http://localhost:8080/api/chats/data', {
-        params: { activeUser: activeUser.id },
+        params: { activeUser: String(activeUser.id) },
       })
       .then((res) => {
         dispatch(updateChats(Object.entries(res.data)));
@@ -251,7 +251,7 @@ const Chat = () => {
             >
               {currentChat.messages !== undefined &&
                 currentChat.messages.map((data) => {
-                  return data.senderID === activeUser.id ? (
+                  return String(data.senderID) === String(activeUser.id) ? (
                     <View key={data.id} style={styles.sender}>
                       <Text style={styles.senderText}>{data.text}</Text>
                     </View>

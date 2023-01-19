@@ -22,14 +22,6 @@ module.exports.getFromMessagesDB = async (parameters) => {
   }
 };
 
-// const docRef = doc(db, 'chats', parameters);
-//   try {
-//     const data = await getDoc(docRef);
-//     return Promise.resolve(data.data());
-//   } catch (err) {
-//     console.error(err);
-//     return Promise.reject(err);
-
 module.exports.postToMessagesDB = async (parameters) => {
   const id = parameters;
   try {

@@ -53,24 +53,32 @@ const NewChatList = ({ user }) => {
       });
   };
 
+  const chatExists = (id) => {
+    let exists = false;
+    chats.forEach((chat) => {
+      if (chat[0] === id) {
+        exists = true;
+      }
+    });
+    return exists;
+  };
+
   const navigateTo = async (Id, username, profilePicture) => {
-    const activeUserId = activeUser.id;
-    const userId = Id.toString();
+    const activeUserId = String(activeUser.id);
+    const userId = String(Id);
     const combinedId =
       activeUserId > userId ? activeUserId + userId : userId + activeUserId;
 
     console.log(combinedId);
-
+    dispatch(updateSelectedUser(user));
     dispatch(updateCurrentCombinedId(combinedId));
     dispatch(updateChatHeaderInfo({ username, profilePicture }));
-    // search userChats to see if this combined exists in the currentUser's chats
-    //  if chat doesn't exist, create chat for both the sender and reciever
-    //  if chat does exist, grab the messages from the chat collection
-    if (!chats.combinedId) {
+
+    if (!chatExists(combinedId)) {
       axios
         .post('http://localhost:8080/api/chats/data', {
           params: {
-            id: activeUser.id,
+            id: String(activeUser.id),
             combinedId,
             userId: user.id,
             profilePicture: user.profilePicture,
@@ -88,8 +96,8 @@ const NewChatList = ({ user }) => {
           params: {
             id: user.id,
             combinedId,
-            userId: activeUser.id,
-            profilePicture: user.profilePicture,
+            userId: String(activeUser.id),
+            profilePicture: activeUser.profilePicture,
             username: activeUser.username,
           },
         })

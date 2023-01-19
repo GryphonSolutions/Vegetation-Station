@@ -12,6 +12,7 @@ import {
 } from '../../../reducers/messagesReducer.js';
 import { updateSelectedUser } from '../../../reducers/dataReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
+import testUsers from '../../../../../server/data/users.js';
 
 const ChatList = ({ chat }) => {
   const { activeUser, selectedUser } = useSelector((state) => state.data);
@@ -52,11 +53,22 @@ const ChatList = ({ chat }) => {
       });
   };
 
+  const getUserInfo = (username) => {
+    let userObj = {};
+    testUsers.forEach((user) => {
+      if (user.username === username) {
+        userObj = user;
+      }
+    });
+    return userObj;
+  };
+
   const navigateTo = (combinedId, username, profilePicture) => {
     console.log(combinedId);
     dispatch(updateSearchMessages(false));
     dispatch(updateUserMessageSearch(''));
     dispatch(updateChatHeaderInfo({ username, profilePicture }));
+    dispatch(updateSelectedUser(getUserInfo(username)));
     dispatch(updateCurrentCombinedId(combinedId));
     // pull chat data from collection chats based on the combinedId
     // update state for chats
