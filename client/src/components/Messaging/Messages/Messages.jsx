@@ -29,6 +29,7 @@ import {
   updateSearchMessages,
   updateUserMessageSearch,
   updateChats,
+  updateMessagesIntervalId,
 } from '../../../reducers/messagesReducer.js';
 import ChatList from './ChatList.jsx';
 import NewChatList from './NewChatList.jsx';
@@ -38,9 +39,8 @@ import testUsers from '../../../../../server/data/users.js';
 const Messages = () => {
   const { isDarkMode } = useSelector((state) => state.app);
   const { activeUser } = useSelector((state) => state.data);
-  const { searchMessages, userMessageSearch, chats } = useSelector(
-    (state) => state.messages,
-  );
+  const { searchMessages, userMessageSearch, chats, messagesIntervalId } =
+    useSelector((state) => state.messages);
   const dispatch = useDispatch();
 
   const getChats = () => {
@@ -52,7 +52,14 @@ const Messages = () => {
         },
       )
       .then((res) => {
-        dispatch(updateChats(Object.entries(res.data)));
+        // console.log('ORDERED IN MESSAGES');
+        dispatch(
+          updateChats(
+            Object.entries(res.data).sort(
+              (a, b) => b[1].date.seconds - a[1].date.seconds,
+            ),
+          ),
+        );
       })
       .catch((err) => {
         console.log(err, 'error when fetching chats');
@@ -63,46 +70,59 @@ const Messages = () => {
     getChats();
   }, [activeUser]);
 
-  console.log(chats);
-
   const styles = StyleSheet.create({
-    border: {
-      borderStyle: 'solid',
-      borderWidth: '2',
-      borderColor: 'red',
-    },
-    header: {
-      backgroundColor: '#fff',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderBottomColor: 'gray',
-      borderBottomStyles: 'solid',
-      borderBottomWidth: 1,
-    },
-    titleSearchCont: {
-      backgroundColor: '#fff',
+    headerContainer: {},
+    headerTextSearchButtonContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingLeft: 10,
-      paddingRight: 10,
-      alignSelf: 'stretch',
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      marginVertical: '5%',
     },
-    title: {
-      fontWeight: '800',
-      fontSize: 30,
+    headerText: {
+      fontFamily: 'AnonymousPro-Bold',
+      fontSize: 35,
+      letterSpacing: 1,
+      color: '#283618',
     },
-    search: {
-      alignSelf: 'stretch',
+    searchButtonContainer: {
+      right: 10,
+      top: -3,
+      position: 'absolute',
+      alignItems: 'flex-end',
+    },
+    searchButton: {
+      color: '#283618',
+    },
+    searchBarContainer: {},
+    searchBarInputContainerStyle: {},
+    searchText: {
+      fontFamily: 'JosefinSans',
+    },
+    contentContainer: {
+      marginHorizontal: '4%',
+    },
+    lobbyStatusMessage: {
+      fontFamily: 'JosefinSans',
+    },
+    lobbySectionHeader: {
+      fontFamily: 'JosefinSans',
+      marginTop: 10,
+      paddingVertical: 5,
+      alignSelf: 'center',
+      color: '#283618',
     },
   });
 
   const users = testUsers;
 
-  console.log('chats ', chats);
+  // console.log('chats ', chats);
+
   const searchResultsChats = chats.filter((chat) => {
-    if (chat[1].chattingWith.username.includes(userMessageSearch)) {
+    if (
+      chat[1].chattingWith.username
+        .toLowerCase()
+        .includes(userMessageSearch.toLowerCase())
+    ) {
       return true;
     }
     return false;
@@ -110,13 +130,13 @@ const Messages = () => {
   const checkFilterChatsLength = searchResultsChats.length > 0;
 
   const searchResultsUsers = users.filter((user) => {
-    console.log(
-      user.username,
-      activeUser.username,
-      user.username !== activeUser.username,
-    );
+    // console.log(
+    //   user.username,
+    //   activeUser.username,
+    //   user.username !== activeUser.username,
+    // );
     if (
-      user.username.includes(userMessageSearch) &&
+      user.username.toLowerCase().includes(userMessageSearch.toLowerCase()) &&
       user.username !== activeUser.username
     ) {
       return true;
@@ -130,95 +150,146 @@ const Messages = () => {
   };
 
   return (
-    <SafeAreaView>
-      <View style={styles.header}>
-        <View style={styles.titleSearchCont}>
-          <Text style={styles.title}>Messages</Text>
-          <TouchableOpacity
-            onPress={() => searchHandler(searchMessages)}
-            activeOpacity={0.5}
-          >
-            <Ionicons
-              name={
-                searchMessages
-                  ? 'close-circle-outline'
-                  : 'search-circle-outline'
-              }
-              size="40"
-              color={isDarkMode ? 'white' : 'black'}
-            />
-          </TouchableOpacity>
-        </View>
-        {searchMessages && (
-          <SearchBar
-            style={styles.search}
-            platform="ios"
-            placeholder="search users..."
-            value={userMessageSearch}
-            lightTheme={isDarkMode}
-            onChangeText={(newVal) => dispatch(updateUserMessageSearch(newVal))}
-            onCancel={() => dispatch(updateSearchMessages())}
-          />
-        )}
-      </View>
-      {!searchMessages && (
-        <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
-          {chats.length === 0 && (
-            <ListItem>
-              <ListItem.Content>
-                <ListItem.Title style={styles.name}>
-                  No current chats.
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
-          )}
-          {chats.length > 0 &&
-            chats.map((chat) => {
-              return <ChatList key={chat[0]} chat={chat} />;
-            })}
-        </ScrollView>
-      )}
-      {searchMessages && (
-        <KeyboardAvoidingView behavior="padding" style={{ marginBottom: 118 }}>
-          <View style={{ maxHeight: '50%' }}>
-            <Text>Start a New Conversation</Text>
-            <ScrollView>
-              {!checkUsersLength && (
-                <ListItem>
-                  <ListItem.Content>
-                    <ListItem.Title style={styles.name}>
-                      No users named {userMessageSearch}.
-                    </ListItem.Title>
-                  </ListItem.Content>
-                </ListItem>
-              )}
-              {checkUsersLength &&
-                searchResultsUsers.map((user) => {
-                  return <NewChatList key={user.username} user={user} />;
-                })}
-            </ScrollView>
+    <View
+      style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
+    >
+      <SafeAreaView
+        style={{
+          flex: 0,
+        }}
+      />
+      <View style={{ flex: 1 }}>
+        <View style={styles.headerContainer}>
+          <View style={styles.headerTextSearchButtonContainer}>
+            <Text style={styles.headerText}>Messages</Text>
+            <TouchableOpacity
+              style={styles.searchButtonContainer}
+              onPress={() => searchHandler(searchMessages)}
+              activeOpacity={0.5}
+            >
+              <Ionicons
+                style={styles.searchButton}
+                name={
+                  searchMessages
+                    ? 'close-circle-outline'
+                    : 'search-circle-outline'
+                }
+                size={40}
+                color={isDarkMode ? 'white' : 'black'}
+              />
+            </TouchableOpacity>
           </View>
-          <View style={{ height: '50%' }}>
-            <Text>Your Conversations</Text>
-            <ScrollView>
-              {!checkFilterChatsLength && (
-                <ListItem>
+          {searchMessages && (
+            <SearchBar
+              containerStyle={[
+                { backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' },
+                styles.searchBarContainer,
+              ]}
+              inputContainerStyle={[
+                { backgroundColor: isDarkMode ? '#656464' : '#d5dec6' },
+                styles.searchBarInputContainerStyle,
+              ]}
+              inputStyle={[
+                { color: isDarkMode ? '#f3e5dc' : '#224722' },
+                styles.searchText,
+              ]}
+              platform="ios"
+              placeholder="search users..."
+              value={userMessageSearch}
+              lightTheme={isDarkMode}
+              onChangeText={(newVal) => {
+                dispatch(updateUserMessageSearch(newVal));
+              }}
+              onCancel={() => dispatch(updateSearchMessages())}
+            />
+          )}
+        </View>
+        <View style={styles.contentContainer}>
+          {!searchMessages && (
+            <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
+              {chats.length === 0 && (
+                <ListItem
+                  containerStyle={{
+                    backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
+                  }}
+                  topDivider
+                  bottomDivider
+                >
                   <ListItem.Content>
-                    <ListItem.Title style={styles.name}>
-                      No chats with {userMessageSearch}.
+                    <ListItem.Title style={styles.lobbyStatusMessage}>
+                      No current chats.
                     </ListItem.Title>
                   </ListItem.Content>
                 </ListItem>
               )}
-              {checkFilterChatsLength &&
-                searchResultsChats.map((chat) => {
+              {chats.length > 0 &&
+                chats.map((chat) => {
                   return <ChatList key={chat[0]} chat={chat} />;
                 })}
             </ScrollView>
-          </View>
-        </KeyboardAvoidingView>
-      )}
-    </SafeAreaView>
+          )}
+          {searchMessages && (
+            <KeyboardAvoidingView
+              behavior="padding"
+              style={{ marginBottom: 118 }}
+            >
+              <View style={{ maxHeight: '50%' }}>
+                <Text style={styles.lobbySectionHeader}>
+                  Start a New Conversation
+                </Text>
+                <ScrollView>
+                  {!checkUsersLength && (
+                    <ListItem
+                      containerStyle={{
+                        backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
+                      }}
+                      topDivider
+                      bottomDivider
+                    >
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.lobbyStatusMessage}>
+                          No users named {userMessageSearch}.
+                        </ListItem.Title>
+                      </ListItem.Content>
+                    </ListItem>
+                  )}
+                  {checkUsersLength &&
+                    searchResultsUsers.map((user) => {
+                      return <NewChatList key={user.username} user={user} />;
+                    })}
+                </ScrollView>
+              </View>
+              <View style={{ height: '50%' }}>
+                <Text style={styles.lobbySectionHeader}>
+                  Your Conversations
+                </Text>
+                <ScrollView>
+                  {!checkFilterChatsLength && (
+                    <ListItem
+                      containerStyle={{
+                        backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
+                      }}
+                      topDivider
+                      bottomDivider
+                    >
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.lobbyStatusMessage}>
+                          No chats with {userMessageSearch}.
+                        </ListItem.Title>
+                      </ListItem.Content>
+                    </ListItem>
+                  )}
+                  {checkFilterChatsLength &&
+                    searchResultsChats.map((chat) => {
+                      return <ChatList key={chat[0]} chat={chat} />;
+                    })}
+                </ScrollView>
+              </View>
+            </KeyboardAvoidingView>
+          )}
+        </View>
+      </View>
+    </View>
   );
 };
 

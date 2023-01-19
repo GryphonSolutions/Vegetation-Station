@@ -22,14 +22,14 @@ import {
   updateChats,
   updateCurrentChat,
   updateCurrentCombinedId,
-  updateChatHeaderInfo,
+  updateChatIntervalId,
 } from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const Chat = () => {
   const { isDarkMode } = useSelector((state) => state.app);
   const { activeUser, selectedUser } = useSelector((state) => state.data);
-  const { senderInput, currentCombinedId, chatHeaderInfo, currentChat } =
+  const { senderInput, currentCombinedId, currentChat, chatIntervalId } =
     useSelector((state) => state.messages);
   const dispatch = useDispatch();
 
@@ -115,7 +115,7 @@ const Chat = () => {
         },
       )
       .then((res) => {
-        console.log('MESSAGES DATA ', res.data);
+        // console.log('MESSAGES DATA ', res.data);
         dispatch(updateCurrentChat(res.data));
       })
       .catch((err) => {
@@ -124,8 +124,8 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    console.log('USE EFFECT');
-    console.log(currentCombinedId);
+    // console.log('USE EFFECT');
+    // console.log(currentCombinedId);
     if (currentCombinedId !== '') {
       getMessages(currentCombinedId);
     }
@@ -133,7 +133,7 @@ const Chat = () => {
 
   const sendMessage = () => {
     Keyboard.dismiss();
-    console.log(senderInput);
+    // console.log(senderInput);
     // update messages
     axios
       .patch(
@@ -147,7 +147,7 @@ const Chat = () => {
         },
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         getMessages(currentCombinedId);
       })
       .catch((err) => {
@@ -167,7 +167,7 @@ const Chat = () => {
         },
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -187,7 +187,7 @@ const Chat = () => {
         },
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -205,7 +205,14 @@ const Chat = () => {
         },
       )
       .then((res) => {
-        dispatch(updateChats(Object.entries(res.data)));
+        // console.log('ORDERED IN CHATS');
+        dispatch(
+          updateChats(
+            Object.entries(res.data).sort(
+              (a, b) => b[1].date.seconds - a[1].date.seconds,
+            ),
+          ),
+        );
       })
       .catch((err) => {
         console.log(err, 'error when fetching chats');
@@ -213,11 +220,10 @@ const Chat = () => {
   };
 
   const backToMessages = () => {
-    console.log('Go back to messages');
+    // console.log('Go back to messages');
     getChats();
     dispatch(updateSenderInput(''));
     dispatch(updateCurrentCombinedId(''));
-    dispatch(updateChatHeaderInfo({ username: '', profilePicture: '' }));
     dispatch(updateCurrentChat({}));
     RootNavigation.navigate('Messages');
   };
@@ -244,10 +250,10 @@ const Chat = () => {
               rounded
               size="medium"
               source={{
-                uri: `${chatHeaderInfo.profilePicture}`,
+                uri: `${selectedUser.profilePicture}`,
               }}
             />
-            <Text style={{ fontSize: 20 }}>{chatHeaderInfo.username}</Text>
+            <Text style={{ fontSize: 20 }}>{selectedUser.username}</Text>
           </View>
           <Ionicons
             name="arrow-back-circle-outline"
@@ -266,7 +272,7 @@ const Chat = () => {
             >
               {currentChat.messages !== undefined &&
                 currentChat.messages.map((data) => {
-                  return String(data.senderID) === String(activeUser.id) ? (
+                  return String(data.senderId) === String(activeUser.id) ? (
                     <View key={data.id} style={styles.sender}>
                       <Text style={styles.senderText}>{data.text}</Text>
                     </View>
@@ -301,90 +307,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-// const messages = [
-//   {
-//     12: {
-//       messages: [
-//         { id: 1, text: 'hello', senderID: 2 },
-//         { id: 2, text: 'Can we trade plants?', senderID: 2 },
-//         { id: 3, text: "Possibly, what's your address?", senderID: 1 },
-//         { id: 4, text: "Whoa...let's meet at costco in LA", senderID: 2 },
-//         { id: 5, text: 'Nah', senderID: 1 },
-//         { id: 6, text: 'ight', senderID: 2 },
-//         { id: 7, text: 'Good luck with the next guy.', senderID: 1 },
-//       ],
-//     },
-//   },
-// ];
-
-// const messages = [
-//   {
-//     combinedId: 8962128089621281,
-//     messages: [
-//       {
-//         id: String(new Date().getTime()),
-//         text: 'mo are you seriously doing this right now?',
-//         senderID: 89621281,
-//         date: JSON.stringify(new Date()),
-//       },
-//       {
-//         id: String(new Date().getTime()),
-//         text: 'Are you trying to scam me?',
-//         senderID: 89621280,
-//         date: JSON.stringify(new Date()),
-//       },
-//     ],
-//   },
-//   {
-//     combinedId: 8962128089621282,
-//     messages: [
-//       {
-//         id: String(new Date().getTime()),
-//         text: 'Hold on I gotta do something',
-//         senderID: 89621280,
-//         date: JSON.stringify(new Date()),
-//       },
-//       {
-//         id: String(new Date().getTime()),
-//         text: 'Where did you go?',
-//         senderID: 89621282,
-//         date: JSON.stringify(new Date()),
-//       },
-//     ],
-//   },
-//   {
-//     combinedId: 8962128589621280,
-//     messages: [
-//       {
-//         id: String(new Date().getTime()),
-//         text: 'So, what do you think?',
-//         senderID: 89621285,
-//         date: JSON.stringify(new Date()),
-//       },
-//       {
-//         id: String(new Date().getTime()),
-//         text: "Your plant isn't even nice",
-//         senderID: 89621280,
-//         date: JSON.stringify(new Date()),
-//       },
-//     ],
-//   },
-//   {
-//     combinedId: 8962128189621286,
-//     messages: [
-//       {
-//         id: String(new Date().getTime()),
-//         text: 'Thoughts bro?',
-//         senderID: 89621281,
-//         date: JSON.stringify(new Date()),
-//       },
-//       {
-//         id: String(new Date().getTime()),
-//         text: 'Can I kill God with this plant?',
-//         senderID: 89621286,
-//         date: JSON.stringify(new Date()),
-//       },
-//     ],
-//   },
-// ];
