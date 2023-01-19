@@ -18,7 +18,7 @@ import * as ImagePicker from 'expo-image-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
 import styles from './StyleSheet';
-import plantData from './sampleData.js';
+import plantData from '../../../../../server/data/plants.js';
 
 const Post = () => {
   // is this a trade
@@ -42,12 +42,11 @@ const Post = () => {
   useEffect(() => {
     const plantNames = plantData.map((plant) => {
       return {
-        label: plant.latinName,
+        label: plant['Latin name'],
         value: plant,
       };
     });
     setDropdownItems(plantNames);
-    console.log(plantNames);
   }, []);
 
   // page is still checking camera priveledges
@@ -78,7 +77,6 @@ const Post = () => {
   const takePhoto = async () => {
     const data = await camera.takePictureAsync(null);
     setImage(data.uri);
-    console.log('THIS IS DATA IN TAKEPHOTO: ', data.uri);
   };
   //  read and photo from library
   const pickImage = async () => {
