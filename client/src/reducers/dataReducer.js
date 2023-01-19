@@ -1,39 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getCatalog, getOffers, getPlants, getUsers } from '../actions';
+import testCatalog from '../../../server/data/catalog.js';
+import testChatMessages from '../../../server/data/chatMessages.js';
+import testChats from '../../../server/data/chats.js';
+import testOffers from '../../../server/data/offers.js';
+import testPlants from '../../../server/data/plants.js';
+import testUsers from '../../../server/data/users.js';
 
 const initialState = {
-  activeUser: {
-    id: 1,
-    username: 'Matt',
-    profilePicture:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu9Phe4zkjG0oyvuH5rGMSl1vpKHyXzqquqg&usqp=CAU',
-    tradeCount: 12,
-    location: {
-      city: 'Long Beach',
-      state: 'CA',
-      longitude: 33.7701,
-      latitude: 118.1937,
-      zip: 90712,
-    },
-  },
-  selectedUser: {
-    id: 1,
-    username: 'Matt',
-    profilePicture:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu9Phe4zkjG0oyvuH5rGMSl1vpKHyXzqquqg&usqp=CAU',
-    tradeCount: 12,
-    location: {
-      city: 'Long Beach',
-      state: 'CA',
-      longitude: -118.75845,
-      latitude: 34.139713,
-      zip: 90712,
-    },
-  },
-  catalog: [],
-  offers: [],
-  plants: [],
-  users: [],
+  activeUser: testUsers[0],
+  selectedUser: testUsers[1],
+  currentOffers: (testOffers.filter((item) => {
+    return item.buyer.id === testUsers[0].id || item.seller.id === testUsers[0].id;
+  })),
+  catalog: testCatalog,
+  offers: testOffers,
+  plants: testPlants,
+  users: testUsers,
+  chatMessages: testChatMessages,
+  chats: testChats,
 };
 
 const dataSlice = createSlice({

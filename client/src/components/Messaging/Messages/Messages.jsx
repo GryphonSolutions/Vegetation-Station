@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import {
@@ -21,7 +22,7 @@ import ChatList from './ChatList.jsx';
 import NewChatList from './NewChatList.jsx';
 
 const Messages = () => {
-  const { isDarkMode } = useSelector((state) => state.app);
+  const { isDarkMode, users } = useSelector((state) => state.app);
   const { searchMessages, userMessageSearch } = useSelector(
     (state) => state.messages,
   );
@@ -198,21 +199,28 @@ const Messages = () => {
     }
     return false;
   });
-  const check = searchResultsUsers.length !== 0;
+  const checkUsersLength = searchResultsUsers.length !== 0;
+  const checkChatsLength = searchResultsChats.length !== 0;
 
   return (
     <SafeAreaView>
       <View style={styles.header}>
         <View style={styles.titleSearchCont}>
           <Text style={styles.title}>Messages</Text>
-          <Ionicons
-            name={
-              searchMessages ? 'close-circle-outline' : 'search-circle-outline'
-            }
-            size="40"
-            color={isDarkMode ? 'white' : 'black'}
+          <TouchableOpacity
             onPress={() => dispatch(updateSearchMessages())}
-          />
+            activeOpacity={0.5}
+          >
+            <Ionicons
+              name={
+                searchMessages
+                  ? 'close-circle-outline'
+                  : 'search-circle-outline'
+              }
+              size="40"
+              color={isDarkMode ? 'white' : 'black'}
+            />
+          </TouchableOpacity>
         </View>
         {searchMessages && (
           <SearchBar
@@ -238,16 +246,16 @@ const Messages = () => {
           <View style={{ maxHeight: '50%' }}>
             <Text>Start a New Conversation</Text>
             <ScrollView>
-              {!check && (
+              {!checkUsersLength && (
                 <ListItem>
                   <ListItem.Content>
                     <ListItem.Title style={styles.name}>
-                      No Users Found.
+                      No users named {userMessageSearch}.
                     </ListItem.Title>
                   </ListItem.Content>
                 </ListItem>
               )}
-              {check &&
+              {checkUsersLength &&
                 searchResultsUsers.map((chat) => {
                   return <NewChatList key={chat.id} chat={chat} />;
                 })}
@@ -256,9 +264,19 @@ const Messages = () => {
           <View style={{ height: '50%' }}>
             <Text>Your Conversations</Text>
             <ScrollView>
-              {searchResultsChats.map((chat) => {
-                return <ChatList key={chat[0]} chat={chat} />;
-              })}
+              {!checkChatsLength && (
+                <ListItem>
+                  <ListItem.Content>
+                    <ListItem.Title style={styles.name}>
+                      No chats with {userMessageSearch}.
+                    </ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+              )}
+              {checkChatsLength &&
+                searchResultsChats.map((chat) => {
+                  return <ChatList key={chat[0]} chat={chat} />;
+                })}
             </ScrollView>
           </View>
         </KeyboardAvoidingView>
