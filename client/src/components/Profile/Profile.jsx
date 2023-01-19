@@ -60,7 +60,9 @@ const Profile = ({ navigation }) => {
         return post.id === item.seller.listing;
       });
     }
-    return target[0] ? target[0].images[0] : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTii1mJuz9Iuq_q7QJdqtNjxptTCWS1q6di8A&usqp=CAU';
+    return target[0]
+      ? target[0].images[0]
+      : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTii1mJuz9Iuq_q7QJdqtNjxptTCWS1q6di8A&usqp=CAU';
   };
 
   const renderRow = (index, item1, item2, item3) => {
@@ -96,19 +98,27 @@ const Profile = ({ navigation }) => {
   const renderBody = () => {
     return (
       <View>
-        <View style={styles.accountInfo}>
-          <Image style={styles.profile} source={{ uri: profilePicture }} />
-          <View style={styles.details}>
-            <Text style={styles.name}>{username}</Text>
-            <Text style={styles.location}>
+        <View style={styles.accountInfoContainer}>
+          <View style={styles.profilePictureContainer}>
+            <Image
+              style={styles.profilePicture}
+              source={{ uri: profilePicture }}
+            />
+          </View>
+          <View style={styles.profileDetailsContainer}>
+            <Text style={[styles.profileDetailsText, styles.username]}>
+              {username}
+            </Text>
+            <Text style={[styles.profileDetailsText, styles.userLocation]}>
               {`${location?.city}, ${location?.state}`}
             </Text>
-            <Text style={styles.trades}>
+            <Text style={[styles.profileDetailsText, styles.userTrades]}>
               {tradeCount > 10 ? (
                 <Ionicons style={styles.starIcon} size="15px" name="md-star" />
               ) : null}
               {`${tradeCount} Trades`}
             </Text>
+
             {username === activeUser.username ? (
               <TouchableOpacity style={styles.button} onPress={signOut}>
                 <Text style={styles.buttonText}>Sign Out</Text>
@@ -144,16 +154,17 @@ const Profile = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#606C38' }}>
+    <View
+      style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
+    >
+      <SafeAreaView style={{ flex: 0 }} />
+      <View style={{ flex: 1 }}>
         <View style={styles.headerContainer}>
-          {activeUser.username === username ? (
-            null
-          ) : (
+          {activeUser.username === username ? null : (
             <Ionicons
               style={styles.backButton}
               name="arrow-undo"
-              size="25px"
+              size={30}
               onPress={() => navigation.navigate('Details')}
             />
           )}
@@ -164,13 +175,13 @@ const Profile = ({ navigation }) => {
             <Text style={styles.headerText}>Profile</Text>
           )}
         </View>
-        <View style={styles.itemsContainer}>
+        <View style={styles.contentContainer}>
           <SectionList
             sections={[{ data: [1] }]}
             renderItem={({ item }) => renderBody()}
           />
         </View>
-      </SafeAreaView>
+      </View>
     </View>
   );
 };

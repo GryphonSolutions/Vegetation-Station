@@ -1,11 +1,21 @@
 import React from 'react';
+import axios from 'axios';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
-import { updateCurrentChat } from '../../../reducers/messagesReducer.js';
+import {
+  updateCurrentCombinedId,
+  updateCurrentChat,
+  updateChatHeaderInfo,
+  updateSearchMessages,
+  updateUserMessageSearch,
+} from '../../../reducers/messagesReducer.js';
+import { updateSelectedUser } from '../../../reducers/dataReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
-const NewChatList = ({ chat }) => {
+const NewChatList = ({ user }) => {
+  const { activeUser, selectedUser } = useSelector((state) => state.data);
+  const { chats } = useSelector((state) => state.messages);
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
@@ -29,29 +39,107 @@ const NewChatList = ({ chat }) => {
     },
   });
 
-  const navigateTo = (name) => {
-    console.log(name);
-    dispatch(updateCurrentChat(name));
+  const getMessages = (combinedId) => {
+    axios
+      .get('http://localhost:8080/api/messages/data', {
+        params: { combinedId },
+      })
+      .then((res) => {
+        console.log('MESSAGES DATA ', res.data);
+        dispatch(updateCurrentChat(res.data));
+      })
+      .catch((err) => {
+        console.log(err, 'error fetching messages');
+      });
+  };
+
+  const chatExists = (id) => {
+    let exists = false;
+    chats.forEach((chat) => {
+      if (chat[0] === id) {
+        exists = true;
+      }
+    });
+    return exists;
+  };
+
+  const navigateTo = async (Id, username, profilePicture) => {
+    const activeUserId = String(activeUser.id);
+    const userId = String(Id);
+    const combinedId =
+      activeUserId > userId ? activeUserId + userId : userId + activeUserId;
+
+    console.log(combinedId);
+    dispatch(updateSelectedUser(user));
+    dispatch(updateCurrentCombinedId(combinedId));
+    dispatch(updateChatHeaderInfo({ username, profilePicture }));
+
+    if (!chatExists(combinedId)) {
+      axios
+        .post('http://localhost:8080/api/chats/data', {
+          params: {
+            id: String(activeUser.id),
+            combinedId,
+            userId: user.id,
+            profilePicture: user.profilePicture,
+            username: user.username,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      axios
+        .post('http://localhost:8080/api/chats/data', {
+          params: {
+            id: user.id,
+            combinedId,
+            userId: String(activeUser.id),
+            profilePicture: activeUser.profilePicture,
+            username: activeUser.username,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      axios
+        .post('http://localhost:8080/api/messages/data', {
+          params: {
+            combinedId,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log('error creating chatMessages ', err));
+    }
+
+    getMessages(combinedId);
+    dispatch(updateSearchMessages(false));
+    dispatch(updateUserMessageSearch(''));
     RootNavigation.navigate('Chat');
-    // search userChats to see if this combined exists in the currentUser's chats
-    //  if chat doesn't exist, create chat for both the sender and reciever
-    //  if chat does exist, grab the messages from the chat collection
   };
 
   return (
     <ListItem
       onPress={() => {
-        navigateTo(chat.userName);
+        navigateTo(user.id, user.username, user.profilePicture);
+        dispatch(updateSelectedUser(user));
       }}
     >
       <Avatar
         rounded
         source={{
-          uri: 'https://media.istockphoto.com/id/1214428300/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=vftMdLhldDx9houN4V-g3C9k0xl6YeBcoB_Rk6Trce0=',
+          uri: `${user.profilePicture}`,
         }}
       />
       <ListItem.Content>
-        <ListItem.Title style={styles.name}>{chat.userName}</ListItem.Title>
+        <ListItem.Title style={styles.name}>{user.username}</ListItem.Title>
       </ListItem.Content>
     </ListItem>
   );
