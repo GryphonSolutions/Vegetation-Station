@@ -65,25 +65,25 @@ const Profile = ({ navigation }) => {
 
   const renderRow = (index, item1, item2, item3) => {
     return (
-      <View style={styles.body}>
-        <View key={`View ${index}`} style={styles.row}>
+      <View key={`Row ${index}`} style={styles.body}>
+        <View style={styles.row}>
           {item1 ? (
             <Image
-              key={index}
+              key={`View ${index}`}
               style={styles.col}
               source={{ uri: findPhoto(item1) }}
             />
           ) : null}
           {item2 ? (
             <Image
-              key={index + 1}
+              key={`View ${index + 1}`}
               style={styles.col}
               source={{ uri: findPhoto(item2) }}
             />
           ) : null}
           {item3 ? (
             <Image
-              key={index + 2}
+              key={`View ${index + 2}`}
               style={styles.col}
               source={{ uri: findPhoto(item3) }}
             />

@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../../actions';
 import styles from './assets/StyleSheet.jsx';
-import testData from './testData.js';
 
 const Offers = ({ navigation }) => {
   const { activeUser, selectedUser, users, catalog, currentOffers } =
