@@ -11,24 +11,68 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import axios from 'axios';
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 import Registration from './Registration.jsx';
 import styles from './assets/StyleSheet.jsx';
+import { auth } from '../../../../server/database/firebase.js';
+import { updateActiveUser } from '../../reducers';
+import { navigate } from '../NavBar/navigation.js';
+import { logout } from './authLogout.js';
 
 const Login = () => {
   const [registration, setRegistration] = useState(false);
 
   const [userInfo, setUserInfo] = useState({});
-  const [registerUser, setRegisterUser] = useState({ email: '', password: '' });
+  const [currUser, setCurrUser] = useState({});
 
-  const login = async () => {};
+  const dispatch = useDispatch();
 
-  const logout = async () => {};
+  onAuthStateChanged(auth, (currentUser) => {
+    setCurrUser(currentUser);
+  });
 
-  const loginHandler = () => {};
+  const getOneAndSetOne = (userEmail) => {
+    axios
+      .get(`http://localhost:8080/api/users/info/${userEmail}`)
+      .then((res) => {
+        dispatch(updateActiveUser(res.data));
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  };
+
+  const login = async () => {
+    try {
+      const user = await signInWithEmailAndPassword(
+        auth,
+        userInfo.email,
+        userInfo.password,
+      )
+        .then((res) => {
+          console.log(res);
+          getOneAndSetOne(res.user.email.split('@')[0]);
+          navigate('Home');
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
   return registration ? (
-    <Registration setRegistration={setRegistration} />
+    <Registration
+      setRegistration={setRegistration}
+      getOneAndSetOne={getOneAndSetOne}
+    />
   ) : (
     <SafeAreaView style={styles.container}>
       <View>
@@ -42,6 +86,9 @@ const Login = () => {
           <TextInput
             placeholder="Enter your email..."
             style={styles.loginInputs}
+            onChangeText={(text) => {
+              setUserInfo(userInfo, (userInfo.email = text));
+            }}
           />
           <View>
             <Text style={styles.registerLabels}>Password</Text>
@@ -49,11 +96,22 @@ const Login = () => {
           <TextInput
             placeholder="Enter password..."
             style={styles.loginInputs}
+            secureTextEntry
+            onChangeText={(text) => {
+              setUserInfo(userInfo, (userInfo.password = text));
+            }}
           />
         </View>
         <View style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}>
           <View style={styles.logSubmitContainer}>
-            <Button style={styles.regButton} color="black" title="Login" />
+            <Button
+              style={styles.regButton}
+              color="black"
+              title="Login"
+              onPress={() => {
+                login();
+              }}
+            />
             <Ionicons name="checkmark-done-circle-sharp" size="23px" />
           </View>
           <View style={styles.logSubmitContainer}>
@@ -63,6 +121,17 @@ const Login = () => {
               title="Register"
               onPress={() => {
                 setRegistration(true);
+              }}
+            />
+          </View>
+          <View style={styles.logSubmitContainer}>
+            <Button
+              style={styles.regButton}
+              color="black"
+              title="Logout"
+              onPress={() => {
+                logout();
+                dispatch(updateActiveUser({}));
               }}
             />
           </View>

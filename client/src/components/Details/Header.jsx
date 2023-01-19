@@ -1,9 +1,15 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useDispatch, useSelector } from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { persistor } from '../../store';
+import * as navigation from '../NavBar/navigation';
 import styles from './assets/StyleSheet';
+
+const returnHome = () => {
+  persistor.purge();
+  navigation.navigate('Home');
+};
 
 const Header = () => {
   return (
@@ -12,7 +18,7 @@ const Header = () => {
         style={styles.backButton}
         name="arrow-undo"
         size="25px"
-        // onPress={() => navigation.navigate('Details')}
+        onPress={() => returnHome()}
       />
       <View style={{ flex: 1 }}>
         <Text style={styles.headerText}>Item Information</Text>
