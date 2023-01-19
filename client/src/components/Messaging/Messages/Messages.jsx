@@ -184,9 +184,9 @@ const Messages = () => {
               placeholder="search users..."
               value={userMessageSearch}
               lightTheme={isDarkMode}
-              onChangeText={(newVal) =>
-                dispatch(updateUserMessageSearch(newVal))
-              }
+              onChangeText={(newVal) => {
+                dispatch(updateUserMessageSearch(newVal));
+              }}
               onCancel={() => dispatch(updateSearchMessages())}
             />
           )}
