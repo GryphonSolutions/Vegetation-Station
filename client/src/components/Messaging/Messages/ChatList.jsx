@@ -15,6 +15,7 @@ import * as RootNavigation from '../../NavBar/navigation.js';
 import testUsers from '../../../../../server/data/users.js';
 
 const ChatList = ({ chat }) => {
+  const { isDarkMode } = useSelector((state) => state.app);
   const { activeUser, selectedUser } = useSelector((state) => state.data);
   const dispatch = useDispatch();
 
@@ -25,17 +26,21 @@ const ChatList = ({ chat }) => {
       borderColor: 'red',
     },
     name: {
-      fontWeight: '800',
+      fontFamilt: 'JosefinSans-Bold',
     },
     time: {
-      fontWeight: '700',
+      fontFamily: 'JosefinSans-Light',
       color: 'gray',
+      fontSize: '85%',
     },
     titleCont: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignSelf: 'stretch',
       marginBottom: 5,
+    },
+    chatItemText: {
+      fontFamily: 'JosefinSans',
     },
   });
 
@@ -78,6 +83,10 @@ const ChatList = ({ chat }) => {
 
   return (
     <ListItem
+      containerStyle={{
+        backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
+      }}
+      bottomDivider
       onPress={() => {
         navigateTo(
           chat[0],
@@ -94,14 +103,24 @@ const ChatList = ({ chat }) => {
       />
       <ListItem.Content>
         <View style={styles.titleCont}>
-          <ListItem.Title style={styles.name}>
+          <ListItem.Title
+            style={[
+              styles.chatItemText,
+              styles.name,
+              { color: isDarkMode ? '#d39b52' : '#283618' },
+            ]}
+          >
             {chat[1].chattingWith.username}
           </ListItem.Title>
           <ListItem.Title style={styles.time}>
             {formatDistanceToNow(new Date(chat[1].date.seconds * 1000))}
           </ListItem.Title>
         </View>
-        <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
+        <ListItem.Subtitle
+          style={styles.chatItemText}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
           {chat[1].lastMessage}
         </ListItem.Subtitle>
       </ListItem.Content>

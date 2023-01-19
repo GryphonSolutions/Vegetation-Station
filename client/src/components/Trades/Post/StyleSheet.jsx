@@ -1,16 +1,23 @@
-import { StyleSheet, StatusBar } from 'react-native';
+// mine
+import { StyleSheet, StatusBar, PixelRatio, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const imageWidth = (screenWidth - 30) / 3.5;
 
 export default StyleSheet.create({
   page: {
-    backgroundColor: '#FEFAE0',
     flex: 1,
   },
   container: {
     paddingTop: 20,
   },
   title: {
-    fontSize: 30,
-    alignSelf: 'center',
+    fontFamily: 'AnonymousPro-Bold',
+    fontSize: 35,
+    letterSpacing: 1,
+    color: '#283618',
+    paddingHorizontal: '8%',
+    textAlign: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -28,11 +35,13 @@ export default StyleSheet.create({
   buttonText: {
     fontSize: 20,
     alignSelf: 'center',
+    fontFamily: 'JosefinSans',
   },
   text: {
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
+    fontFamily: 'JosefinSans',
   },
   // ----Camera and image---------------------------------
   camera: {
@@ -53,30 +62,52 @@ export default StyleSheet.create({
     alignSelf: 'center',
     borderWidth: 2,
     borderColor: 'black',
-    padding: 10,
+    margin: 25,
   },
   // ----INPUT---------------------------------
   input: {
-    borderWidth: 1,
     alignSelf: 'center',
     width: '65%',
-    height: '5%',
-    marginBottom: 10,
     flex: 1,
+    fontSize: 20,
+    fontFamily: 'JosefinSans',
+    padding: 10,
+    marginRight: 8,
+    color: '#224722',
+    backgroundColor: '#d5dec6',
+    borderRadius: imageWidth / 15,
   },
   inputLabel: {
     fontSize: 20,
     marginLeft: '17%',
     flex: 1,
+    fontFamily: 'JosefinSans',
   },
   inputDescription: {
-    borderWidth: 1,
     alignSelf: 'center',
     width: '65%',
-    height: 100,
-    marginBottom: 10,
-    // flex: 1,
     minHeight: '20%',
     maxHeight: '20%',
+    flex: 1,
+    fontSize: 20,
+    fontFamily: 'JosefinSans',
+    padding: 10,
+    marginRight: 8,
+    color: '#224722',
+    backgroundColor: '#d5dec6',
+    borderRadius: imageWidth / 15,
+  },
+  plantTitle: {
+    fontSize: 25,
+    alignSelf: 'center',
+    flex: 1,
+    marginBottom: 10,
+    fontFamily: 'JosefinSans',
+  },
+  plantDesription: {
+    fontSize: 18,
+    alignSelf: 'center',
+    flex: 1,
+    fontFamily: 'JosefinSans',
   },
 });

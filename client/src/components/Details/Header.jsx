@@ -13,7 +13,6 @@ const Header = () => {
   const { selectedUser, activeUser } = useSelector((state) => state.data);
   const returnHome = () => {
     persistor.purge();
-    dispatch(updateSelectedUser(activeUser));
     navigation.navigate('Home');
   };
   return (
