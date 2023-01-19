@@ -12,17 +12,17 @@ export default StyleSheet.create({
     marginVertical: '5%',
   },
 
-  backButton: {
-    position: 'absolute',
-    color: '#283618',
-    left: 10,
-  },
-
   headerText: {
     fontFamily: 'AnonymousPro-Bold',
     fontSize: 35,
     letterSpacing: 1,
     color: '#283618',
+  },
+
+  backButton: {
+    position: 'absolute',
+    color: '#283618',
+    left: 10,
   },
 
   contentContainer: {

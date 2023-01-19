@@ -49,6 +49,8 @@ const NavBar = () => {
     AnonymousPro: require('../../assets/fonts/AnonymousPro-Regular.ttf'),
     'AnonymousPro-Bold': require('../../assets/fonts/AnonymousPro-Bold.ttf'),
     JosefinSans: require('../../assets/fonts/JosefinSans-Regular.ttf'),
+    'JosefinSans-Light': require('../../assets/fonts/JosefinSans-Light.ttf'),
+    'JosefinSans-Bold': require('../../assets/fonts/JosefinSans-Bold.ttf'),
   });
   const { isDarkMode } = useSelector((state) => state.app);
 

@@ -14,6 +14,7 @@ import { updateSelectedUser } from '../../../reducers/dataReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const NewChatList = ({ user }) => {
+  const { isDarkMode } = useSelector((state) => state.app);
   const { activeUser, selectedUser } = useSelector((state) => state.data);
   const { chats } = useSelector((state) => state.messages);
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const NewChatList = ({ user }) => {
       borderColor: 'red',
     },
     name: {
+      fontFamily: 'JosefinSans-Bold',
       fontWeight: '800',
     },
     time: {
@@ -127,6 +129,12 @@ const NewChatList = ({ user }) => {
 
   return (
     <ListItem
+      containerStyle={{
+        backgroundColor: isDarkMode ? '#656464' : '#e4e9dc',
+        marginVertical: 2,
+        borderRadius: '8%',
+      }}
+      // bottomDivider
       onPress={() => {
         navigateTo(user.id, user.username, user.profilePicture);
         dispatch(updateSelectedUser(user));
