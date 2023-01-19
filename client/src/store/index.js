@@ -12,6 +12,7 @@ import {
   messagesReducer,
   dataReducer,
   homeReducer,
+  usersReducer,
 } from '../reducers';
 
 const persistAppConfig = {
@@ -33,6 +34,7 @@ const store = configureStore({
     messages: messagesReducer,
     data: persistedData,
     home: homeReducer,
+    user: usersReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({

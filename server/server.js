@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const fs = require('fs');
 const {
   catalogRouter,
+  chatsRouter,
   messagesRouter,
   offersRouter,
   plantsRouter,
@@ -23,6 +24,7 @@ app.use(express.json());
 // Routers
 app.use('/api/catalog', catalogRouter);
 app.use('/api/messages', messagesRouter);
+app.use('/api/chats', chatsRouter);
 app.use('/api/offers', offersRouter);
 app.use('/api/plants', plantsRouter);
 app.use('/api/users', usersRouter);

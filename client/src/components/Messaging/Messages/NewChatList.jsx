@@ -1,8 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
+import { updateCurrentChat } from '../../../reducers/messagesReducer.js';
+import * as RootNavigation from '../../NavBar/navigation.js';
 
 const NewChatList = ({ chat }) => {
+  const dispatch = useDispatch();
+
   const styles = StyleSheet.create({
     border: {
       borderStyle: 'solid',
@@ -24,8 +29,21 @@ const NewChatList = ({ chat }) => {
     },
   });
 
+  const navigateTo = (name) => {
+    console.log(name);
+    dispatch(updateCurrentChat(name));
+    RootNavigation.navigate('Chat');
+    // search userChats to see if this combined exists in the currentUser's chats
+    //  if chat doesn't exist, create chat for both the sender and reciever
+    //  if chat does exist, grab the messages from the chat collection
+  };
+
   return (
-    <ListItem>
+    <ListItem
+      onPress={() => {
+        navigateTo(chat.userName);
+      }}
+    >
       <Avatar
         rounded
         source={{

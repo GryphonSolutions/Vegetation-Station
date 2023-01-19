@@ -17,6 +17,7 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 import axios from 'axios';
+import { updateUserRegistration } from '../../reducers/usersReducer.js';
 import { auth } from '../../../../server/database/firebase.js';
 import styles from './assets/StyleSheet.jsx';
 
@@ -30,46 +31,57 @@ const config = {
 };
 
 const Registration = ({ setRegistration }) => {
-  const getLatLong = () => {
-    axios
-      .get('https://api.radar.io/v1/search/autocomplete?query=91301', config)
-      .then((res) => {
-        console.log(res.data.addresses[0]);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  };
+  // const { userRegistration } = useSelector((state) => state.user);
+  // const dispatch = useDispatch();
+  const [userReg, setUserReg] = useState({});
+  const [radarQuery, setRadarQuery] = useState(0);
 
-  const register = async () => {
+  const register = async (locationDeets) => {
     try {
       const user = await createUserWithEmailAndPassword(
         auth,
-        'BlakeGriffin@gmail.com',
-        '1234567',
+        userReg.email,
+        userReg.password,
       );
       axios
         .post('http://localhost:8080/api/users/info', {
-          location: {
-            city: 'Agoura Hills',
-            latitude: 34.139713,
-            longitude: -118.75845,
-            state: 'California',
-            zip: 91301,
-          },
-          profilePicture:
-            'https://movietvtechgeeks.com/wp-content/uploads/2016/06/blake-griffin-reveals-nba-forced-him-to-jump-over-a-kia-optima-2016-images-e1465467645690.png',
-          username: 'BlakeGriffin',
+          location: locationDeets,
+          profilePicture: userReg.profilePicture,
+          username: userReg.email.split('@')[0],
         })
         .then((res) => {
           console.log(res);
         })
         .catch((err) => {
-          console.log(err.message);
+          console.error(err.message);
         });
     } catch (err) {
       console.error(err.message);
     }
+  };
+  const getLatLong = () => {
+    axios
+      .get(
+        `https://api.radar.io/v1/search/autocomplete?query=${radarQuery}`,
+        config,
+      )
+      .then((res) => {
+        const locationDetails = {
+          city: res.data.addresses[0].city,
+          latitude: res.data.addresses[0].latitude,
+          longitude: res.data.addresses[0].longitude,
+          state: res.data.addresses[0].state,
+          zip: Number(res.data.addresses[0].postalCode),
+        };
+        return locationDetails;
+      })
+      .then((res) => {
+        register(res);
+        setRegistration(false);
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
   };
 
   return (
@@ -95,6 +107,9 @@ const Registration = ({ setRegistration }) => {
           <TextInput
             placeholder="Enter your email..."
             style={styles.loginInputs}
+            onChangeText={(e) => {
+              setUserReg(userReg, (userReg.email = e));
+            }}
           />
           <View>
             <Text style={styles.registerLabels}>Password</Text>
@@ -102,6 +117,10 @@ const Registration = ({ setRegistration }) => {
           <TextInput
             placeholder="Enter password..."
             style={styles.loginInputs}
+            secureTextEntry
+            onChangeText={(e) => {
+              setUserReg(userReg, (userReg.password = e));
+            }}
           />
           <View>
             <Text style={styles.registerLabels}>Zipcode</Text>
@@ -109,6 +128,9 @@ const Registration = ({ setRegistration }) => {
           <TextInput
             placeholder="Enter your zipcode..."
             style={styles.loginInputs}
+            onChangeText={(zip) => {
+              setRadarQuery(zip);
+            }}
           />
           <View>
             <Text style={styles.registerLabels}>Profile Picture</Text>
@@ -116,6 +138,9 @@ const Registration = ({ setRegistration }) => {
           <TextInput
             placeholder="Enter your profile picture Url..."
             style={styles.loginInputs}
+            onChangeText={(e) => {
+              setUserReg(userReg, (userReg.profilePicture = e));
+            }}
           />
         </View>
         <View style={{ alignItems: 'center' }}>
@@ -125,7 +150,7 @@ const Registration = ({ setRegistration }) => {
               color="black"
               title="Submit"
               onPress={() => {
-                register();
+                getLatLong();
               }}
             />
             <Ionicons name="checkmark-done-circle-sharp" size="23px" />

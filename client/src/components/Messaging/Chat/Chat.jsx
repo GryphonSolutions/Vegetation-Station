@@ -16,9 +16,13 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { updateSenderInput } from '../../../reducers/messagesReducer.js';
+import * as RootNavigation from '../../NavBar/navigation.js';
 
-const Chat = ({ navigation }) => {
+const Chat = () => {
   const { isDarkMode } = useSelector((state) => state.app);
+  const { senderInput, currentChat } = useSelector((state) => state.messages);
+  const dispatch = useDispatch();
   const [input, setInput] = useState('');
 
   const styles = StyleSheet.create({
@@ -65,7 +69,7 @@ const Chat = ({ navigation }) => {
       backgroundColor: '#ECECEC',
       alignSelf: 'flex-start',
       borderRadius: 20,
-      marginRight: 15,
+      marginLeft: 10,
       marginBottom: 10,
       maxWidth: '80%',
       position: 'relative',
@@ -73,14 +77,15 @@ const Chat = ({ navigation }) => {
     recieverText: {
       color: 'black',
       fontWeight: '500',
-      marginLeft: 10,
+      marginLeft: 0,
+      marginRight: 0,
     },
     sender: {
       padding: 10,
       backgroundColor: '#2B68E6',
       alignSelf: 'flex-end',
       borderRadius: 20,
-      marginRight: 15,
+      marginRight: 10,
       marginBottom: 10,
       maxWidth: '80%',
       position: 'relative',
@@ -88,19 +93,21 @@ const Chat = ({ navigation }) => {
     senderText: {
       color: 'white',
       fontWeight: '500',
-      marginLeft: 10,
+      marginRight: 0,
+      marginLeft: 0,
     },
   });
 
   const sendMessage = () => {
     Keyboard.dismiss();
-    console.log(input);
+    console.log(senderInput);
     // update database
-    setInput('');
+    dispatch(updateSenderInput(''));
   };
 
   const backToMessages = () => {
     console.log('Go back to messages');
+    RootNavigation.navigate('Messages');
   };
 
   const messages = [
@@ -164,7 +171,7 @@ const Chat = ({ navigation }) => {
                 uri: 'https://media.istockphoto.com/id/1214428300/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=vftMdLhldDx9houN4V-g3C9k0xl6YeBcoB_Rk6Trce0=',
               }}
             />
-            <Text style={{ fontSize: 20 }}>Kyle</Text>
+            <Text style={{ fontSize: 20 }}>{currentChat}</Text>
           </View>
           <Ionicons
             name="arrow-back-circle-outline"
@@ -195,8 +202,8 @@ const Chat = ({ navigation }) => {
             </ScrollView>
             <View style={styles.footer}>
               <TextInput
-                value={input}
-                onChangeText={(text) => setInput(text)}
+                value={senderInput}
+                onChangeText={(text) => dispatch(updateSenderInput(text))}
                 onSubmitEditing={sendMessage}
                 placeholder="message"
                 style={styles.textInput}
