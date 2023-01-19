@@ -17,7 +17,7 @@ import { updateActiveUser, updateSelectedUser } from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
 
-const Profile = ({ navigation }) => {
+const UserProfile = ({ navigation }) => {
   const {
     activeUser,
     selectedUser,
@@ -27,7 +27,7 @@ const Profile = ({ navigation }) => {
     currentOffers,
     isDarkMode,
   } = useSelector((state) => state.data);
-  const { id, username, profilePicture, tradeCount, location } = selectedUser;
+  const { id, username, profilePicture, tradeCount, location } = activeUser;
   const dispatch = useDispatch();
 
   const openTrades = offers.filter((item) => {
@@ -186,4 +186,4 @@ const Profile = ({ navigation }) => {
   );
 };
 
-export default Profile;
+export default UserProfile;

@@ -1,98 +1,92 @@
-import { StyleSheet, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar, PixelRatio, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const imageWidth = (screenWidth - 30) / 3.5;
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    backgroundColor: '#283618',
-  },
-
   headerContainer: {
     flex: 0,
-    backgroundColor: '#606C38',
     flexDirection: 'row',
+    alignItems: 'flex-start',
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  headerText: {
-    color: '#FEFAE0',
-    fontSize: 30,
-    fontFamily: 'Helvetica-Bold',
-    paddingVertical: 20,
+    marginVertical: '5%',
   },
 
   backButton: {
-    color: 'white',
-    size: '20px',
-    alignSelf: 'start',
-    paddingTop: 5,
-    paddingLeft: 5,
-    float: 'left',
-    display: 'inline-block',
+    position: 'absolute',
+    color: '#283618',
+    left: 10,
   },
 
-  itemsContainer: {
-    backgroundColor: '#283618',
+  headerText: {
+    fontFamily: 'AnonymousPro-Bold',
+    fontSize: 35,
+    letterSpacing: 1,
+    color: '#283618',
   },
 
-  accountInfo: {
-    display: 'inline',
-    flex: -1,
+  contentContainer: {
+    flex: 1,
+    marginTop: '10%',
+    marginHorizontal: '8%',
+  },
+
+  accountInfoContainer: {
+    // flex: 0,
     flexDirection: 'row',
-    paddingTop: 10,
-    paddingBottom: 10,
+    // justifyContent: 'center',
+    // backgroundColor: 'red',
+    // width: '80%',
   },
 
-  profile: {
-    width: 100,
-    height: 100,
-    marginLeft: '10%',
+  profilePictureContainer: {
+    // backgroundColor: 'yellow',
+  },
+
+  profilePicture: {
+    width: imageWidth,
+    maxWidth: 150,
+    height: undefined,
+    aspectRatio: 1,
     borderRadius: '50%',
-    display: 'inline-block',
-    float: 'left',
   },
 
-  details: {
-    float: 'right',
-    display: 'inline-block',
-    marginLeft: '5%',
-    // display: 'inline-block',
+  profileDetailsContainer: {
+    flex: 1,
+    paddingLeft: '4%',
+    // backgroundColor: 'blue',
+    justifyContent: 'center',
+  },
+
+  profileDetailsText: {
+    fontFamily: 'JosefinSans',
+  },
+
+  username: {
+    fontSize: 20,
+  },
+
+  userLocation: {
+    fontSize: 16,
+    marginTop: 10,
+  },
+
+  userTrades: {
+    fontSize: 16,
+    marginTop: 5,
   },
 
   button: {
-    color: 'black',
     backgroundColor: '#dda15e',
-    border: '1px solid #dda15e',
     borderRadius: '5%',
-    marginTop: '2%',
+    marginTop: 10,
     width: 100,
     padding: 5,
-    alignSelf: 'center',
   },
 
   buttonText: {
     textAlign: 'center',
-    color: 'white',
-  },
-
-  name: {
-    color: 'white',
-    fontSize: 20,
-    // fontWeight: 500,
-    paddingBottom: 5,
-  },
-
-  location: {
-    color: 'white',
-    fontSize: 16,
-    paddingBottom: 5,
-  },
-
-  trades: {
-    color: 'white',
-    fontSize: 16,
-    paddingBottom: 5,
+    fontFamily: 'JosefinSans',
   },
 
   starIcon: {
@@ -113,8 +107,6 @@ export default StyleSheet.create({
   },
 
   header2: {
-    color: 'white',
-    backgroundColor: '#606C38',
     fontSize: 20,
     flex: 2,
     // fontWeight: 600,
@@ -123,8 +115,7 @@ export default StyleSheet.create({
   },
 
   header3: {
-    color: 'white',
-    backgroundColor: '#606C38',
+    // color: 'white',
     fontSize: 20,
     flex: 2,
     // fontWeight: 600,
