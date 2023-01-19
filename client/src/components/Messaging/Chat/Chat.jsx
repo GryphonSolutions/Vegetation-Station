@@ -190,7 +190,14 @@ const Chat = () => {
         params: { activeUser: String(activeUser.id) },
       })
       .then((res) => {
-        dispatch(updateChats(Object.entries(res.data)));
+        console.log('ORDERED IN CHATS');
+        dispatch(
+          updateChats(
+            Object.entries(res.data).sort(
+              (a, b) => b[1].date.seconds - a[1].date.seconds,
+            ),
+          ),
+        );
       })
       .catch((err) => {
         console.log(err, 'error when fetching chats');

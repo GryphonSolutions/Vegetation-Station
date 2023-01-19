@@ -3,6 +3,7 @@ import axios from 'axios';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import {
   updateCurrentCombinedId,
   updateCurrentChat,
@@ -97,7 +98,7 @@ const ChatList = ({ chat }) => {
             {chat[1].chattingWith.username}
           </ListItem.Title>
           <ListItem.Title style={styles.time}>
-            {chat[1].date.seconds}
+            {formatDistanceToNow(new Date(chat[1].date.seconds * 1000))}
           </ListItem.Title>
         </View>
         <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
