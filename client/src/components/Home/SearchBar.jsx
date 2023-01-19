@@ -17,7 +17,7 @@ import { updateHomeSearchText, updateCurrentPosts } from '../../reducers';
 export default function SearchBar() {
   const { isDarkMode } = useSelector((state) => state.app);
   const { homeSearchText } = useSelector((state) => state.home);
-  const { catalog, filteredCatalog } = useSelector((state) => state.data);
+  const { catalog, currentPosts, filteredCatalog, users } = useSelector((state) => state.data);
   const dispatch = useDispatch();
 
   const updateSearch = (val) => {
@@ -43,21 +43,31 @@ export default function SearchBar() {
 
   };
 
+  // sort alphabetically by color
   const sortColor = () => {
-
+    const sorted = catalog.sort((a, b) => compare(a.color, b.color));
+    // dispatch(updateCurrentPosts(sorted));
   };
 
+  // sort smallest to largest size
   const sortSize = () => {
     const size = { small: 1, medium: 2, large: 3 };
     const sorted = catalog.sort((a, b) => compare(size[a.size], size[b.size]));
-    console.log(sorted);
+    // dispatch(updateCurrentPosts(sorted));
   };
 
+  // sort highest to lowest trade count
   const sortTopSellers = () => {
-
+    const sortedUsers = users.sort((a, b) => compare(b.tradeCount, a.tradeCount));
+    const sorted = catalog.sort((a, b) => {
+      const index1 = sortedUsers.map((e) => e.username).indexOf(a.poster);
+      const index2 = sortedUsers.map((e) => e.username).indexOf(b.poster);
+      return compare(index1, index2);
+    });
+    // dispatch(updateCurrentPosts(sorted));
   };
 
-  sortSize();
+  // sortTopSellers();
   return (
     <View style={styles.searchBarContainer}>
       <TextInput
