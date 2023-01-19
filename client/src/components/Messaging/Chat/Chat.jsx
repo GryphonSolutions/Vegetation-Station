@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -16,14 +17,21 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { updateSenderInput } from '../../../reducers/messagesReducer.js';
+import {
+  updateSenderInput,
+  updateChats,
+  updateCurrentChat,
+  updateCurrentCombinedId,
+  updateChatHeaderInfo,
+} from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const Chat = () => {
   const { isDarkMode } = useSelector((state) => state.app);
-  const { senderInput, currentChat } = useSelector((state) => state.messages);
+  const { activeUser, selectedUser } = useSelector((state) => state.data);
+  const { senderInput, currentCombinedId, chatHeaderInfo, currentChat } =
+    useSelector((state) => state.messages);
   const dispatch = useDispatch();
-  const [input, setInput] = useState('');
 
   const styles = StyleSheet.create({
     border: {
@@ -98,53 +106,106 @@ const Chat = () => {
     },
   });
 
+  const getMessages = (combinedId) => {
+    axios
+      .get('http://localhost:8080/api/messages/data', {
+        params: { combinedId },
+      })
+      .then((res) => {
+        console.log('MESSAGES DATA ', res.data);
+        dispatch(updateCurrentChat(res.data));
+      })
+      .catch((err) => {
+        console.log(err, 'error fetching messages');
+      });
+  };
+
+  useEffect(() => {
+    console.log('USE EFFECT');
+    console.log(currentCombinedId);
+    if (currentCombinedId !== '') {
+      getMessages(currentCombinedId);
+    }
+  }, [activeUser]);
+
   const sendMessage = () => {
     Keyboard.dismiss();
     console.log(senderInput);
-    // update database
+    // update messages
+    axios
+      .patch('http://localhost:8080/api/messages/data', {
+        params: {
+          senderId: String(activeUser.id),
+          text: senderInput,
+          combinedId: currentCombinedId,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        getMessages(currentCombinedId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // update chats for active user (time, lastMessage, read = true)
+    axios
+      .patch('http://localhost:8080/api/chats/data', {
+        params: {
+          id: String(activeUser.id),
+          currentCombinedId,
+          read: true,
+          text: senderInput,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // update chats for recipient (time, lastMessage, read = false)
+    // id is currently hard coded
+    axios
+      .patch('http://localhost:8080/api/chats/data', {
+        params: {
+          id: String(selectedUser.id),
+          currentCombinedId,
+          read: false,
+          text: senderInput,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     dispatch(updateSenderInput(''));
+  };
+
+  const getChats = () => {
+    axios
+      .get('http://localhost:8080/api/chats/data', {
+        params: { activeUser: String(activeUser.id) },
+      })
+      .then((res) => {
+        dispatch(updateChats(Object.entries(res.data)));
+      })
+      .catch((err) => {
+        console.log(err, 'error when fetching chats');
+      });
   };
 
   const backToMessages = () => {
     console.log('Go back to messages');
+    getChats();
+    dispatch(updateSenderInput(''));
+    dispatch(updateCurrentCombinedId(''));
+    dispatch(updateChatHeaderInfo({ username: '', profilePicture: '' }));
+    dispatch(updateCurrentChat({}));
     RootNavigation.navigate('Messages');
   };
-
-  const messages = [
-    {
-      12: {
-        messages: [
-          { id: 1, text: 'hello', senderID: 2 },
-          { id: 2, text: 'Can we trade plants?', senderID: 2 },
-          { id: 3, text: "Possibly, what's your address?", senderID: 1 },
-          { id: 4, text: "Whoa...let's meet at costco in LA", senderID: 2 },
-          { id: 5, text: 'Nah', senderID: 1 },
-          { id: 6, text: 'ight', senderID: 2 },
-          { id: 7, text: 'Good luck with the next guy.', senderID: 1 },
-          {
-            id: 8,
-            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
-            senderID: 1,
-          },
-          {
-            id: 9,
-            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
-            senderID: 2,
-          },
-          {
-            id: 10,
-            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
-            senderID: 1,
-          },
-          {
-            id: 11,
-            text: 'asjdf laskldjflk lkjasdflj jlsdafkljds lasdjflkjsda lkajsdfklj ajsdfklj lasjkdflkj aslkdfjlkj asdfjlkj aslkdfjlkfjsd lkjasdfl laksjdf jsdfkjk dkj dkk fjasldkjfaslkjdf l aksjd vhjkcj dfvl kjadf',
-            senderID: 2,
-          },
-        ],
-      },
-    },
-  ];
 
   const scrollViewRef = useRef();
 
@@ -168,10 +229,10 @@ const Chat = () => {
               rounded
               size="medium"
               source={{
-                uri: 'https://media.istockphoto.com/id/1214428300/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=vftMdLhldDx9houN4V-g3C9k0xl6YeBcoB_Rk6Trce0=',
+                uri: `${chatHeaderInfo.profilePicture}`,
               }}
             />
-            <Text style={{ fontSize: 20 }}>{currentChat}</Text>
+            <Text style={{ fontSize: 20 }}>{chatHeaderInfo.username}</Text>
           </View>
           <Ionicons
             name="arrow-back-circle-outline"
@@ -188,17 +249,18 @@ const Chat = () => {
                 scrollViewRef.current.scrollToEnd({ animated: true });
               }}
             >
-              {messages[0]['12'].messages.map((data) => {
-                return data.senderID === 1 ? (
-                  <View key={data.id} style={styles.sender}>
-                    <Text style={styles.senderText}>{data.text}</Text>
-                  </View>
-                ) : (
-                  <View key={data.id} style={styles.receiver}>
-                    <Text style={styles.recieverText}>{data.text}</Text>
-                  </View>
-                );
-              })}
+              {currentChat.messages !== undefined &&
+                currentChat.messages.map((data) => {
+                  return String(data.senderID) === String(activeUser.id) ? (
+                    <View key={data.id} style={styles.sender}>
+                      <Text style={styles.senderText}>{data.text}</Text>
+                    </View>
+                  ) : (
+                    <View key={data.id} style={styles.receiver}>
+                      <Text style={styles.recieverText}>{data.text}</Text>
+                    </View>
+                  );
+                })}
             </ScrollView>
             <View style={styles.footer}>
               <TextInput
@@ -224,3 +286,90 @@ const Chat = () => {
 };
 
 export default Chat;
+
+// const messages = [
+//   {
+//     12: {
+//       messages: [
+//         { id: 1, text: 'hello', senderID: 2 },
+//         { id: 2, text: 'Can we trade plants?', senderID: 2 },
+//         { id: 3, text: "Possibly, what's your address?", senderID: 1 },
+//         { id: 4, text: "Whoa...let's meet at costco in LA", senderID: 2 },
+//         { id: 5, text: 'Nah', senderID: 1 },
+//         { id: 6, text: 'ight', senderID: 2 },
+//         { id: 7, text: 'Good luck with the next guy.', senderID: 1 },
+//       ],
+//     },
+//   },
+// ];
+
+// const messages = [
+//   {
+//     combinedId: 8962128089621281,
+//     messages: [
+//       {
+//         id: String(new Date().getTime()),
+//         text: 'mo are you seriously doing this right now?',
+//         senderID: 89621281,
+//         date: JSON.stringify(new Date()),
+//       },
+//       {
+//         id: String(new Date().getTime()),
+//         text: 'Are you trying to scam me?',
+//         senderID: 89621280,
+//         date: JSON.stringify(new Date()),
+//       },
+//     ],
+//   },
+//   {
+//     combinedId: 8962128089621282,
+//     messages: [
+//       {
+//         id: String(new Date().getTime()),
+//         text: 'Hold on I gotta do something',
+//         senderID: 89621280,
+//         date: JSON.stringify(new Date()),
+//       },
+//       {
+//         id: String(new Date().getTime()),
+//         text: 'Where did you go?',
+//         senderID: 89621282,
+//         date: JSON.stringify(new Date()),
+//       },
+//     ],
+//   },
+//   {
+//     combinedId: 8962128589621280,
+//     messages: [
+//       {
+//         id: String(new Date().getTime()),
+//         text: 'So, what do you think?',
+//         senderID: 89621285,
+//         date: JSON.stringify(new Date()),
+//       },
+//       {
+//         id: String(new Date().getTime()),
+//         text: "Your plant isn't even nice",
+//         senderID: 89621280,
+//         date: JSON.stringify(new Date()),
+//       },
+//     ],
+//   },
+//   {
+//     combinedId: 8962128189621286,
+//     messages: [
+//       {
+//         id: String(new Date().getTime()),
+//         text: 'Thoughts bro?',
+//         senderID: 89621281,
+//         date: JSON.stringify(new Date()),
+//       },
+//       {
+//         id: String(new Date().getTime()),
+//         text: 'Can I kill God with this plant?',
+//         senderID: 89621286,
+//         date: JSON.stringify(new Date()),
+//       },
+//     ],
+//   },
+// ];
