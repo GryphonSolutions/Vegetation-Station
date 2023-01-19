@@ -17,11 +17,17 @@ import ProfileRibbon from './ProfileRibbon';
 import * as navigation from '../NavBar/navigation';
 import styles from './assets/StyleSheet';
 
+const navigateSelectedProfile = () => {
+  navigation.navigate('Profile');
+};
+
 const Details = () => {
-  const { selectedUser, catalog } = useSelector((state) => state.data);
+  const { selectedUser, currentPlant } = useSelector((state) => state.data);
   const { location } = selectedUser;
+  const { description, images, preferredTrade, commonName, postTitle } =
+    currentPlant;
   const dispatch = useDispatch();
-  console.log(selectedUser);
+  console.log(currentPlant);
   return (
     // <SafeAreaView style={styles.container}>
     <View style={styles.container}>
@@ -31,24 +37,21 @@ const Details = () => {
           <Image
             style={styles.plantPic}
             source={{
-              uri: 'https://www.domino.com/uploads/2020/08/24/00-FEATURE-pink-princess-philodendron-domino.jpg',
+              uri: images[0],
             }}
           />
         </View>
         <View style={styles.postContainer}>
-          <Text style={styles.postTitle}>Dethrone Me, the Pink Princess</Text>
+          <Text style={styles.postTitle}>{postTitle}</Text>
           <View style={styles.plantNameContainer}>
-            <Text style={styles.plantNameText}>Philodendron Erubescens</Text>
+            <Text style={styles.plantNameText}>{commonName}</Text>
           </View>
           <View style={styles.postDescContainer}>
             <View style={styles.prefTradesContainer}>
               <Text style={styles.descTradesText}>Preferred trades: </Text>
-              <Text style={styles.prefTradeText}>Ficus lyrata </Text>
+              <Text style={styles.prefTradeText}>{preferredTrade}</Text>
             </View>
-            <Text style={styles.plantPostDesc}>
-              Well maintaned and healthy. I no longer want to be known as the
-              Princess of Pink Princesses.
-            </Text>
+            <Text style={styles.plantPostDesc}>{description}</Text>
           </View>
           <View style={styles.LocationContainer}>
             <Text style={styles.plantNameText}>Trader's General Location:</Text>
@@ -56,7 +59,7 @@ const Details = () => {
           </View>
         </View>
       </ScrollView>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigateSelectedProfile()}>
         <ProfileRibbon />
       </TouchableOpacity>
       <View style={styles.buttonContainer}>

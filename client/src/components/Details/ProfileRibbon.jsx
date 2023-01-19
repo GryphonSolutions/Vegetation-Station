@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import * as navigation from '../NavBar/navigation';
 import styles from './assets/StyleSheet';
 
 const ProfileRibbon = () => {
@@ -17,9 +18,7 @@ const ProfileRibbon = () => {
   return (
     <View style={styles.profileRibbon}>
       <View style={styles.profileInfoContainer}>
-        {/* <ScrollView> */}
         <Image source={{ uri: profilePicture }} style={styles.profileImage} />
-        {/* </ScrollView> */}
         <View style={styles.usernameContainer}>
           <Text style={styles.profileUsername}>{username.toUpperCase()}</Text>
           <Text style={styles.tradeNumber}>
