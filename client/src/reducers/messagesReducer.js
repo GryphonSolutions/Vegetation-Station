@@ -7,7 +7,7 @@ const initialState = {
   currentCombinedId: '',
   activeUser: '00516411',
   chatHeaderInfo: { username: '', profilePicture: '' },
-  currentChat: [],
+  currentChat: {},
   chats: [],
 };
 

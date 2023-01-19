@@ -59,9 +59,14 @@ module.exports.postToChatsDB = async (parameters) => {
 };
 
 module.exports.updateChatsDB = async (parameters) => {
+  const { id, currentCombinedId, read, text } = parameters;
+  const docRef = doc(db, 'chats', id);
   try {
-    // Query Here
-    await updateDoc();
+    await updateDoc(docRef, {
+      [`${currentCombinedId}.lastMessage`]: { text },
+      [`${currentCombinedId}.date`]: serverTimestamp(),
+      [`${currentCombinedId}.read`]: read,
+    });
     return Promise.resolve();
   } catch (err) {
     console.error(err);

@@ -48,7 +48,7 @@ const Messages = () => {
         params: { activeUser },
       })
       .then((res) => {
-        dispatch(updateChats(res.data));
+        dispatch(updateChats(Object.entries(res.data)));
       })
       .catch((err) => {
         console.log(err, 'error when fetching chats');
@@ -92,7 +92,7 @@ const Messages = () => {
 
   const users = [
     {
-      id: String(new Date().getTime()),
+      id: '11347750',
       username: 'akbarimo',
       profilePicture: 'https://i.imgur.com/br9bWAp.png',
       tradeCount: 1,
@@ -105,7 +105,7 @@ const Messages = () => {
       },
     },
     {
-      id: String(new Date().getTime()),
+      id: '11347751',
       username: 'SaldanaThomas',
       profilePicture: 'https://i.imgur.com/br9bWAp.png',
       tradeCount: 2,
@@ -118,7 +118,7 @@ const Messages = () => {
       },
     },
     {
-      id: String(new Date().getTime()),
+      id: '11347752',
       username: 'JustDatGuy',
       profilePicture: 'https://i.imgur.com/br9bWAp.png',
       tradeCount: 15,
@@ -131,7 +131,7 @@ const Messages = () => {
       },
     },
     {
-      id: String(new Date().getTime()),
+      id: '11347753',
       username: 'kylemartinelli',
       profilePicture: 'https://i.imgur.com/br9bWAp.png',
       tradeCount: 20,
@@ -144,7 +144,7 @@ const Messages = () => {
       },
     },
     {
-      id: String(new Date().getTime()),
+      id: '11347754',
       username: 'officiallywilly',
       profilePicture: 'https://i.imgur.com/br9bWAp.png',
       tradeCount: 1,
@@ -157,7 +157,7 @@ const Messages = () => {
       },
     },
     {
-      id: String(new Date().getTime()),
+      id: '11347755',
       username: 'RyanGehris',
       profilePicture: 'https://i.imgur.com/br9bWAp.png',
       tradeCount: 4,
@@ -170,7 +170,7 @@ const Messages = () => {
       },
     },
     {
-      id: String(new Date().getTime()),
+      id: '11347756',
       username: 'WhenIKillGod',
       profilePicture: 'https://i.imgur.com/br9bWAp.png',
       tradeCount: 23,
@@ -183,7 +183,7 @@ const Messages = () => {
       },
     },
     {
-      id: String(new Date().getTime()),
+      id: '11347757',
       username: 'PeaceLilyMilly',
       profilePicture: 'https://i.imgur.com/br9bWAp.png',
       tradeCount: 69,
@@ -197,16 +197,8 @@ const Messages = () => {
     },
   ];
 
-  // const activeUserChats = chats.filter((chat) => {
-  //   if (chat.id === activeUser) {
-  //     return true;
-  //   }
-  //   return false;
-  // });
-  // const checkChatsLength = activeUserChats.length > 0;
-
-  console.log(Object.entries(chats));
-  const searchResultsChats = Object.entries(chats).filter((chat) => {
+  console.log('chats ', chats);
+  const searchResultsChats = chats.filter((chat) => {
     if (chat[1].chattingWith.username.includes(userMessageSearch)) {
       return true;
     }
@@ -256,7 +248,7 @@ const Messages = () => {
       </View>
       {!searchMessages && (
         <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
-          {Object.entries(chats).length === 0 && (
+          {chats.length === 0 && (
             <ListItem>
               <ListItem.Content>
                 <ListItem.Title style={styles.name}>
@@ -265,8 +257,8 @@ const Messages = () => {
               </ListItem.Content>
             </ListItem>
           )}
-          {Object.entries(chats).length > 0 &&
-            Object.entries(chats).map((chat) => {
+          {chats.length > 0 &&
+            chats.map((chat) => {
               return <ChatList key={chat[0]} chat={chat} />;
             })}
         </ScrollView>

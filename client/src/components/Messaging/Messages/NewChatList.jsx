@@ -81,6 +81,16 @@ const NewChatList = ({ user }) => {
         .catch((err) => {
           console.log(err);
         });
+      axios
+        .post('http://localhost:8080/api/messages/data', {
+          params: {
+            combinedId,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log('error creating chatMessages ', err));
     }
 
     RootNavigation.navigate('Chat');

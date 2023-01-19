@@ -31,8 +31,9 @@ module.exports.postToChats = async (req, res) => {
 };
 
 module.exports.updateChats = async (req, res) => {
+  console.log('UPDATE CHATS ', req.body.params);
   try {
-    await updateChatsDB(req.body);
+    await updateChatsDB(req.body.params);
     res.sendStatus(204);
   } catch (err) {
     console.error(err);

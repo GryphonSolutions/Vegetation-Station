@@ -47,7 +47,7 @@ const ChatList = ({ chat }) => {
     <ListItem
       onPress={() => {
         navigateTo(
-          chat[0].combinedId,
+          chat[0],
           chat[1].chattingWith.username,
           chat[1].chattingWith.profilePicture,
         );
@@ -64,7 +64,9 @@ const ChatList = ({ chat }) => {
           <ListItem.Title style={styles.name}>
             {chat[1].chattingWith.username}
           </ListItem.Title>
-          <ListItem.Title style={styles.time}>{chat[1].date}</ListItem.Title>
+          <ListItem.Title style={styles.time}>
+            {chat[1].date.seconds}
+          </ListItem.Title>
         </View>
         <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
           {chat[1].lastMessage}

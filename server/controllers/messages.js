@@ -8,8 +8,10 @@ const {
 } = require('../models');
 
 module.exports.getFromMessages = async (req, res) => {
+  console.log('Get messages', req.query);
+  const id = req.query.combinedId;
   try {
-    const data = await getFromMessagesDB();
+    const data = await getFromMessagesDB(id);
     res.send(data);
   } catch (err) {
     console.log(err);
@@ -18,8 +20,10 @@ module.exports.getFromMessages = async (req, res) => {
 };
 
 module.exports.postToMessages = async (req, res) => {
+  console.log('Messages post', req.body.params);
+  const id = req.body.params.combinedId;
   try {
-    await postToMessagesDB(req.body);
+    await postToMessagesDB(id);
     res.sendStatus(201);
   } catch (err) {
     console.error(err);
@@ -28,8 +32,9 @@ module.exports.postToMessages = async (req, res) => {
 };
 
 module.exports.updateMessages = async (req, res) => {
+  console.log('MESSAGES UPDATE ', req.body.params);
   try {
-    await updateMessagesDB(req.body);
+    await updateMessagesDB(req.body.params);
     res.sendStatus(204);
   } catch (err) {
     console.error(err);
