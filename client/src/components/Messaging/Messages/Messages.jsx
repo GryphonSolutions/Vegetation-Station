@@ -29,6 +29,7 @@ import {
   updateSearchMessages,
   updateUserMessageSearch,
   updateChats,
+  updateMessagesIntervalId,
 } from '../../../reducers/messagesReducer.js';
 import ChatList from './ChatList.jsx';
 import NewChatList from './NewChatList.jsx';
@@ -38,9 +39,8 @@ import testUsers from '../../../../../server/data/users.js';
 const Messages = () => {
   const { isDarkMode } = useSelector((state) => state.app);
   const { activeUser } = useSelector((state) => state.data);
-  const { searchMessages, userMessageSearch, chats } = useSelector(
-    (state) => state.messages,
-  );
+  const { searchMessages, userMessageSearch, chats, messagesIntervalId } =
+    useSelector((state) => state.messages);
   const dispatch = useDispatch();
 
   const getChats = () => {
@@ -59,8 +59,6 @@ const Messages = () => {
   useEffect(() => {
     getChats();
   }, [activeUser]);
-
-  console.log(chats);
 
   const styles = StyleSheet.create({
     border: {
@@ -97,9 +95,14 @@ const Messages = () => {
 
   const users = testUsers;
 
-  console.log('chats ', chats);
+  // console.log('chats ', chats);
+
   const searchResultsChats = chats.filter((chat) => {
-    if (chat[1].chattingWith.username.includes(userMessageSearch)) {
+    if (
+      chat[1].chattingWith.username
+        .toLowerCase()
+        .includes(userMessageSearch.toLowerCase())
+    ) {
       return true;
     }
     return false;
@@ -107,13 +110,13 @@ const Messages = () => {
   const checkFilterChatsLength = searchResultsChats.length > 0;
 
   const searchResultsUsers = users.filter((user) => {
-    console.log(
-      user.username,
-      activeUser.username,
-      user.username !== activeUser.username,
-    );
+    // console.log(
+    //   user.username,
+    //   activeUser.username,
+    //   user.username !== activeUser.username,
+    // );
     if (
-      user.username.includes(userMessageSearch) &&
+      user.username.toLowerCase().includes(userMessageSearch.toLowerCase()) &&
       user.username !== activeUser.username
     ) {
       return true;

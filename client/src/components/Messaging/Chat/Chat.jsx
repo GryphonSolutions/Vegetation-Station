@@ -22,14 +22,14 @@ import {
   updateChats,
   updateCurrentChat,
   updateCurrentCombinedId,
-  updateChatHeaderInfo,
+  updateChatIntervalId,
 } from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const Chat = () => {
   const { isDarkMode } = useSelector((state) => state.app);
   const { activeUser, selectedUser } = useSelector((state) => state.data);
-  const { senderInput, currentCombinedId, chatHeaderInfo, currentChat } =
+  const { senderInput, currentCombinedId, currentChat, chatIntervalId } =
     useSelector((state) => state.messages);
   const dispatch = useDispatch();
 
@@ -112,7 +112,7 @@ const Chat = () => {
         params: { combinedId },
       })
       .then((res) => {
-        console.log('MESSAGES DATA ', res.data);
+        // console.log('MESSAGES DATA ', res.data);
         dispatch(updateCurrentChat(res.data));
       })
       .catch((err) => {
@@ -121,8 +121,8 @@ const Chat = () => {
   };
 
   useEffect(() => {
-    console.log('USE EFFECT');
-    console.log(currentCombinedId);
+    // console.log('USE EFFECT');
+    // console.log(currentCombinedId);
     if (currentCombinedId !== '') {
       getMessages(currentCombinedId);
     }
@@ -130,7 +130,7 @@ const Chat = () => {
 
   const sendMessage = () => {
     Keyboard.dismiss();
-    console.log(senderInput);
+    // console.log(senderInput);
     // update messages
     axios
       .patch('http://localhost:8080/api/messages/data', {
@@ -141,7 +141,7 @@ const Chat = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         getMessages(currentCombinedId);
       })
       .catch((err) => {
@@ -158,7 +158,7 @@ const Chat = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -175,7 +175,7 @@ const Chat = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -198,11 +198,10 @@ const Chat = () => {
   };
 
   const backToMessages = () => {
-    console.log('Go back to messages');
+    // console.log('Go back to messages');
     getChats();
     dispatch(updateSenderInput(''));
     dispatch(updateCurrentCombinedId(''));
-    dispatch(updateChatHeaderInfo({ username: '', profilePicture: '' }));
     dispatch(updateCurrentChat({}));
     RootNavigation.navigate('Messages');
   };
@@ -229,10 +228,10 @@ const Chat = () => {
               rounded
               size="medium"
               source={{
-                uri: `${chatHeaderInfo.profilePicture}`,
+                uri: `${selectedUser.profilePicture}`,
               }}
             />
-            <Text style={{ fontSize: 20 }}>{chatHeaderInfo.username}</Text>
+            <Text style={{ fontSize: 20 }}>{selectedUser.username}</Text>
           </View>
           <Ionicons
             name="arrow-back-circle-outline"
