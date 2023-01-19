@@ -5,9 +5,10 @@ const initialState = {
   userMessageSearch: '',
   senderInput: '',
   currentCombinedId: '',
-  chatHeaderInfo: { username: '', profilePicture: '' },
   currentChat: {},
   chats: [],
+  chatIntervalId: 0,
+  messagesIntervalId: 0,
 };
 
 const messagesSlice = createSlice({
@@ -26,14 +27,17 @@ const messagesSlice = createSlice({
     updateCurrentCombinedId: (state, action) => {
       state.currentCombinedId = action.payload;
     },
-    updateChatHeaderInfo: (state, action) => {
-      state.chatHeaderInfo = action.payload;
-    },
     updateCurrentChat: (state, action) => {
       state.currentChat = action.payload;
     },
     updateChats: (state, action) => {
       state.chats = action.payload;
+    },
+    updateChatIntervalId: (state, action) => {
+      state.chatIntervalId = action.payload;
+    },
+    updateMessagesIntervalId: (state, action) => {
+      state.messagesIntervalId = action.payload;
     },
   },
   extraReducers: (builder) => {},
@@ -46,7 +50,8 @@ export const {
   updateCurrentCombinedId,
   updateCurrentChat,
   updateChats,
-  updateChatHeaderInfo,
+  updateChatIntervalId,
+  updateMessagesIntervalId,
 } = messagesSlice.actions;
 
 export const messagesReducer = messagesSlice.reducer;

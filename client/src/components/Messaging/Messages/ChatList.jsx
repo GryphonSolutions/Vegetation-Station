@@ -3,10 +3,10 @@ import axios from 'axios';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ListItem, Avatar } from 'react-native-elements';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import {
   updateCurrentCombinedId,
   updateCurrentChat,
-  updateChatHeaderInfo,
   updateSearchMessages,
   updateUserMessageSearch,
 } from '../../../reducers/messagesReducer.js';
@@ -50,7 +50,7 @@ const ChatList = ({ chat }) => {
         params: { combinedId },
       })
       .then((res) => {
-        console.log('MESSAGES DATA ', res.data);
+        // console.log('MESSAGES DATA ', res.data);
         dispatch(updateCurrentChat(res.data));
       })
       .catch((err) => {
@@ -69,10 +69,9 @@ const ChatList = ({ chat }) => {
   };
 
   const navigateTo = (combinedId, username, profilePicture) => {
-    console.log(combinedId);
+    // console.log(combinedId);
     dispatch(updateSearchMessages(false));
     dispatch(updateUserMessageSearch(''));
-    dispatch(updateChatHeaderInfo({ username, profilePicture }));
     dispatch(updateSelectedUser(getUserInfo(username)));
     dispatch(updateCurrentCombinedId(combinedId));
     // pull chat data from collection chats based on the combinedId
@@ -113,8 +112,8 @@ const ChatList = ({ chat }) => {
           >
             {chat[1].chattingWith.username}
           </ListItem.Title>
-          <ListItem.Title style={[styles.chatItemText, styles.time]}>
-            {chat[1].date.seconds}
+          <ListItem.Title style={styles.time}>
+            {formatDistanceToNow(new Date(chat[1].date.seconds * 1000))}
           </ListItem.Title>
         </View>
         <ListItem.Subtitle

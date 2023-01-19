@@ -74,7 +74,11 @@ const dataSlice = createSlice({
   },
 });
 
-export const { updateActiveUser, updateSelectedUser, updateCurrentPlant, updateCurrentPosts } =
-  dataSlice.actions;
+export const {
+  updateActiveUser,
+  updateSelectedUser,
+  updateCurrentPlant,
+  updateCurrentPosts,
+} = dataSlice.actions;
 
 export const dataReducer = dataSlice.reducer;
