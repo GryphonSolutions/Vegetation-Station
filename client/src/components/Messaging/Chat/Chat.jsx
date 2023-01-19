@@ -108,9 +108,12 @@ const Chat = () => {
 
   const getMessages = (combinedId) => {
     axios
-      .get('http://localhost:8080/api/messages/data', {
-        params: { combinedId },
-      })
+      .get(
+        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/messages/data',
+        {
+          params: { combinedId },
+        },
+      )
       .then((res) => {
         console.log('MESSAGES DATA ', res.data);
         dispatch(updateCurrentChat(res.data));
@@ -133,13 +136,16 @@ const Chat = () => {
     console.log(senderInput);
     // update messages
     axios
-      .patch('http://localhost:8080/api/messages/data', {
-        params: {
-          senderId: String(activeUser.id),
-          text: senderInput,
-          combinedId: currentCombinedId,
+      .patch(
+        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/messages/data',
+        {
+          params: {
+            senderId: String(activeUser.id),
+            text: senderInput,
+            combinedId: currentCombinedId,
+          },
         },
-      })
+      )
       .then((res) => {
         console.log(res);
         getMessages(currentCombinedId);
@@ -149,14 +155,17 @@ const Chat = () => {
       });
     // update chats for active user (time, lastMessage, read = true)
     axios
-      .patch('http://localhost:8080/api/chats/data', {
-        params: {
-          id: String(activeUser.id),
-          currentCombinedId,
-          read: true,
-          text: senderInput,
+      .patch(
+        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
+        {
+          params: {
+            id: String(activeUser.id),
+            currentCombinedId,
+            read: true,
+            text: senderInput,
+          },
         },
-      })
+      )
       .then((res) => {
         console.log(res);
       })
@@ -166,14 +175,17 @@ const Chat = () => {
     // update chats for recipient (time, lastMessage, read = false)
     // id is currently hard coded
     axios
-      .patch('http://localhost:8080/api/chats/data', {
-        params: {
-          id: String(selectedUser.id),
-          currentCombinedId,
-          read: false,
-          text: senderInput,
+      .patch(
+        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
+        {
+          params: {
+            id: String(selectedUser.id),
+            currentCombinedId,
+            read: false,
+            text: senderInput,
+          },
         },
-      })
+      )
       .then((res) => {
         console.log(res);
       })
@@ -186,9 +198,12 @@ const Chat = () => {
 
   const getChats = () => {
     axios
-      .get('http://localhost:8080/api/chats/data', {
-        params: { activeUser: String(activeUser.id) },
-      })
+      .get(
+        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
+        {
+          params: { activeUser: String(activeUser.id) },
+        },
+      )
       .then((res) => {
         dispatch(updateChats(Object.entries(res.data)));
       })

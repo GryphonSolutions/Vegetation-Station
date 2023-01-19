@@ -43,11 +43,14 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
         userReg.password,
       );
       axios
-        .post('http://localhost:8080/api/users/info', {
-          location: locationDeets,
-          profilePicture: userReg.profilePicture,
-          username: userReg.email.split('@')[0],
-        })
+        .post(
+          'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info',
+          {
+            location: locationDeets,
+            profilePicture: userReg.profilePicture,
+            username: userReg.email.split('@')[0],
+          },
+        )
         .then((res) => {
           getOneAndSetOne(userReg.email.split('@')[0]);
           console.log(res);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -18,6 +18,12 @@ import {
   Profile,
 } from '..';
 import { navigationRef } from './navigation';
+import { getCatalog, getOffers, getPlants, getUsers } from '../../actions';
+import {
+  updateCurrentOffers,
+  updateCurrentPosts,
+  updateFilteredCatalog,
+} from '../../reducers';
 
 const Tab = createBottomTabNavigator();
 
@@ -49,6 +55,41 @@ const NavBar = () => {
     JosefinSans: require('../../assets/fonts/JosefinSans-Regular.ttf'),
   });
   const { isDarkMode } = useSelector((state) => state.app);
+  const { activeUser } = useSelector((state) => state.data);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUsers({ url: 'users/info' }));
+    dispatch(getCatalog({ url: 'catalog/listings' }))
+      .unwrap()
+      .then(async (res) => {
+        try {
+          dispatch(updateFilteredCatalog(res));
+          const listings = await res.filter((item) => {
+            return item.isPosted === true || item.isTraded === false;
+          });
+          dispatch(updateCurrentPosts(listings));
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    dispatch(getOffers({ url: 'offers/archive' }))
+      .unwrap()
+      .then(async (res) => {
+        try {
+          const offers = await res.filter((item) => {
+            return (
+              item.buyer.id === activeUser.id ||
+              item.seller.id === activeUser.id
+            );
+          });
+          dispatch(updateCurrentOffers(offers));
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    dispatch(getPlants({ url: 'plants/details' }));
+  }, []);
 
   if (!fontsLoaded) {
     return null;

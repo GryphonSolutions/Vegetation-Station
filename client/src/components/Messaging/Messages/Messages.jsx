@@ -45,9 +45,12 @@ const Messages = () => {
 
   const getChats = () => {
     axios
-      .get('http://localhost:8080/api/chats/data', {
-        params: { activeUser: String(activeUser.id) },
-      })
+      .get(
+        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
+        {
+          params: { activeUser: String(activeUser.id) },
+        },
+      )
       .then((res) => {
         dispatch(updateChats(Object.entries(res.data)));
       })
