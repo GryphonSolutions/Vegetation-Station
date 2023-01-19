@@ -31,7 +31,7 @@ const ChatList = ({ chat }) => {
     time: {
       fontFamily: 'JosefinSans-Light',
       color: 'gray',
-      fontSize: '85%',
+      fontSize: 14,
     },
     titleCont: {
       flexDirection: 'row',

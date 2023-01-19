@@ -96,7 +96,6 @@ const NavBar = () => {
               item?.seller?.id === activeUser?.id
             );
           });
-          console.log('OFFERS IN NAV', offers1);
           dispatch(updateCurrentOffers(offers1));
         } catch (err) {
           console.error(err);
@@ -113,7 +112,7 @@ const NavBar = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Tab.Navigator
-        initialRouteName="Home"
+        initialRouteName="Login"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             const iconName = routes[route.name][focused ? 0 : 1];

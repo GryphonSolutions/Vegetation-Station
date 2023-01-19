@@ -79,12 +79,6 @@ export const {
   updateSelectedUser,
   updateCurrentPlant,
   updateCurrentPosts,
-} = dataSlice.actions;
-export const {
-  updateActiveUser,
-  updateSelectedUser,
-  updateCurrentPlant,
-  updateCurrentPosts,
   updateCurrentOffers,
   updateFilteredCatalog,
 } = dataSlice.actions;
