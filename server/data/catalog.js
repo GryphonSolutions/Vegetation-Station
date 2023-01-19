@@ -70,7 +70,7 @@ module.exports = [
     images: ['https://i.imgur.com/XjsCfJB.png'],
     size: 'small',
     color: 'reddish green',
-    poster: 'chillywilly',
+    poster: 'officiallywilly',
     description: 'Need this gone ASAP so I can play league',
     preferredTrade: 'Herringbone',
     isPosted: true,

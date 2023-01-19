@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar, PixelRatio, Dimensions } from 'react-native';
 
+const screenWidth = Dimensions.get('window').width;
+const imageWidth = (screenWidth - 30) / 3.5;
 export default StyleSheet.create({
   container: {
     flex: 6,
@@ -9,14 +11,19 @@ export default StyleSheet.create({
     // paddingTop: 60,
   },
   imageContainer: {
-    // flex: 2,
+    flex: 2,
   },
   plantPic: {
-    // flex: 2,
-    // aspectRation: 1.5,
+    flex: 2,
+    // // aspectRation: 1.5,
     height: '100%',
     width: '100%',
     resizeMode: 'contain',
+    // width: imageWidth,
+    // height: undefined,
+    // aspectRatio: 1,
+    // borderRadius: imageWidth / 15,
+    // margin: (screenWidth - 30) / 45,
   },
   postContainer: {
     flex: 2,

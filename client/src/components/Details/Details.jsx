@@ -23,11 +23,11 @@ const navigateSelectedProfile = () => {
 
 const Details = () => {
   const { selectedUser, currentPlant } = useSelector((state) => state.data);
-  const { location } = selectedUser;
+  // const { location } = selectedUser;
   const { description, images, preferredTrade, commonName, postTitle } =
     currentPlant;
   const dispatch = useDispatch();
-  console.log(currentPlant);
+  console.log('Plant info: ', images);
   return (
     // <SafeAreaView style={styles.container}>
     <View style={styles.container}>
@@ -36,9 +36,7 @@ const Details = () => {
         <View style={styles.imageContainer}>
           <Image
             style={styles.plantPic}
-            source={{
-              uri: images[0],
-            }}
+            source={{ uri: currentPlant.images[0] }}
           />
         </View>
         <View style={styles.postContainer}>
