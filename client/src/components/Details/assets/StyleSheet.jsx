@@ -2,14 +2,14 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 6,
     // alignItems: 'center',
     // justifyContent: 'center',
     backgroundColor: '#283618',
     // paddingTop: 60,
   },
   imageContainer: {
-    flex: 2,
+    // flex: 2,
   },
   plantPic: {
     // flex: 2,
@@ -19,7 +19,7 @@ export default StyleSheet.create({
     resizeMode: 'contain',
   },
   postContainer: {
-    flex: 3,
+    flex: 2,
     backgroundColor: '#283618',
   },
   postTitle: {
@@ -68,7 +68,7 @@ export default StyleSheet.create({
   /* ----------------- Button Container ----------------- */
 
   buttonContainer: {
-    flex: -1,
+    // flex: -1,
     display: 'flex',
     flexDirection: 'row',
     marginTop: 10,
@@ -125,15 +125,17 @@ export default StyleSheet.create({
 
   LocationContainer: {
     margin: 10,
-    flex: 1,
+    // flex: 1,
     // marginLeft: 10,
     // marginRight: 10,
     // marginBottom: 5,
     // width: 100,
     // height: 100,
   },
-  LocationImage: {
-    flex: 1,
+  LocationMap: {
+    flex: 0,
+    width: '100%',
+    height: '100%',
     // overflow: 'hidden',
   },
 
@@ -146,6 +148,7 @@ export default StyleSheet.create({
     backgroundColor: '#DDA15E',
     paddingLeft: 25,
     paddingRight: 25,
+    marginTop: 10,
   },
   profileInfoContainer: {
     flexDirection: 'row',

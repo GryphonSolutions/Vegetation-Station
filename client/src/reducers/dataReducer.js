@@ -25,8 +25,8 @@ const initialState = {
     location: {
       city: 'Long Beach',
       state: 'CA',
-      longitude: 33.7701,
-      latitude: 118.1937,
+      longitude: -118.75845,
+      latitude: 34.139713,
       zip: 90712,
     },
   },
