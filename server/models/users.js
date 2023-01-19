@@ -2,10 +2,13 @@ const {
   getFirestore,
   collection,
   getDocs,
+  getDoc,
   doc,
   setDoc,
   deleteDoc,
   updateDoc,
+  where,
+  query,
 } = require('firebase/firestore');
 const { db, usersCol } = require('../database');
 
@@ -18,6 +21,21 @@ module.exports.getFromUsersDB = async (params) => {
       allDocs.push(document.data());
     });
     return Promise.resolve(allDocs);
+  } catch (err) {
+    console.error(err);
+    return Promise.reject(err);
+  }
+};
+
+module.exports.getOneUser = async (params) => {
+  const oneUser = [];
+  try {
+    const oneUserQuery = query(usersCol, where('username', '==', params));
+    const getOneUser = await getDocs(oneUserQuery);
+    getOneUser.forEach((us) => {
+      oneUser.push(us.data());
+    });
+    return Promise.resolve(oneUser);
   } catch (err) {
     console.error(err);
     return Promise.reject(err);
