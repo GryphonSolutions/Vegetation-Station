@@ -9,6 +9,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { updateSelectedUser, updateCurrentPlant } from '../../reducers';
 
@@ -17,6 +18,7 @@ import styles from './assets/stylesheet';
 import SearchBar from './SearchBar';
 
 export default function Body() {
+  const { isDarkMode } = useSelector((state) => state.app);
   const {
     activeUser,
     selectedUser,
@@ -24,7 +26,6 @@ export default function Body() {
     catalog,
     currentPosts,
     currentOffers,
-    isDarkMode,
   } = useSelector((state) => state.data);
 
   const goToPlant = (item) => {
@@ -46,12 +47,13 @@ export default function Body() {
   );
 
   return (
-    <View style={styles.contentContainer}>
+    <View style={[styles.contentContainer]}>
       <SearchBar />
       <View style={styles.itemsContainer}>
         <FlatList
           data={currentPosts}
           numColumns={3}
+          showsVerticalScrollIndicator={false}
           ListEmptyComponent={<Text>There are no plants to show</Text>}
           renderItem={({ item }) => renderImage(item)}
         />
