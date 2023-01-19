@@ -23,12 +23,13 @@ import styles from './assets/StyleSheet.jsx';
 import { auth } from '../../../../server/database/firebase.js';
 import { updateActiveUser } from '../../reducers';
 import { navigate } from '../NavBar/navigation.js';
+import { logout } from './authLogout.js';
 
 const Login = () => {
   const [registration, setRegistration] = useState(false);
 
   const [userInfo, setUserInfo] = useState({});
-  const [currUser, setCurrUser] = useState({ email: '' });
+  const [currUser, setCurrUser] = useState({});
 
   const dispatch = useDispatch();
 
@@ -67,10 +68,6 @@ const Login = () => {
     }
   };
 
-  const logout = async () => {
-    await signOut(auth);
-  };
-
   return registration ? (
     <Registration
       setRegistration={setRegistration}
@@ -78,92 +75,68 @@ const Login = () => {
     />
   ) : (
     <SafeAreaView style={styles.container}>
-      {!currUser ? (
+      <View>
         <View>
-          <View>
-            <Text style={styles.regHeader}>Vegetation Station</Text>
-          </View>
-          <View style={styles.loginInputsContainer}>
-            <View>
-              <Text style={styles.registerLabels}>Email</Text>
-            </View>
-            <TextInput
-              placeholder="Enter your email..."
-              style={styles.loginInputs}
-              onChangeText={(text) => {
-                setUserInfo(userInfo, (userInfo.email = text));
-              }}
-            />
-            <View>
-              <Text style={styles.registerLabels}>Password</Text>
-            </View>
-            <TextInput
-              placeholder="Enter password..."
-              style={styles.loginInputs}
-              secureTextEntry
-              onChangeText={(text) => {
-                setUserInfo(userInfo, (userInfo.password = text));
-              }}
-            />
-          </View>
-          <View
-            style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}
-          >
-            <View style={styles.logSubmitContainer}>
-              <Button
-                style={styles.regButton}
-                color="black"
-                title="Login"
-                onPress={() => {
-                  login();
-                }}
-              />
-              <Ionicons name="checkmark-done-circle-sharp" size="23px" />
-            </View>
-            <View style={styles.logSubmitContainer}>
-              <Button
-                style={styles.regButton}
-                color="black"
-                title="Register"
-                onPress={() => {
-                  setRegistration(true);
-                }}
-              />
-            </View>
-            <View style={styles.logSubmitContainer}>
-              <Button
-                style={styles.regButton}
-                color="black"
-                title="Logout"
-                onPress={() => {
-                  logout();
-                }}
-              />
-            </View>
-          </View>
+          <Text style={styles.regHeader}>Vegetation Station</Text>
         </View>
-      ) : (
-        <View>
-          <Text
-            style={{
-              fontSize: 30,
-              color: 'white',
-              alignSelf: 'center',
-              justifyContent: 'center',
+        <View style={styles.loginInputsContainer}>
+          <View>
+            <Text style={styles.registerLabels}>Email</Text>
+          </View>
+          <TextInput
+            placeholder="Enter your email..."
+            style={styles.loginInputs}
+            onChangeText={(text) => {
+              setUserInfo(userInfo, (userInfo.email = text));
             }}
-          >
-            {`Welcome ${currUser.email.split('@')[0]}`}
-          </Text>
-          <Button
-            style={styles.regButton}
-            color="black"
-            title="signOut"
-            onPress={() => {
-              logout();
+          />
+          <View>
+            <Text style={styles.registerLabels}>Password</Text>
+          </View>
+          <TextInput
+            placeholder="Enter password..."
+            style={styles.loginInputs}
+            secureTextEntry
+            onChangeText={(text) => {
+              setUserInfo(userInfo, (userInfo.password = text));
             }}
           />
         </View>
-      )}
+        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}>
+          <View style={styles.logSubmitContainer}>
+            <Button
+              style={styles.regButton}
+              color="black"
+              title="Login"
+              onPress={() => {
+                login();
+              }}
+            />
+            <Ionicons name="checkmark-done-circle-sharp" size="23px" />
+          </View>
+          <View style={styles.logSubmitContainer}>
+            <Button
+              style={styles.regButton}
+              color="black"
+              title="Register"
+              onPress={() => {
+                setRegistration(true);
+              }}
+            />
+          </View>
+          <View style={styles.logSubmitContainer}>
+            <Button
+              style={styles.regButton}
+              color="black"
+              title="Logout"
+              onPress={() => {
+                logout();
+                dispatch(updateActiveUser({}));
+              }}
+            />
+          </View>
+        </View>
+      </View>
     </SafeAreaView>
   );
 };

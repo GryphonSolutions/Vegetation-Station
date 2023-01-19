@@ -11,6 +11,7 @@ import {
   Separator,
   SafeAreaView,
   Header,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {
   createUserWithEmailAndPassword,
@@ -31,8 +32,6 @@ const config = {
 };
 
 const Registration = ({ setRegistration, getOneAndSetOne }) => {
-  // const { userRegistration } = useSelector((state) => state.user);
-  // const dispatch = useDispatch();
   const [userReg, setUserReg] = useState({});
   const [radarQuery, setRadarQuery] = useState(0);
 
