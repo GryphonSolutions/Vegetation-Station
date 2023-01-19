@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 import {
   Details,
   Home,
@@ -25,7 +26,7 @@ const IoniconsRender = (iconName, size, color, isDarkMode) => {
     <Ionicons
       name={iconName}
       size={size}
-      color={isDarkMode ? 'white' : 'black'}
+      color={isDarkMode ? '#d39b52' : '#224722'}
     />
   );
 };
@@ -42,7 +43,16 @@ const routes = {
 };
 
 const NavBar = () => {
+  const [fontsLoaded] = useFonts({
+    AnonymousPro: require('../../assets/fonts/AnonymousPro-Regular.ttf'),
+    'AnonymousPro-Bold': require('../../assets/fonts/AnonymousPro-Bold.ttf'),
+    JosefinSans: require('../../assets/fonts/JosefinSans-Regular.ttf'),
+  });
   const { isDarkMode } = useSelector((state) => state.app);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <NavigationContainer ref={navigationRef}>
@@ -57,8 +67,13 @@ const NavBar = () => {
           tabBarActiveTintColor: isDarkMode ? '#dda15e' : '#dda15e',
           tabBarInactiveTintColor: isDarkMode ? '#FFF' : '#000',
           tabBarStyle: {
-            backgroundColor: isDarkMode ? '#000' : '#FFF',
+            backgroundColor: isDarkMode ? '#2F2E2D' : '#d5dec6',
+            borderTopWidth: 0,
+            height: '10%',
+            // height: '9%',
+            // paddingTop: 10,
           },
+          tabBarShowLabel: false,
         })}
       >
         <Tab.Screen name="Home" component={Home} />
