@@ -7,21 +7,14 @@ import styles from './assets/stylesheet';
 export default function Header() {
   const { isDarkMode } = useSelector((state) => state.app);
   return (
-    <View
-      style={[
-        styles.headerContainer,
-        { backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' },
-      ]}
-    >
+    <View style={styles.headerContainer}>
       <Text
         style={[
           styles.headerText,
           { color: isDarkMode ? '#d39b52' : '#283618' },
-          // { color: isDarkMode ? '#D2984E' : '#283618' },
         ]}
       >
-        Vegetation{'\n'}
-        Station
+        Vegetation Station
       </Text>
     </View>
   );

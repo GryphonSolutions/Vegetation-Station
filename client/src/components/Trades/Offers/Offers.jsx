@@ -2,30 +2,36 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Text, View, SafeAreaView, SectionList, Image, TouchableOpacity, Alert } from 'react-native';
+import {
+  Text,
+  View,
+  SafeAreaView,
+  SectionList,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../../actions';
 import styles from './assets/StyleSheet.jsx';
 import testData from './testData.js';
 
 const Offers = ({ navigation }) => {
-  const {
-    activeUser,
-    selectedUser,
-    users,
-    catalog,
-    currentOffers,
-    isDarkMode,
-  } = useSelector((state) => state.data);
-
+  const { activeUser, selectedUser, users, catalog, currentOffers } =
+    useSelector((state) => state.data);
+  const { isDarkMode } = useSelector((state) => state.app);
   const { username, profilePicture, tradeCount, location } = selectedUser;
-  const offers = [{
-    title: 'Your Offers',
-    data: currentOffers.filter((item) => activeUser.id === item.seller.id),
-  }];
-  const requests = [{
-    title: 'Your Requests',
-    data: currentOffers.filter((item) => activeUser.id === item.buyer.id),
-  }];
+  const offers = [
+    {
+      title: 'Your Offers',
+      data: currentOffers.filter((item) => activeUser.id === item.seller.id),
+    },
+  ];
+  const requests = [
+    {
+      title: 'Your Requests',
+      data: currentOffers.filter((item) => activeUser.id === item.buyer.id),
+    },
+  ];
   const dispatch = useDispatch();
 
   const findBuyer = (item) => {
@@ -45,43 +51,83 @@ const Offers = ({ navigation }) => {
 
   const renderTrade = (item) => {
     return (
-      <View style={styles.trade}>
-        <View style={styles.yourItem}>
-          <Text style={styles.user}>{activeUser?.username}</Text>
-          <Image style={styles.plantImage} source={{ uri: findPhoto(item?.seller?.listing) }} />
-          {activeUser?.id === item?.seller?.id
-            ? (
-              <TouchableOpacity style={styles.accept} onPress={() => Alert.alert('Accept Button Pressed')}>
+      <View style={styles.tradeContainer}>
+        <View style={styles.itemContainer}>
+          <View style={styles.usernameContainer}>
+            <Text style={styles.username}>{activeUser?.username}</Text>
+          </View>
+          <Image
+            style={styles.plantImage}
+            source={{ uri: findPhoto(item?.seller?.listing) }}
+          />
+          <View style={styles.buttonContainer}>
+            {activeUser?.id === item?.seller?.id ? (
+              <TouchableOpacity
+                style={[
+                  styles.actionButton,
+                  styles.accept,
+                  { backgroundColor: '#405725' },
+                ]}
+                onPress={() => Alert.alert('Accept Button Pressed')}
+              >
                 <Text style={styles.buttonText}>Accept</Text>
               </TouchableOpacity>
-            )
-            : (
-              <TouchableOpacity style={styles.cancel} onPress={() => Alert.alert('Cancel Button Pressed')}>
+            ) : (
+              <TouchableOpacity
+                style={[
+                  styles.actionButton,
+                  styles.cancel,
+                  { backgroundColor: '#64370c' },
+                ]}
+                onPress={() => Alert.alert('Cancel Button Pressed')}
+              >
                 <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
             )}
+          </View>
         </View>
-        <View style={styles.arrows}>
-          <Ionicons name="swap-horizontal" size="40px" color={isDarkMode ? 'white' : 'white'} />
+        <View style={styles.arrowsContainer}>
+          <Ionicons
+            name="swap-horizontal"
+            size="40px"
+            color={isDarkMode ? '#85766a' : '#1c381c'}
+          />
         </View>
-        <View style={styles.otherItem}>
-          <Text style={styles.user}>
-            {activeUser?.id === item?.buyer?.id
-              ? findBuyer(item)
-              : findSeller(item)}
-          </Text>
-          <Image style={styles.plantImage} source={{ uri: findPhoto(item?.buyer?.listing) }} />
-          {activeUser?.id === item?.seller?.id
-            ? (
-              <TouchableOpacity style={styles.decline} onPress={() => Alert.alert('Decline Button Pressed')}>
-                <Text style={styles.buttonText}>Decline</Text>
-              </TouchableOpacity>
-            )
-            : (
-              <TouchableOpacity style={styles.message} onPress={() => navigation.navigate('Chat')}>
-                <Text style={styles.buttonText}>Message</Text>
-              </TouchableOpacity>
-            )}
+        <View style={styles.itemContainer}>
+          <View style={styles.usernameContainer}>
+            <Text style={styles.username}>
+              {activeUser?.id === item?.buyer?.id
+                ? findBuyer(item)
+                : findSeller(item)}
+            </Text>
+          </View>
+          <Image
+            style={styles.plantImage}
+            source={{ uri: findPhoto(item?.buyer?.listing) }}
+          />
+          {activeUser?.id === item?.seller?.id ? (
+            <TouchableOpacity
+              style={[
+                styles.actionButton,
+                styles.decline,
+                { backgroundColor: '#64370c' },
+              ]}
+              onPress={() => Alert.alert('Decline Button Pressed')}
+            >
+              <Text style={styles.buttonText}>Decline</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={[
+                styles.actionButton,
+                styles.message,
+                { backgroundColor: '#405725' },
+              ]}
+              onPress={() => navigation.navigate('Chat')}
+            >
+              <Text style={styles.buttonText}>Message</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );
@@ -90,39 +136,75 @@ const Offers = ({ navigation }) => {
   const renderBody = () => {
     return (
       <View>
-        <Text style={styles.subHeader}>Your Offers</Text>
-        <SectionList
-          sections={offers}
-          listKey={(item, index) => `_key${index.toString()}`}
-          keyExtractor={(item, index) => `_key${index.toString()}`}
-          renderItem={({ item }) => renderTrade(item)}
-        />
-        <Text style={styles.subHeader}>Your Requests</Text>
-        <SectionList
-          sections={requests}
-          listKey={(item, index) => `_key${index.toString()}`}
-          keyExtractor={(item, index) => `_key${index.toString()}`}
-          renderItem={({ item }) => renderTrade(item)}
-        />
+        <View
+          style={[
+            { backgroundColor: isDarkMode ? '#656464' : '#e4e9dc' },
+            styles.sectionContainer,
+          ]}
+        >
+          <View style={styles.subHeaderContainerPositioner}>
+            <View
+              style={[
+                { backgroundColor: isDarkMode ? '#B3CB84' : '#f0c466' },
+                styles.subHeaderContainer,
+              ]}
+            >
+              <Text style={styles.subHeader}>Your Offers</Text>
+            </View>
+          </View>
+          <SectionList
+            sections={offers}
+            listKey={(item, index) => `_key${index.toString()}`}
+            keyExtractor={(item, index) => `_key${index.toString()}`}
+            renderItem={({ item }) => renderTrade(item)}
+          />
+        </View>
+        <View
+          style={[
+            { backgroundColor: isDarkMode ? '#656464' : '#e4e9dc' },
+            styles.sectionContainer,
+          ]}
+        >
+          <View style={styles.subHeaderContainerPositioner}>
+            <View
+              style={[
+                { backgroundColor: isDarkMode ? '#B3CB84' : '#f0c466' },
+                styles.subHeaderContainer,
+              ]}
+            >
+              <Text style={styles.subHeader}>Your Requests</Text>
+            </View>
+          </View>
+          <SectionList
+            sections={requests}
+            listKey={(item, index) => `_key${index.toString()}`}
+            keyExtractor={(item, index) => `_key${index.toString()}`}
+            renderItem={({ item }) => renderTrade(item)}
+          />
+        </View>
       </View>
     );
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 0, backgroundColor: '#606C38' }}>
-        <View style={styles.headerContainer}>
+    <View
+      style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
+    >
+      <SafeAreaView style={{ flex: 0 }} />
+      <View style={{ flex: 1 }}>
+        <View style={[styles.headerContainer]}>
           <Text style={styles.headerText}>Trade Proposals</Text>
         </View>
-        <View style={styles.itemsContainer}>
-          {currentOffers.length && catalog.length && users.length && (
+        <View style={styles.contentContainer}>
+          {currentOffers.length ? (
             <SectionList
               sections={[{ data: [1] }]}
+              showsVerticalScrollIndicator={false}
               renderItem={({ item }) => renderBody()}
             />
-          )}
+          ) : null}
         </View>
-      </SafeAreaView>
+      </View>
     </View>
   );
 };

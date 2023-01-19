@@ -6,23 +6,22 @@ const imageWidth = (screenWidth - 30) / 3.5;
 export default StyleSheet.create({
   headerContainer: {
     flex: 0,
-    backgroundColor: '#f0f4f1',
     flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: '5%',
-    paddingBottom: '8%',
+    alignItems: 'flex-start',
+    marginVertical: '5%',
   },
   headerText: {
     fontFamily: 'AnonymousPro-Bold',
     fontSize: 35,
     letterSpacing: 1,
     color: '#283618',
-    paddingLeft: 30,
+    paddingHorizontal: '8%',
   },
   searchBarContainer: {
     flex: 0,
     height: 40,
     flexDirection: 'row',
+    marginTop: '4%',
     marginHorizontal: 30,
     justifyContent: 'center',
     alignItems: 'center',
@@ -39,12 +38,10 @@ export default StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    // backgroundColor: '#FEFAE0',
-    backgroundColor: '#f0f4f1',
   },
   itemsContainer: {
     flex: 1,
-    marginHorizontal: 15,
+    marginHorizontal: '4%',
     marginTop: 18,
     alignItems: 'center',
   },

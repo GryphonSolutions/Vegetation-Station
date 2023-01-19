@@ -34,17 +34,13 @@ export default function Body() {
   );
 
   return (
-    <View
-      style={[
-        styles.contentContainer,
-        { backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' },
-      ]}
-    >
+    <View style={[styles.contentContainer]}>
       <SearchBar />
       <View style={styles.itemsContainer}>
         <FlatList
           data={data}
           numColumns={3}
+          showsVerticalScrollIndicator={false}
           ListEmptyComponent={<Text>There are no plants to show</Text>}
           renderItem={({ item }) => renderImage(item)}
         />
