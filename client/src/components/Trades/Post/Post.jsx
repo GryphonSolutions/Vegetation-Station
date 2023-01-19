@@ -49,7 +49,6 @@ const Post = () => {
       };
     });
     setDropdownItems(plantNames);
-    console.log(currentPlant.images[0]);
   }, []);
 
   // page is still checking camera priveledges

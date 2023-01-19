@@ -42,9 +42,11 @@ const Login = () => {
 
   const getOneAndSetOne = (userEmail) => {
     axios
-      .get(`http://localhost:8080/api/users/info/${userEmail}`)
+      .get(
+        `http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info/${userEmail}`,
+      )
       .then((res) => {
-        dispatch(updateActiveUser(res.data));
+        dispatch(updateActiveUser(res.data[0]));
       })
       .catch((err) => {
         console.error(err.message);

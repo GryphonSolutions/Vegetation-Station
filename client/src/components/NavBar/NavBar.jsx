@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { persistor } from '../../store';
 import {
   Details,
   Home,
@@ -19,6 +20,13 @@ import {
   UserProfile,
 } from '..';
 import { navigationRef } from './navigation';
+import { getCatalog, getOffers, getPlants, getUsers } from '../../actions';
+import {
+  updateCurrentOffers,
+  updateCurrentPosts,
+  updateFilteredCatalog,
+  updateIsNavShown,
+} from '../../reducers';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,7 +60,50 @@ const NavBar = () => {
     'JosefinSans-Light': require('../../assets/fonts/JosefinSans-Light.ttf'),
     'JosefinSans-Bold': require('../../assets/fonts/JosefinSans-Bold.ttf'),
   });
-  const { isDarkMode } = useSelector((state) => state.app);
+  const { isDarkMode, isNavShown } = useSelector((state) => state.app);
+  const { activeUser, offers, currentOffers } = useSelector(
+    (state) => state.data,
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    persistor.purge();
+    dispatch(getOffers({ url: 'offers/archive' }));
+    dispatch(getUsers({ url: 'users/info' }));
+    dispatch(getCatalog({ url: 'catalog/listings' }))
+      .unwrap()
+      .then(async (res) => {
+        try {
+          dispatch(updateFilteredCatalog(res));
+          const listings = await res.filter((item) => {
+            return item.isPosted === true || item.isTraded === false;
+          });
+          dispatch(updateCurrentPosts(listings));
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    dispatch(getPlants({ url: 'plants/details' }));
+  }, []);
+
+  useEffect(() => {
+    if (activeUser?.id) {
+      const test = async () => {
+        try {
+          const offers1 = await offers.filter((item) => {
+            return (
+              item?.buyer?.id === activeUser?.id ||
+              item?.seller?.id === activeUser?.id
+            );
+          });
+          dispatch(updateCurrentOffers(offers1));
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      test();
+    }
+  }, [activeUser, offers]);
 
   if (!fontsLoaded) {
     return null;
@@ -61,7 +112,7 @@ const NavBar = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Tab.Navigator
-        initialRouteName="Home"
+        initialRouteName="Login"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             const iconName = routes[route.name][focused ? 0 : 1];
@@ -109,14 +160,7 @@ const NavBar = () => {
             tabBarVisible: false, // if you don't want to see the tab bar
           }}
         />
-        <Tab.Screen
-          name="Login"
-          component={Login}
-          // options={{
-          //   tabBarButton: () => null,
-          //   tabBarVisible: false, // if you don't want to see the tab bar
-          // }}
-        />
+        <Tab.Screen name="Login" component={Login} />
       </Tab.Navigator>
     </NavigationContainer>
   );
