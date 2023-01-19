@@ -90,6 +90,9 @@ const Messages = () => {
     searchText: {
       fontFamily: 'JosefinSans',
     },
+    contentContainer: {
+      marginHorizontal: '4%',
+    },
     lobbyStatusMessage: {
       fontFamily: 'JosefinSans',
     },
@@ -188,86 +191,90 @@ const Messages = () => {
             />
           )}
         </View>
-        {!searchMessages && (
-          <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
-            {chats.length === 0 && (
-              <ListItem
-                containerStyle={{
-                  backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
-                }}
-                topDivider
-                bottomDivider
-              >
-                <ListItem.Content>
-                  <ListItem.Title style={styles.lobbyStatusMessage}>
-                    No current chats.
-                  </ListItem.Title>
-                </ListItem.Content>
-              </ListItem>
-            )}
-            {chats.length > 0 &&
-              chats.map((chat) => {
-                return <ChatList key={chat[0]} chat={chat} />;
-              })}
-          </ScrollView>
-        )}
-        {searchMessages && (
-          <KeyboardAvoidingView
-            behavior="padding"
-            style={{ marginBottom: 118 }}
-          >
-            <View style={{ maxHeight: '50%' }}>
-              <Text style={styles.lobbySectionHeader}>
-                Start a New Conversation
-              </Text>
-              <ScrollView>
-                {!checkUsersLength && (
-                  <ListItem
-                    containerStyle={{
-                      backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
-                    }}
-                    topDivider
-                    bottomDivider
-                  >
-                    <ListItem.Content>
-                      <ListItem.Title style={styles.lobbyStatusMessage}>
-                        No users named {userMessageSearch}.
-                      </ListItem.Title>
-                    </ListItem.Content>
-                  </ListItem>
-                )}
-                {checkUsersLength &&
-                  searchResultsUsers.map((user) => {
-                    return <NewChatList key={user.username} user={user} />;
-                  })}
-              </ScrollView>
-            </View>
-            <View style={{ height: '50%' }}>
-              <Text style={styles.lobbySectionHeader}>Your Conversations</Text>
-              <ScrollView>
-                {!checkFilterChatsLength && (
-                  <ListItem
-                    containerStyle={{
-                      backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
-                    }}
-                    topDivider
-                    bottomDivider
-                  >
-                    <ListItem.Content>
-                      <ListItem.Title style={styles.lobbyStatusMessage}>
-                        No chats with {userMessageSearch}.
-                      </ListItem.Title>
-                    </ListItem.Content>
-                  </ListItem>
-                )}
-                {checkFilterChatsLength &&
-                  searchResultsChats.map((chat) => {
-                    return <ChatList key={chat[0]} chat={chat} />;
-                  })}
-              </ScrollView>
-            </View>
-          </KeyboardAvoidingView>
-        )}
+        <View style={styles.contentContainer}>
+          {!searchMessages && (
+            <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
+              {chats.length === 0 && (
+                <ListItem
+                  containerStyle={{
+                    backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
+                  }}
+                  topDivider
+                  bottomDivider
+                >
+                  <ListItem.Content>
+                    <ListItem.Title style={styles.lobbyStatusMessage}>
+                      No current chats.
+                    </ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+              )}
+              {chats.length > 0 &&
+                chats.map((chat) => {
+                  return <ChatList key={chat[0]} chat={chat} />;
+                })}
+            </ScrollView>
+          )}
+          {searchMessages && (
+            <KeyboardAvoidingView
+              behavior="padding"
+              style={{ marginBottom: 118 }}
+            >
+              <View style={{ maxHeight: '50%' }}>
+                <Text style={styles.lobbySectionHeader}>
+                  Start a New Conversation
+                </Text>
+                <ScrollView>
+                  {!checkUsersLength && (
+                    <ListItem
+                      containerStyle={{
+                        backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
+                      }}
+                      topDivider
+                      bottomDivider
+                    >
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.lobbyStatusMessage}>
+                          No users named {userMessageSearch}.
+                        </ListItem.Title>
+                      </ListItem.Content>
+                    </ListItem>
+                  )}
+                  {checkUsersLength &&
+                    searchResultsUsers.map((user) => {
+                      return <NewChatList key={user.username} user={user} />;
+                    })}
+                </ScrollView>
+              </View>
+              <View style={{ height: '50%' }}>
+                <Text style={styles.lobbySectionHeader}>
+                  Your Conversations
+                </Text>
+                <ScrollView>
+                  {!checkFilterChatsLength && (
+                    <ListItem
+                      containerStyle={{
+                        backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
+                      }}
+                      topDivider
+                      bottomDivider
+                    >
+                      <ListItem.Content>
+                        <ListItem.Title style={styles.lobbyStatusMessage}>
+                          No chats with {userMessageSearch}.
+                        </ListItem.Title>
+                      </ListItem.Content>
+                    </ListItem>
+                  )}
+                  {checkFilterChatsLength &&
+                    searchResultsChats.map((chat) => {
+                      return <ChatList key={chat[0]} chat={chat} />;
+                    })}
+                </ScrollView>
+              </View>
+            </KeyboardAvoidingView>
+          )}
+        </View>
       </View>
     </View>
   );
