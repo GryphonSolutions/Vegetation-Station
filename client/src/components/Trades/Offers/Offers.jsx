@@ -127,7 +127,7 @@ const Offers = ({ navigation }) => {
                   styles.accept,
                   { backgroundColor: '#405725' },
                 ]}
-                onPress={() => Alert.alert('Accept Button Pressed')}
+                onPress={() => acceptTrade(item)}
               >
                 <Text style={styles.buttonText}>Accept</Text>
               </TouchableOpacity>
@@ -138,7 +138,7 @@ const Offers = ({ navigation }) => {
                   styles.cancel,
                   { backgroundColor: '#64370c' },
                 ]}
-                onPress={() => Alert.alert('Cancel Button Pressed')}
+                onPress={() => cancelTrade(item)}
               >
                 <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
@@ -171,7 +171,7 @@ const Offers = ({ navigation }) => {
                 styles.decline,
                 { backgroundColor: '#64370c' },
               ]}
-              onPress={() => Alert.alert('Decline Button Pressed')}
+              onPress={() => cancelTrade(item)}
             >
               <Text style={styles.buttonText}>Decline</Text>
             </TouchableOpacity>
@@ -182,7 +182,7 @@ const Offers = ({ navigation }) => {
                 styles.message,
                 { backgroundColor: '#405725' },
               ]}
-              onPress={() => navigation.navigate('Chat')}
+              onPress={() => chatWithUser(item.buyer.id)}
             >
               <Text style={styles.buttonText}>Message</Text>
             </TouchableOpacity>
