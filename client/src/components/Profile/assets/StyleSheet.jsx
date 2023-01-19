@@ -100,6 +100,10 @@ export default StyleSheet.create({
     color: 'gold',
   },
 
+  body: {
+    backgroundColor: '#606C38',
+  },
+
   item: {
     backgroundColor: '#606C38',
     flexDirection: 'row',
@@ -110,6 +114,7 @@ export default StyleSheet.create({
 
   header2: {
     color: 'white',
+    backgroundColor: '#606C38',
     fontSize: 20,
     flex: 2,
     // fontWeight: 600,
@@ -119,6 +124,7 @@ export default StyleSheet.create({
 
   header3: {
     color: 'white',
+    backgroundColor: '#606C38',
     fontSize: 20,
     flex: 2,
     // fontWeight: 600,

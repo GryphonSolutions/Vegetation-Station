@@ -13,7 +13,7 @@ import {
   Alert,
 } from 'react-native';
 import { persistor } from '../../store';
-import { updateSelectedUser } from '../../reducers';
+import { updateActiveUser, updateSelectedUser } from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
 
@@ -39,9 +39,9 @@ const Profile = ({ navigation }) => {
   });
 
   const signOut = () => {
-    dispatch(updateSelectedUser({}));
     persistor.purge();
-    navigation.navigate('Home');
+    dispatch(updateActiveUser({}));
+    navigation.navigate('Login');
   };
 
   const navMessage = () => {
@@ -65,28 +65,30 @@ const Profile = ({ navigation }) => {
 
   const renderRow = (index, item1, item2, item3) => {
     return (
-      <View key={`View ${index}`} style={styles.row}>
-        {item1 ? (
-          <Image
-            key={index}
-            style={styles.col}
-            source={{ uri: findPhoto(item1) }}
-          />
-        ) : null}
-        {item2 ? (
-          <Image
-            key={index + 1}
-            style={styles.col}
-            source={{ uri: findPhoto(item2) }}
-          />
-        ) : null}
-        {item3 ? (
-          <Image
-            key={index + 2}
-            style={styles.col}
-            source={{ uri: findPhoto(item3) }}
-          />
-        ) : null}
+      <View style={styles.body}>
+        <View key={`View ${index}`} style={styles.row}>
+          {item1 ? (
+            <Image
+              key={index}
+              style={styles.col}
+              source={{ uri: findPhoto(item1) }}
+            />
+          ) : null}
+          {item2 ? (
+            <Image
+              key={index + 1}
+              style={styles.col}
+              source={{ uri: findPhoto(item2) }}
+            />
+          ) : null}
+          {item3 ? (
+            <Image
+              key={index + 2}
+              style={styles.col}
+              source={{ uri: findPhoto(item3) }}
+            />
+          ) : null}
+        </View>
       </View>
     );
   };
@@ -143,7 +145,7 @@ const Profile = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 0, backgroundColor: '#606C38' }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#606C38' }}>
         <View style={styles.headerContainer}>
           {activeUser.username === username ? (
             null
