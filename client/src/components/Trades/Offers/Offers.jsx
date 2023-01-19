@@ -12,6 +12,7 @@ import {
   Alert,
 } from 'react-native';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../../actions';
+import { updateSelectedUser } from '../../../reducers';
 import styles from './assets/StyleSheet.jsx';
 
 const Offers = ({ navigation }) => {
@@ -19,6 +20,8 @@ const Offers = ({ navigation }) => {
     useSelector((state) => state.data);
   const { isDarkMode } = useSelector((state) => state.app);
   const { username, profilePicture, tradeCount, location } = selectedUser;
+  const dispatch = useDispatch();
+
   const offers = [
     {
       title: 'Your Offers',
@@ -31,7 +34,7 @@ const Offers = ({ navigation }) => {
       data: currentOffers.filter((item) => activeUser.id === item.buyer.id),
     },
   ];
-  const dispatch = useDispatch();
+
 
   const findBuyer = (item) => {
     const target = users.filter((user) => item.seller.id === user.id);
@@ -63,7 +66,7 @@ const Offers = ({ navigation }) => {
       .catch((err) => console.error(err));
     const target2 = catalog.filter((plant) => buyerListingID === plant.id);
     target2[0].isTraded = true;
-    axios.patch('http://localhost:3000/api/catalog/listings', target2, { headers: { 'content-type': 'application/json' } })
+    axios.patch('http://localhost:3000/api/catalog/listings', target2[0], { headers: { 'content-type': 'application/json' } })
       .then(() => console.log('success'))
       .catch((err) => console.error(err));
   };
@@ -103,7 +106,8 @@ const Offers = ({ navigation }) => {
   };
 
   const chatWithUser = (id) => {
-    console.log('SELECT USER: ', id);
+    const target = users.filter((user) => user.id === id);
+    dispatch(updateSelectedUser(target[0]));
     navigation.navigate('Chat');
   };
 
@@ -181,7 +185,7 @@ const Offers = ({ navigation }) => {
                 styles.message,
                 { backgroundColor: '#405725' },
               ]}
-              onPress={() => chatWithUser(item.buyer.id)}
+              onPress={() => chatWithUser(item.seller.id)}
             >
               <Text style={styles.buttonText}>Message</Text>
             </TouchableOpacity>
