@@ -1,35 +1,36 @@
 import { StyleSheet, StatusBar } from 'react-native';
 
 export default StyleSheet.create({
+  headerContainer: {
+    // flex: 0,
+    // flexDirection: 'row',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    flex: 0,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginVertical: '5%',
+    paddingLeft: 20,
+  },
+
+  backButton: {
+    position: 'absolute',
+    color: '#283618',
+    left: 10,
+  },
+
+  headerText: {
+    fontFamily: 'AnonymousPro-Bold',
+    fontSize: 35,
+    letterSpacing: 1,
+    color: '#283618',
+    paddingHorizontal: '8%',
+  },
+
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
     backgroundColor: '#283618',
-  },
-
-  headerContainer: {
-    flex: 0,
-    backgroundColor: '#606C38',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  headerText: {
-    color: '#FEFAE0',
-    fontSize: 30,
-    fontFamily: 'Helvetica-Bold',
-    paddingVertical: 20,
-  },
-
-  backButton: {
-    color: 'white',
-    size: '20px',
-    alignSelf: 'start',
-    paddingTop: 5,
-    paddingLeft: 5,
-    float: 'left',
-    display: 'inline-block',
   },
 
   itemsContainer: {
@@ -73,24 +74,24 @@ export default StyleSheet.create({
 
   buttonText: {
     textAlign: 'center',
-    color: 'white',
+    // color: 'white',
   },
 
   name: {
-    color: 'white',
+    // color: 'white',
     fontSize: 20,
     // fontWeight: 500,
     paddingBottom: 5,
   },
 
   location: {
-    color: 'white',
+    // color: 'white',
     fontSize: 16,
     paddingBottom: 5,
   },
 
   trades: {
-    color: 'white',
+    // color: 'white',
     fontSize: 16,
     paddingBottom: 5,
   },
@@ -109,7 +110,7 @@ export default StyleSheet.create({
   },
 
   header2: {
-    color: 'white',
+    // color: 'white',
     fontSize: 20,
     flex: 2,
     // fontWeight: 600,
@@ -118,7 +119,7 @@ export default StyleSheet.create({
   },
 
   header3: {
-    color: 'white',
+    // color: 'white',
     fontSize: 20,
     flex: 2,
     // fontWeight: 600,

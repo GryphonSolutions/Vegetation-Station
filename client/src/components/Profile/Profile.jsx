@@ -17,46 +17,6 @@ import { updateSelectedUser } from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
 
-const plant =
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-m6_9tWJNGZNP4ISvhI52ea-AGvKD2gXx9w&usqp=CAU';
-const allTrades = [
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-  { isOpen: false },
-  { isOpen: true },
-  { isOpen: false },
-];
-
 const Profile = ({ navigation }) => {
   const {
     activeUser,
@@ -182,13 +142,16 @@ const Profile = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 0, backgroundColor: '#606C38' }}>
+    <View
+      style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
+    >
+      <SafeAreaView style={{ flex: 0 }} />
+      <View style={{ flex: 1 }}>
         <View style={styles.headerContainer}>
           <Ionicons
             style={styles.backButton}
             name="arrow-undo"
-            size="25px"
+            size={30}
             onPress={() => navigation.navigate('Details')}
           />
           {username === activeUser.username ? (
@@ -203,7 +166,7 @@ const Profile = ({ navigation }) => {
             renderItem={({ item }) => renderBody()}
           />
         </View>
-      </SafeAreaView>
+      </View>
     </View>
   );
 };
