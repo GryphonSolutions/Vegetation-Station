@@ -44,7 +44,9 @@ const Messages = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8080/api/chats/data')
+      .get('http://localhost:8080/api/chats/data', {
+        params: { activeUser },
+      })
       .then((res) => {
         dispatch(updateChats(res.data));
       })
@@ -195,16 +197,17 @@ const Messages = () => {
     },
   ];
 
-  const activeUserChats = chats.filter((chat) => {
-    if (chat.id === activeUser) {
-      return true;
-    }
-    return false;
-  });
-  const checkChatsLength = activeUserChats.length > 0;
+  // const activeUserChats = chats.filter((chat) => {
+  //   if (chat.id === activeUser) {
+  //     return true;
+  //   }
+  //   return false;
+  // });
+  // const checkChatsLength = activeUserChats.length > 0;
 
-  const searchResultsChats = activeUserChats.filter((chat) => {
-    if (chat.chattingWith.username.includes(userMessageSearch)) {
+  console.log(Object.entries(chats));
+  const searchResultsChats = Object.entries(chats).filter((chat) => {
+    if (chat[1].chattingWith.username.includes(userMessageSearch)) {
       return true;
     }
     return false;
@@ -219,7 +222,6 @@ const Messages = () => {
   });
   const checkUsersLength = searchResultsUsers.length > 0;
 
-  console.log(activeUserChats);
   return (
     <SafeAreaView>
       <View style={styles.header}>
@@ -254,7 +256,7 @@ const Messages = () => {
       </View>
       {!searchMessages && (
         <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
-          {!checkChatsLength && (
+          {Object.entries(chats).length === 0 && (
             <ListItem>
               <ListItem.Content>
                 <ListItem.Title style={styles.name}>
@@ -263,9 +265,9 @@ const Messages = () => {
               </ListItem.Content>
             </ListItem>
           )}
-          {checkChatsLength &&
-            activeUserChats.map((chat) => {
-              return <ChatList key={chat.chattingWith.id} chat={chat} />;
+          {Object.entries(chats).length > 0 &&
+            Object.entries(chats).map((chat) => {
+              return <ChatList key={chat[0]} chat={chat} />;
             })}
         </ScrollView>
       )}
@@ -303,7 +305,7 @@ const Messages = () => {
               )}
               {checkFilterChatsLength &&
                 searchResultsChats.map((chat) => {
-                  return <ChatList key={chat.chattingWithId} chat={chat} />;
+                  return <ChatList key={chat[0]} chat={chat} />;
                 })}
             </ScrollView>
           </View>

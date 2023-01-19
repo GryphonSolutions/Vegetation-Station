@@ -35,16 +35,6 @@ const NewChatList = ({ user }) => {
     },
   });
 
-  const checkForCombinedId = (id) => {
-    const array = chats.filter((chat) => {
-      if (chat.combinedId === id) {
-        return true;
-      }
-      return false;
-    });
-    return array.length > 0;
-  };
-
   const navigateTo = async (Id, username, profilePicture) => {
     const activeUserId = activeUser.toString();
     const userId = Id.toString();
@@ -58,7 +48,7 @@ const NewChatList = ({ user }) => {
     // search userChats to see if this combined exists in the currentUser's chats
     //  if chat doesn't exist, create chat for both the sender and reciever
     //  if chat does exist, grab the messages from the chat collection
-    if (!checkForCombinedId(combinedId)) {
+    if (!chats.combinedId) {
       axios
         .post('http://localhost:8080/api/chats/data', {
           params: {
@@ -82,7 +72,7 @@ const NewChatList = ({ user }) => {
             combinedId,
             userId: activeUser,
             profilePicture: user.profilePicture,
-            username: 'Thomas',
+            username: 'AuthDone',
           },
         })
         .then((res) => {

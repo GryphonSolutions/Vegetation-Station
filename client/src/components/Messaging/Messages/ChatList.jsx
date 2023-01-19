@@ -33,10 +33,10 @@ const ChatList = ({ chat }) => {
     },
   });
 
-  const navigateTo = (chatRoomID, username, profilePicture) => {
-    console.log(chatRoomID);
+  const navigateTo = (combinedId, username, profilePicture) => {
+    console.log(combinedId);
     dispatch(updateChatHeaderInfo({ username, profilePicture }));
-    dispatch(updateCurrentCombinedId(chatRoomID));
+    dispatch(updateCurrentCombinedId(combinedId));
     // pull chat data from collection chats based on the combinedId
     // update state for chats
 
@@ -47,27 +47,27 @@ const ChatList = ({ chat }) => {
     <ListItem
       onPress={() => {
         navigateTo(
-          chat.combinedId,
-          chat.chattingWith.username,
-          chat.chattingWith.profilePicture,
+          chat[0].combinedId,
+          chat[1].chattingWith.username,
+          chat[1].chattingWith.profilePicture,
         );
       }}
     >
       <Avatar
         rounded
         source={{
-          uri: `${chat.chattingWith.profilePicture}`,
+          uri: `${chat[1].chattingWith.profilePicture}`,
         }}
       />
       <ListItem.Content>
         <View style={styles.titleCont}>
           <ListItem.Title style={styles.name}>
-            {chat.chattingWith.username}
+            {chat[1].chattingWith.username}
           </ListItem.Title>
-          <ListItem.Title style={styles.time}>{chat.date}</ListItem.Title>
+          <ListItem.Title style={styles.time}>{chat[1].date}</ListItem.Title>
         </View>
         <ListItem.Subtitle numberOfLines={1} ellipsizeMode="tail">
-          {chat.lastMessage}
+          {chat[1].lastMessage}
         </ListItem.Subtitle>
       </ListItem.Content>
     </ListItem>

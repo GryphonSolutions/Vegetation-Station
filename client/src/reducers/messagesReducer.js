@@ -5,7 +5,7 @@ const initialState = {
   userMessageSearch: '',
   senderInput: '',
   currentCombinedId: '',
-  activeUser: '89621280',
+  activeUser: '00516411',
   chatHeaderInfo: { username: '', profilePicture: '' },
   currentChat: [],
   chats: [],

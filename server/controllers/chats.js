@@ -8,9 +8,10 @@ const {
 } = require('../models');
 
 module.exports.getFromChats = async (req, res) => {
-  console.log('Chats Controller');
+  console.log('Chats Controller', req.query);
+  const id = req.query.activeUser;
   try {
-    const data = await getFromChatsDB();
+    const data = await getFromChatsDB(id);
     res.send(data);
   } catch (err) {
     console.log(err);

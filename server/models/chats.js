@@ -11,15 +11,26 @@ const {
 } = require('firebase/firestore');
 const { db, chatsCol, chatMessagesCol } = require('../database');
 
+// module.exports.getFromChatsDB = async (parameters) => {
+//   console.log('Chats model');
+//   const allDocs = [];
+//   try {
+//     const data = await getDoc(chatsCol);
+//     data.forEach((document) => {
+//       allDocs.push(document.data());
+//     });
+//     return Promise.resolve(allDocs);
+//   } catch (err) {
+//     console.error(err);
+//     return Promise.reject(err);
+//   }
+// };
+
 module.exports.getFromChatsDB = async (parameters) => {
-  console.log('Chats model');
-  const allDocs = [];
+  const docRef = doc(db, 'chats', parameters);
   try {
-    const data = await getDocs(chatsCol);
-    data.forEach((document) => {
-      allDocs.push(document.data());
-    });
-    return Promise.resolve(allDocs);
+    const data = await getDoc(docRef);
+    return Promise.resolve(data.data());
   } catch (err) {
     console.error(err);
     return Promise.reject(err);
