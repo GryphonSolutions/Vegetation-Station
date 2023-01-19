@@ -15,7 +15,6 @@ import styles from './assets/StyleSheet';
 const Location = ({ coordinates }) => {
   const { selectedUser } = useSelector((state) => state.data);
   const { username, location } = selectedUser;
-  console.log(location);
   if (location.latitude !== undefined) {
     return (
       <View style={styles.LocationContainer}>
@@ -35,7 +34,7 @@ const Location = ({ coordinates }) => {
               longitude: location.longitude,
             }}
           />
-          {/* <Circle
+          <Circle
             center={{
               latitude: location.latitude,
               longitude: location.longitude,
@@ -44,7 +43,7 @@ const Location = ({ coordinates }) => {
             strokeWidth={2}
             strokeColor="rgba(207,0,15,1)"
             fillColor="rgba(207,0,15,0.2)"
-          /> */}
+          />
         </MapView>
       </View>
     );
