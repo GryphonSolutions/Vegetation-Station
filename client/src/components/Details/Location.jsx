@@ -15,18 +15,11 @@
 // const Location = ({ coordinates }) => {
 //   const { selectedUser } = useSelector((state) => state.data);
 //   const { username, location } = selectedUser;
-//   console.log(coordinates);
-//   const [region, setRegion] = useState({
-//     longitude: -118.75845,
-//     latitude: 34.139713,
-//     // latitudeDelta: 0.01,
-//     // longitudeDelta: 0.01,
-//   });
 //   return (
 //     <View style={styles.LocationContainer}>
 //       <MapView
 //         style={styles.LocationMap}
-//         initialRegion={{
+//         region={{
 //           latitude: location.latitude,
 //           longitude: location.longitude,
 //           latitudeDelta: 0.04,

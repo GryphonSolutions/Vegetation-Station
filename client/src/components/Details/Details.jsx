@@ -23,11 +23,9 @@ const navigateSelectedProfile = () => {
 
 const Details = () => {
   const { selectedUser, currentPlant } = useSelector((state) => state.data);
-  // const { location } = selectedUser;
   const { description, images, preferredTrade, commonName, postTitle } =
     currentPlant;
   const dispatch = useDispatch();
-  console.log('Plant info: ', images);
   return (
     // <SafeAreaView style={styles.container}>
     <View style={styles.container}>
