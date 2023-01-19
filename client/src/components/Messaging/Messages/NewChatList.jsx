@@ -6,7 +6,6 @@ import { ListItem, Avatar } from 'react-native-elements';
 import {
   updateCurrentCombinedId,
   updateCurrentChat,
-  updateChatHeaderInfo,
   updateSearchMessages,
   updateUserMessageSearch,
 } from '../../../reducers/messagesReducer.js';
@@ -47,7 +46,7 @@ const NewChatList = ({ user }) => {
         params: { combinedId },
       })
       .then((res) => {
-        console.log('MESSAGES DATA ', res.data);
+        // console.log('MESSAGES DATA ', res.data);
         dispatch(updateCurrentChat(res.data));
       })
       .catch((err) => {
@@ -71,10 +70,9 @@ const NewChatList = ({ user }) => {
     const combinedId =
       activeUserId > userId ? activeUserId + userId : userId + activeUserId;
 
-    console.log(combinedId);
+    // console.log(combinedId);
     dispatch(updateSelectedUser(user));
     dispatch(updateCurrentCombinedId(combinedId));
-    dispatch(updateChatHeaderInfo({ username, profilePicture }));
 
     if (!chatExists(combinedId)) {
       axios
@@ -88,7 +86,7 @@ const NewChatList = ({ user }) => {
           },
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -104,7 +102,7 @@ const NewChatList = ({ user }) => {
           },
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -116,7 +114,7 @@ const NewChatList = ({ user }) => {
           },
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => console.log('error creating chatMessages ', err));
     }

@@ -12,12 +12,15 @@ import {
   SafeAreaView,
   Header,
   TouchableWithoutFeedback,
+  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from 'firebase/auth';
 import axios from 'axios';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { auth } from '../../../../server/database/firebase.js';
 import styles from './assets/StyleSheet.jsx';
 import { navigate } from '../NavBar/navigation.js';
@@ -87,7 +90,7 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
+      <KeyboardAwareScrollView>
         <View>
           <Ionicons
             style={styles.backButton}
@@ -107,7 +110,9 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
           </View>
           <TextInput
             placeholder="Enter your email..."
+            placeholderTextColor="#283618"
             style={styles.loginInputs}
+            clearButtonMode="always"
             onChangeText={(e) => {
               setUserReg(userReg, (userReg.email = e));
             }}
@@ -118,7 +123,9 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
           <TextInput
             placeholder="Enter password..."
             style={styles.loginInputs}
+            placeholderTextColor="#283618"
             secureTextEntry
+            clearButtonMode="always"
             onChangeText={(e) => {
               setUserReg(userReg, (userReg.password = e));
             }}
@@ -129,6 +136,8 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
           <TextInput
             placeholder="Enter your zipcode..."
             style={styles.loginInputs}
+            placeholderTextColor="#283618"
+            clearButtonMode="always"
             onChangeText={(zip) => {
               setRadarQuery(zip);
             }}
@@ -137,8 +146,10 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
             <Text style={styles.registerLabels}>Profile Picture</Text>
           </View>
           <TextInput
-            placeholder="Enter your profile picture Url..."
+            placeholder="Profile picture Url..."
             style={styles.loginInputs}
+            placeholderTextColor="#283618"
+            clearButtonMode="always"
             onChangeText={(e) => {
               setUserReg(userReg, (userReg.profilePicture = e));
             }}
@@ -154,10 +165,9 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
                 getLatLong();
               }}
             />
-            <Ionicons name="checkmark-done-circle-sharp" size="23px" />
           </View>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };

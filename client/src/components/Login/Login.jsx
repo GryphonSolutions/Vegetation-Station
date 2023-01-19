@@ -9,6 +9,7 @@ import {
   TextInput,
   Separator,
   SafeAreaView,
+  Image,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
@@ -18,12 +19,14 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Registration from './Registration.jsx';
 import styles from './assets/StyleSheet.jsx';
 import { auth } from '../../../../server/database/firebase.js';
 import { updateActiveUser } from '../../reducers';
 import { navigate } from '../NavBar/navigation.js';
 import { logout } from './authLogout.js';
+import logo from './assets/whiteVegiStegi.png';
 
 const Login = () => {
   const [registration, setRegistration] = useState(false);
@@ -75,68 +78,78 @@ const Login = () => {
     />
   ) : (
     <SafeAreaView style={styles.container}>
-      <View>
+      <KeyboardAwareScrollView>
         <View>
-          <Text style={styles.regHeader}>Vegetation Station</Text>
-        </View>
-        <View style={styles.loginInputsContainer}>
-          <View>
-            <Text style={styles.registerLabels}>Email</Text>
+          <Image source={logo} style={styles.logoStyles} />
+          <View style={styles.loginInputsContainer}>
+            <View>
+              <Text style={styles.registerLabels}>Email</Text>
+            </View>
+            <TextInput
+              placeholder="Enter your email..."
+              placeholderTextColor="#283618"
+              style={styles.loginInputs}
+              clearButtonMode="always"
+              onChangeText={(text) => {
+                setUserInfo(userInfo, (userInfo.email = text));
+              }}
+            />
+            <View>
+              <Text style={styles.registerLabels}>Password</Text>
+            </View>
+            <TextInput
+              placeholder="Enter password..."
+              style={styles.loginInputs}
+              placeholderTextColor="black"
+              secureTextEntry
+              clearButtonMode="always"
+              onChangeText={(text) => {
+                setUserInfo(userInfo, (userInfo.password = text));
+              }}
+            />
           </View>
-          <TextInput
-            placeholder="Enter your email..."
-            style={styles.loginInputs}
-            onChangeText={(text) => {
-              setUserInfo(userInfo, (userInfo.email = text));
+          <View
+            style={{
+              justifyContent: 'center',
+              flexDirection: 'row',
+              fontFamily: 'AnonymousPro',
             }}
-          />
-          <View>
-            <Text style={styles.registerLabels}>Password</Text>
-          </View>
-          <TextInput
-            placeholder="Enter password..."
-            style={styles.loginInputs}
-            secureTextEntry
-            onChangeText={(text) => {
-              setUserInfo(userInfo, (userInfo.password = text));
-            }}
-          />
-        </View>
-        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}>
-          <View style={styles.logSubmitContainer}>
-            <Button
-              style={styles.regButton}
-              color="black"
-              title="Login"
-              onPress={() => {
-                login();
-              }}
-            />
-            <Ionicons name="checkmark-done-circle-sharp" size="23px" />
-          </View>
-          <View style={styles.logSubmitContainer}>
-            <Button
-              style={styles.regButton}
-              color="black"
-              title="Register"
-              onPress={() => {
-                setRegistration(true);
-              }}
-            />
-          </View>
-          <View style={styles.logSubmitContainer}>
-            <Button
-              style={styles.regButton}
-              color="black"
-              title="Logout"
-              onPress={() => {
-                logout();
-                dispatch(updateActiveUser({}));
-              }}
-            />
+          >
+            <View style={styles.logSubmitContainer}>
+              <Button
+                style={styles.regButton}
+                color="#283618"
+                title="Login"
+                textStyle={{ fontFamily: 'JosefinSans' }}
+                onPress={() => {
+                  login();
+                }}
+              />
+            </View>
+            <View style={styles.logSubmitContainer}>
+              <Button
+                style={{ fontFamily: 'AnonymousPro' }}
+                color="#283618"
+                title="Register"
+                onPress={() => {
+                  setRegistration(true);
+                }}
+              />
+            </View>
+            <View style={styles.logSubmitContainer}>
+              <Button
+                style={styles.regButton}
+                color="#283618"
+                title="Logout"
+                onPress={() => {
+                  logout();
+                  dispatch(updateActiveUser({}));
+                }}
+              />
+            </View>
           </View>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
