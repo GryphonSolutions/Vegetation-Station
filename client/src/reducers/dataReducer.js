@@ -20,6 +20,7 @@ const initialState = {
     return item.isPosted === true || item.isTraded === false;
   }),
   catalog: testCatalog,
+  filteredCatalog: testCatalog,
   offers: testOffers,
   plants: testPlants,
   users: testUsers,
@@ -39,6 +40,9 @@ const dataSlice = createSlice({
     },
     updateCurrentPlant: (state, action) => {
       state.currentPlant = action.payload;
+    },
+    updateCurrentPosts: (state, action) => {
+      state.currentPosts = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -70,7 +74,7 @@ const dataSlice = createSlice({
   },
 });
 
-export const { updateActiveUser, updateSelectedUser, updateCurrentPlant } =
+export const { updateActiveUser, updateSelectedUser, updateCurrentPlant, updateCurrentPosts } =
   dataSlice.actions;
 
 export const dataReducer = dataSlice.reducer;

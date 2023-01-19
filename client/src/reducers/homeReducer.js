@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  homeSearchText: false,
+  homeSearchText: '',
 };
 
 const homeSlice = createSlice({
