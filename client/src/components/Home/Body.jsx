@@ -22,7 +22,7 @@ export default function Body() {
     <Pressable
       style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
       onPress={() => {
-        navigation.navigate('Details');
+        navigation.navigate('Details', { id: item.id });
       }}
     >
       <Image
@@ -32,7 +32,6 @@ export default function Body() {
       />
     </Pressable>
   );
-
   return (
     <View style={[styles.contentContainer]}>
       <SearchBar />

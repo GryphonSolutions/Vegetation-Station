@@ -18,15 +18,10 @@ import * as navigation from '../NavBar/navigation';
 import styles from './assets/StyleSheet';
 
 const Details = () => {
-  const { selectedUser } = useSelector((state) => state.data);
+  const { selectedUser, catalog } = useSelector((state) => state.data);
   const { location } = selectedUser;
   const dispatch = useDispatch();
-  console.log(location);
-  const [coordinates, setCoordinates] = useState({
-    longitude: location.longitude,
-    latitude: location.latitude,
-  });
-
+  console.log(selectedUser);
   return (
     // <SafeAreaView style={styles.container}>
     <View style={styles.container}>
@@ -57,7 +52,7 @@ const Details = () => {
           </View>
           <View style={styles.LocationContainer}>
             <Text style={styles.plantNameText}>Trader's General Location:</Text>
-            <Location coordinate={coordinates} />
+            <Location />
           </View>
         </View>
       </ScrollView>
