@@ -16,6 +16,7 @@ import {
   Post,
   Submit,
   Profile,
+  UserProfile,
 } from '..';
 import { navigationRef } from './navigation';
 
@@ -38,6 +39,7 @@ const routes = {
   Post: ['add-circle', 'add-circle-outline'],
   Messages: ['chatbox', 'chatbox-outline'],
   Profile: ['person', 'person-outline'],
+  UserProfile: ['person', 'person-outline'],
   Details: ['ios-bookmarks', 'ios-bookmarks-outline'],
   Chat: ['notifications', 'notifications-outline'],
 };
@@ -80,7 +82,15 @@ const NavBar = () => {
         <Tab.Screen name="Offers" component={Offers} />
         <Tab.Screen name="Post" component={Post} />
         <Tab.Screen name="Messages" component={Messages} />
-        <Tab.Screen name="Profile" component={Profile} />
+        <Tab.Screen name="UserProfile" component={UserProfile} />
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            tabBarButton: () => null,
+            tabBarVisible: false, // if you don't want to see the tab bar
+          }}
+        />
         <Tab.Screen
           name="Details"
           component={Details}
