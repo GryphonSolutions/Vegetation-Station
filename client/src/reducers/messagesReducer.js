@@ -15,8 +15,8 @@ const messagesSlice = createSlice({
   name: 'Station Messages',
   initialState,
   reducers: {
-    updateSearchMessages: (state) => {
-      state.searchMessages = !state.searchMessages;
+    updateSearchMessages: (state, action) => {
+      state.searchMessages = action.payload;
     },
     updateUserMessageSearch: (state, action) => {
       state.userMessageSearch = action.payload;

@@ -63,7 +63,7 @@ module.exports.updateChatsDB = async (parameters) => {
   const docRef = doc(db, 'chats', id);
   try {
     await updateDoc(docRef, {
-      [`${currentCombinedId}.lastMessage`]: { text },
+      [`${currentCombinedId}.lastMessage`]: text,
       [`${currentCombinedId}.date`]: serverTimestamp(),
       [`${currentCombinedId}.read`]: read,
     });

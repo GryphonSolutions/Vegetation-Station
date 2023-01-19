@@ -6,6 +6,8 @@ import { ListItem, Avatar } from 'react-native-elements';
 import {
   updateCurrentCombinedId,
   updateChatHeaderInfo,
+  updateSearchMessages,
+  updateUserMessageSearch,
 } from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
@@ -35,6 +37,8 @@ const ChatList = ({ chat }) => {
 
   const navigateTo = (combinedId, username, profilePicture) => {
     console.log(combinedId);
+    dispatch(updateSearchMessages(false));
+    dispatch(updateUserMessageSearch(''));
     dispatch(updateChatHeaderInfo({ username, profilePicture }));
     dispatch(updateCurrentCombinedId(combinedId));
     // pull chat data from collection chats based on the combinedId

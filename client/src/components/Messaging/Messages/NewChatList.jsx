@@ -6,6 +6,8 @@ import { ListItem, Avatar } from 'react-native-elements';
 import {
   updateCurrentCombinedId,
   updateChatHeaderInfo,
+  updateSearchMessages,
+  updateUserMessageSearch,
 } from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
@@ -93,6 +95,8 @@ const NewChatList = ({ user }) => {
         .catch((err) => console.log('error creating chatMessages ', err));
     }
 
+    dispatch(updateSearchMessages(false));
+    dispatch(updateUserMessageSearch(''));
     RootNavigation.navigate('Chat');
   };
 

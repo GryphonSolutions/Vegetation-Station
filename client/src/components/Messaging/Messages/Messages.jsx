@@ -214,13 +214,17 @@ const Messages = () => {
   });
   const checkUsersLength = searchResultsUsers.length > 0;
 
+  const searchHandler = (bool) => {
+    dispatch(updateSearchMessages(!bool));
+  };
+
   return (
     <SafeAreaView>
       <View style={styles.header}>
         <View style={styles.titleSearchCont}>
           <Text style={styles.title}>Messages</Text>
           <TouchableOpacity
-            onPress={() => dispatch(updateSearchMessages())}
+            onPress={() => searchHandler(searchMessages)}
             activeOpacity={0.5}
           >
             <Ionicons

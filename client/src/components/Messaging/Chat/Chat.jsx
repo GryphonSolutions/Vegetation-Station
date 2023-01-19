@@ -20,6 +20,8 @@ import {
 import {
   updateSenderInput,
   updateCurrentChat,
+  updateCurrentCombinedId,
+  updateChatHeaderInfo,
 } from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
@@ -179,6 +181,10 @@ const Chat = () => {
 
   const backToMessages = () => {
     console.log('Go back to messages');
+    dispatch(updateSenderInput(''));
+    dispatch(updateCurrentCombinedId(''));
+    dispatch(updateChatHeaderInfo({ username: '', profilePicture: '' }));
+    dispatch(updateCurrentChat({}));
     RootNavigation.navigate('Messages');
   };
 

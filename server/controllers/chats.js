@@ -8,7 +8,7 @@ const {
 } = require('../models');
 
 module.exports.getFromChats = async (req, res) => {
-  console.log('Chats Controller', req.query);
+  console.log('GET CHATS', req.query);
   const id = req.query.activeUser;
   try {
     const data = await getFromChatsDB(id);
@@ -20,7 +20,7 @@ module.exports.getFromChats = async (req, res) => {
 };
 
 module.exports.postToChats = async (req, res) => {
-  console.log(req.body.params);
+  console.log('POST CHATS ', req.body.params);
   try {
     await postToChatsDB(req.body.params);
     res.sendStatus(201);
