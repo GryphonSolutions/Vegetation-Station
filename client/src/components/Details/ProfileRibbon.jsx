@@ -22,11 +22,7 @@ const ProfileRibbon = () => {
         <View style={styles.usernameContainer}>
           <Text style={styles.profileUsername}>{username.toUpperCase()}</Text>
           <Text style={styles.tradeNumber}>
-            <Ionicons
-              name="star"
-              size="20px"
-              style={{ color: 'yellow', marginRight: 5 }}
-            />
+            <Ionicons name="star" size="20px" style={{ color: 'yellow' }} />
             {tradeCount} Trades
           </Text>
         </View>
