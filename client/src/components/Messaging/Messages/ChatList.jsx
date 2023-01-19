@@ -31,7 +31,7 @@ const ChatList = ({ chat }) => {
     time: {
       fontFamily: 'JosefinSans-Light',
       color: 'gray',
-      fontSize: '85%',
+      fontSize: 14,
     },
     titleCont: {
       flexDirection: 'row',
@@ -46,9 +46,12 @@ const ChatList = ({ chat }) => {
 
   const getMessages = (combinedId) => {
     axios
-      .get('http://localhost:8080/api/messages/data', {
-        params: { combinedId },
-      })
+      .get(
+        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/messages/data',
+        {
+          params: { combinedId },
+        },
+      )
       .then((res) => {
         // console.log('MESSAGES DATA ', res.data);
         dispatch(updateCurrentChat(res.data));
