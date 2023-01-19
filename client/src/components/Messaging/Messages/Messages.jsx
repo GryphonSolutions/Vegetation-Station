@@ -38,16 +38,19 @@ import testUsers from '../../../../../server/data/users.js';
 
 const Messages = () => {
   const { isDarkMode } = useSelector((state) => state.app);
-  const { activeUser } = useSelector((state) => state.data);
+  const { activeUser, users } = useSelector((state) => state.data);
   const { searchMessages, userMessageSearch, chats, messagesIntervalId } =
     useSelector((state) => state.messages);
   const dispatch = useDispatch();
 
   const getChats = () => {
     axios
-      .get('http://localhost:8080/api/chats/data', {
-        params: { activeUser: String(activeUser.id) },
-      })
+      .get(
+        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
+        {
+          params: { activeUser: String(activeUser.id) },
+        },
+      )
       .then((res) => {
         // console.log('ORDERED IN MESSAGES');
         dispatch(
@@ -97,6 +100,7 @@ const Messages = () => {
     },
     contentContainer: {
       marginHorizontal: '4%',
+      flex: 1,
     },
     lobbyStatusMessage: {
       fontFamily: 'JosefinSans',
@@ -110,7 +114,7 @@ const Messages = () => {
     },
   });
 
-  const users = testUsers;
+  // const users = testUsers;
 
   // console.log('chats ', chats);
 
