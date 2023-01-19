@@ -129,6 +129,7 @@ export default StyleSheet.create({
     // float: 'left',
     // alignSelf: 'start',
     color: '#283618',
+    marginLeft: 6,
     // marginLeft: 5,
     // alignItems: 'flex-start',
     // display: 'inline-block',
