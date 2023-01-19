@@ -4,11 +4,11 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    backgroundColor: '#283618',
+    color: '#283618',
   },
   loginInputs: {
     border: 'solid black 1px',
-    backgroundColor: 'white',
+    backgroundColor: '#d5dec6',
     borderRadius: '3%',
     margin: '5%',
     height: 30,
@@ -35,6 +35,11 @@ export default StyleSheet.create({
     fontSize: '30px',
     color: 'green',
   },
+  logoStyles: {
+    height: '44%',
+    width: '70%',
+    alignSelf: 'center',
+  },
 
   backButton: {
     border: '1px solid black',
@@ -45,11 +50,12 @@ export default StyleSheet.create({
     padding: 5,
   },
   regHeader: {
-    fontSize: '30px',
+    fontSize: 33,
     fontWeight: '500',
     alignSelf: 'center',
-    padding: '15%',
-    color: 'white',
+    paddingTop: 50,
+    color: 'black',
+    fontFamily: 'JosefinSans',
   },
 
   regSubmitContainer: {

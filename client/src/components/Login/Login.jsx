@@ -9,6 +9,7 @@ import {
   TextInput,
   Separator,
   SafeAreaView,
+  Image,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
@@ -25,6 +26,7 @@ import { auth } from '../../../../server/database/firebase.js';
 import { updateActiveUser } from '../../reducers';
 import { navigate } from '../NavBar/navigation.js';
 import { logout } from './authLogout.js';
+import logo from './assets/whiteVegiStegi.png';
 
 const Login = () => {
   const [registration, setRegistration] = useState(false);
@@ -81,6 +83,7 @@ const Login = () => {
           <View>
             <Text style={styles.regHeader}>Vegetation Station</Text>
           </View>
+          <Image source={logo} style={styles.logoStyles} />
           <View style={styles.loginInputsContainer}>
             <View>
               <Text style={styles.registerLabels}>Email</Text>
