@@ -27,10 +27,9 @@ const Details = () => {
     currentPlant;
   const dispatch = useDispatch();
   return (
-    // <SafeAreaView style={styles.container}>
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Header />
-      <ScrollView scrollEnabled="true">
+      <ScrollView scrollEnabled="true" style={{ marginHorizontal: '8%' }}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.plantPic}
@@ -49,10 +48,10 @@ const Details = () => {
             </View>
             <Text style={styles.plantPostDesc}>{description}</Text>
           </View>
-          <View style={styles.LocationContainer}>
-            <Text style={styles.plantNameText}>Trader's General Location:</Text>
-            {/* <Location /> */}
-          </View>
+        </View>
+        <View style={styles.LocationContainer}>
+          <Text style={styles.plantNameText}>Trader's General Location:</Text>
+          <Location />
         </View>
       </ScrollView>
       <TouchableOpacity onPress={() => navigateSelectedProfile()}>
@@ -60,7 +59,7 @@ const Details = () => {
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.detailPageButton}>
-          <Text>Save</Text>
+          <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.detailPageButton}
@@ -68,7 +67,7 @@ const Details = () => {
             navigation.navigate('Post');
           }}
         >
-          <Text>Propose Trade</Text>
+          <Text style={styles.buttonText}>Propose Trade</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.detailPageButton}
@@ -76,11 +75,10 @@ const Details = () => {
             navigation.navigate('Messages');
           }}
         >
-          <Text>Message</Text>
+          <Text style={styles.buttonText}>Message</Text>
         </TouchableOpacity>
       </View>
-    </View>
-    //  </SafeAreaView>
+    </SafeAreaView>
   );
 };
 
