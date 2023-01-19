@@ -98,7 +98,7 @@ const Post = () => {
       {!showCamera && (
         <ScrollView style={styles.container}>
           <View style={styles.container}>
-            {!catalog[0].isTraded ? (
+            {catalog[0].isTraded ? (
               <View>
                 <Text style={styles.title}>Propose A Trade</Text>
                 <Image
@@ -199,6 +199,7 @@ const Post = () => {
                   style={styles.buttonCamera}
                   onPress={() => {
                     takePhoto();
+                    setShowCamera(false);
                   }}
                 >
                   <Text style={styles.text}>Take picture</Text>
