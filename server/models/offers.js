@@ -41,7 +41,10 @@ module.exports.postToOffersDB = async ({ buyer, seller }) => {
 // Pass in Offers object
 module.exports.updateOffersDB = async (params) => {
   try {
-    await updateDoc(doc(offersCol, String(params.buyer.id) + String(params.seller.id)), params);
+    await updateDoc(doc(
+      offersCol,
+      String(params.buyer.listing) + String(params.seller.listing),
+    ), params);
     return Promise.resolve();
   } catch (err) {
     console.error(err);

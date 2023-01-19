@@ -49,6 +49,65 @@ const Offers = ({ navigation }) => {
     return target[0]?.images[0];
   };
 
+  const acceptTrade = (item) => {
+    const sellerListingID = item.seller.listing;
+    const buyerListingID = item.buyer.listing;
+    item.isOpen = false;
+    item.reason = 'accepted';
+    axios.patch('http://localhost:3000/api/offers/archive', item, { headers: { 'content-type': 'application/json' } })
+      .then(() => console.log('success'))
+      .catch((err) => console.error(err));
+    const target1 = catalog.filter((plant) => sellerListingID === plant.id);
+    target1[0].isTraded = true;
+    axios.patch('http://localhost:3000/api/catalog/listings', target1[0], { headers: { 'content-type': 'application/json' } })
+      .then(() => console.log('success'))
+      .catch((err) => console.error(err));
+    const target2 = catalog.filter((plant) => buyerListingID === plant.id);
+    target2[0].isTraded = true;
+    axios.patch('http://localhost:3000/api/catalog/listings', target2, { headers: { 'content-type': 'application/json' } })
+      .then(() => console.log('success'))
+      .catch((err) => console.error(err));
+  };
+
+  const declineTrade = (item) => {
+    const buyerListingID = item.buyer.listing;
+    item.isOpen = false;
+    item.reason = 'declined';
+    axios.patch('http://localhost:3000/api/offers/archive', item, { headers: { 'content-type': 'application/json' } })
+      .then(() => console.log('success'))
+      .catch((err) => console.error(err));
+    const target = catalog.filter((plant) => buyerListingID === plant.id);
+    target[0].isTraded = true;
+    axios.patch('http://localhost:3000/api/catalog/listings', target[0], { headers: { 'content-type': 'application/json' } })
+      .then(() => console.log('success'))
+      .catch((err) => console.error(err));
+  };
+
+  const cancelTrade = (item) => {
+    const sellerListingID = item.seller.listing;
+    const buyerListingID = item.buyer.listing;
+    item.isOpen = false;
+    item.reason = 'canceled';
+    axios.patch('http://localhost:3000/api/offers/archive', item, { headers: { 'content-type': 'application/json' } })
+      .then(() => console.log('success'))
+      .catch((err) => console.error(err));
+    const target1 = catalog.filter((plant) => sellerListingID === plant.id);
+    target1[0].isTraded = true;
+    axios.patch('http://localhost:3000/api/catalog/listings', target1[0], { headers: { 'content-type': 'application/json' } })
+      .then(() => console.log('success'))
+      .catch((err) => console.error(err));
+    const target2 = catalog.filter((plant) => buyerListingID === plant.id);
+    target2[0].isTraded = true;
+    axios.patch('http://localhost:3000/api/catalog/listings', target2[0], { headers: { 'content-type': 'application/json' } })
+      .then(() => console.log('success'))
+      .catch((err) => console.error(err));
+  };
+
+  const chatWithUser = (id) => {
+    console.log('SELECT USER: ', id);
+    navigation.navigate('Chat');
+  };
+
   const renderTrade = (item) => {
     return (
       <View style={styles.tradeContainer}>
