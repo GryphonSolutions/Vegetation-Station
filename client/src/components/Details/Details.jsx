@@ -55,7 +55,7 @@ const Details = () => {
           </View>
           <View style={styles.LocationContainer}>
             <Text style={styles.plantNameText}>Trader's General Location:</Text>
-            <Location />
+            {/* <Location /> */}
           </View>
         </View>
       </ScrollView>
