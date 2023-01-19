@@ -1,6 +1,6 @@
 module.exports = [
   {
-    id: String(new Date().getTime()),
+    id: '11347750',
     username: 'akbarimo',
     profilePicture: 'https://i.imgur.com/br9bWAp.png',
     tradeCount: 1,
@@ -13,7 +13,7 @@ module.exports = [
     },
   },
   {
-    id: String(new Date().getTime()),
+    id: '11347751',
     username: 'SaldanaThomas',
     profilePicture: 'https://i.imgur.com/br9bWAp.png',
     tradeCount: 2,
@@ -26,7 +26,7 @@ module.exports = [
     },
   },
   {
-    id: String(new Date().getTime()),
+    id: '11347752',
     username: 'JustDatGuy',
     profilePicture: 'https://i.imgur.com/br9bWAp.png',
     tradeCount: 15,
@@ -39,7 +39,7 @@ module.exports = [
     },
   },
   {
-    id: String(new Date().getTime()),
+    id: '11347753',
     username: 'kylemartinelli',
     profilePicture: 'https://i.imgur.com/br9bWAp.png',
     tradeCount: 20,
@@ -52,7 +52,7 @@ module.exports = [
     },
   },
   {
-    id: String(new Date().getTime()),
+    id: '11347754',
     username: 'officiallywilly',
     profilePicture: 'https://i.imgur.com/br9bWAp.png',
     tradeCount: 1,
@@ -65,7 +65,7 @@ module.exports = [
     },
   },
   {
-    id: String(new Date().getTime()),
+    id: '11347755',
     username: 'RyanGehris',
     profilePicture: 'https://i.imgur.com/br9bWAp.png',
     tradeCount: 4,
@@ -78,7 +78,7 @@ module.exports = [
     },
   },
   {
-    id: String(new Date().getTime()),
+    id: '11347756',
     username: 'WhenIKillGod',
     profilePicture: 'https://i.imgur.com/br9bWAp.png',
     tradeCount: 23,
@@ -91,7 +91,7 @@ module.exports = [
     },
   },
   {
-    id: String(new Date().getTime()),
+    id: '11347757',
     username: 'PeaceLilyMilly',
     profilePicture: 'https://i.imgur.com/br9bWAp.png',
     tradeCount: 69,

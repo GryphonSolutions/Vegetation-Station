@@ -1,6 +1,6 @@
 module.exports = [
   {
-    id: String(new Date().getTime()),
+    id: '10739100',
     commonName: 'Janet Craig',
     images: ['https://i.imgur.com/V7qUyTy.png'],
     size: 'medium',
@@ -12,7 +12,7 @@ module.exports = [
     isTraded: false,
   },
   {
-    id: String(new Date().getTime()),
+    id: '10739101',
     commonName: 'Tailflower',
     images: ['https://i.imgur.com/qDOf74a.png'],
     size: 'small',
@@ -24,7 +24,7 @@ module.exports = [
     isTraded: false,
   },
   {
-    id: String(new Date().getTime()),
+    id: '10739102',
     commonName: "Oreille d'lphant",
     images: ['https://i.imgur.com/fttTw9C.png'],
     size: 'small',
@@ -36,7 +36,7 @@ module.exports = [
     isTraded: false,
   },
   {
-    id: String(new Date().getTime()),
+    id: '10739103',
     commonName: 'Dracaena de Malaisie',
     images: ['https://i.imgur.com/aHkmDYg.png'],
     size: 'medium',
@@ -48,7 +48,7 @@ module.exports = [
     isTraded: false,
   },
   {
-    id: String(new Date().getTime()),
+    id: '10739104',
     commonName: 'Malaysian Dracaena',
     images: ['https://i.imgur.com/H5TPZUD.png'],
     size: 'medium',
@@ -60,7 +60,7 @@ module.exports = [
     isTraded: false,
   },
   {
-    id: String(new Date().getTime()),
+    id: '10739105',
     commonName: 'Aglaonema',
     images: ['https://i.imgur.com/XjsCfJB.png'],
     size: 'small',
@@ -72,7 +72,7 @@ module.exports = [
     isTraded: false,
   },
   {
-    id: String(new Date().getTime()),
+    id: '10739106',
     commonName: 'Guzmania',
     images: ['https://i.imgur.com/SpqsR4P.png'],
     size: 'small',
@@ -84,7 +84,7 @@ module.exports = [
     isTraded: false,
   },
   {
-    id: String(new Date().getTime()),
+    id: '10739107',
     commonName: 'Peace lily',
     images: ['https://i.imgur.com/h5qv6bS.png'],
     size: 'medium',
@@ -96,7 +96,7 @@ module.exports = [
     isTraded: false,
   },
   {
-    id: String(new Date().getTime()),
+    id: '10739108',
     commonName: 'African evergreen',
     images: ['https://i.imgur.com/jov0xbM.png'],
     size: 'medium',
@@ -108,7 +108,7 @@ module.exports = [
     isTraded: false,
   },
   {
-    id: String(new Date().getTime()),
+    id: '10739109',
     commonName: 'Bird nest Anthurium',
     images: ['https://i.imgur.com/jvPhXVy.png'],
     size: 'large',

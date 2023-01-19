@@ -23,7 +23,13 @@ export default function SearchBar() {
   return (
     <View style={styles.searchBarContainer}>
       <TextInput
-        style={styles.searchBar}
+        style={[
+          styles.searchBar,
+          {
+            color: isDarkMode ? '#f3e5dc' : '#224722',
+            backgroundColor: isDarkMode ? '#656464' : '#d5dec6',
+          },
+        ]}
         onChangeText={(val) => dispatch(updateHomeSearchText(val))}
         value={homeSearchText}
         placeholder="search for plants"
@@ -36,7 +42,7 @@ export default function SearchBar() {
         <MaterialIcons
           name="sort"
           size={40}
-          color={isDarkMode ? 'white' : 'black'}
+          color={isDarkMode ? '#B3CB84' : '#f3b736'}
         />
       </Pressable>
     </View>
