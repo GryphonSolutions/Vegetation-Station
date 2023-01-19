@@ -4,18 +4,20 @@ const screenWidth = Dimensions.get('window').width;
 const imageWidth = (screenWidth - 30) / 3.5;
 export default StyleSheet.create({
   container: {
-    flex: 6,
+    flex: 1,
     // alignItems: 'center',
     // justifyContent: 'center',
     backgroundColor: '#283618',
     // paddingTop: 60,
   },
   imageContainer: {
-    flex: 2,
+    marginTop: 10,
+    // flex: 2,
   },
   plantPic: {
-    flex: 2,
+    // flex: 2,
     // // aspectRation: 1.5,
+    position: 'fixed',
     height: '100%',
     width: '100%',
     resizeMode: 'contain',

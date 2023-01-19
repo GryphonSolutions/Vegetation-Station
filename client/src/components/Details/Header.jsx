@@ -2,16 +2,20 @@ import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { persistor } from '../../store';
 import * as navigation from '../NavBar/navigation';
 import styles from './assets/StyleSheet';
-
-const returnHome = () => {
-  persistor.purge();
-  navigation.navigate('Home');
-};
+import { updateSelectedUser } from '../../reducers';
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const { selectedUser, activeUser } = useSelector((state) => state.data);
+  const returnHome = () => {
+    persistor.purge();
+    dispatch(updateSelectedUser(activeUser));
+    navigation.navigate('Home');
+  };
   return (
     <View style={styles.headerContainer}>
       <Ionicons
