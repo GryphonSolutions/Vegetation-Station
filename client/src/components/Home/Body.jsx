@@ -9,21 +9,34 @@ import {
   Image,
   Alert,
 } from 'react-native';
+
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { updateSelectedUser, updateCurrentPlant } from '../../reducers';
 
 import * as navigation from '../NavBar/navigation';
 import styles from './assets/stylesheet';
-import data from './fakeData';
 import SearchBar from './SearchBar';
 
 export default function Body() {
   const { isDarkMode } = useSelector((state) => state.app);
+  const {
+    activeUser,
+    selectedUser,
+    users,
+    catalog,
+    currentPosts,
+    currentOffers,
+  } = useSelector((state) => state.data);
+
+  const goToPlant = (item) => {
+    console.log('GO TO PLANT: ', item);
+    navigation.navigate('Details');
+  };
+
   const renderImage = (item) => (
     <Pressable
       style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-      onPress={() => {
-        navigation.navigate('Details', { id: item.id });
-      }}
+      onPress={() => goToPlant(item)}
     >
       <Image
         style={styles.itemImage}
@@ -37,7 +50,7 @@ export default function Body() {
       <SearchBar />
       <View style={styles.itemsContainer}>
         <FlatList
-          data={data}
+          data={currentPosts}
           numColumns={3}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={<Text>There are no plants to show</Text>}

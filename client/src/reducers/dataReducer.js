@@ -10,8 +10,12 @@ import testUsers from '../../../server/data/users.js';
 const initialState = {
   activeUser: testUsers[0],
   selectedUser: testUsers[1],
+  currentPlant: testCatalog[0],
   currentOffers: (testOffers.filter((item) => {
     return item.buyer.id === testUsers[0].id || item.seller.id === testUsers[0].id;
+  })),
+  currentPosts: (testCatalog.filter((item) => {
+    return item.isPosted === true || item.isTraded === false;
   })),
   catalog: testCatalog,
   offers: testOffers,
@@ -29,6 +33,9 @@ const dataSlice = createSlice({
       state.activeUser = action.payload;
     },
     updateSelectedUser: (state, action) => {
+      state.selectedUser = action.payload;
+    },
+    updateCurrentPlant: (state, action) => {
       state.selectedUser = action.payload;
     },
   },
@@ -61,6 +68,6 @@ const dataSlice = createSlice({
   },
 });
 
-export const { updateActiveUser, updateSelectedUser } = dataSlice.actions;
+export const { updateActiveUser, updateSelectedUser, updateCurrentPlant } = dataSlice.actions;
 
 export const dataReducer = dataSlice.reducer;
