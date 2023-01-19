@@ -17,9 +17,9 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 import axios from 'axios';
-import { updateUserRegistration } from '../../reducers/usersReducer.js';
 import { auth } from '../../../../server/database/firebase.js';
 import styles from './assets/StyleSheet.jsx';
+import { navigate } from '../NavBar/navigation.js';
 
 const radarPublishableKey =
   'prj_live_pk_6efba0e95e7296a089fdcf13dbbe7ba2f83b84a1';
@@ -30,7 +30,7 @@ const config = {
   },
 };
 
-const Registration = ({ setRegistration }) => {
+const Registration = ({ setRegistration, getOneAndSetOne }) => {
   // const { userRegistration } = useSelector((state) => state.user);
   // const dispatch = useDispatch();
   const [userReg, setUserReg] = useState({});
@@ -50,6 +50,7 @@ const Registration = ({ setRegistration }) => {
           username: userReg.email.split('@')[0],
         })
         .then((res) => {
+          getOneAndSetOne(userReg.email.split('@')[0]);
           console.log(res);
         })
         .catch((err) => {
@@ -78,6 +79,7 @@ const Registration = ({ setRegistration }) => {
       .then((res) => {
         register(res);
         setRegistration(false);
+        navigate('Home');
       })
       .catch((err) => {
         console.error(err.message);

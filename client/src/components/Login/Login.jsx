@@ -11,6 +11,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -20,6 +21,8 @@ import {
 import Registration from './Registration.jsx';
 import styles from './assets/StyleSheet.jsx';
 import { auth } from '../../../../server/database/firebase.js';
+import { updateActiveUser } from '../../reducers';
+import { navigate } from '../NavBar/navigation.js';
 
 const Login = () => {
   const [registration, setRegistration] = useState(false);
@@ -27,9 +30,22 @@ const Login = () => {
   const [userInfo, setUserInfo] = useState({});
   const [currUser, setCurrUser] = useState({ email: '' });
 
+  const dispatch = useDispatch();
+
   onAuthStateChanged(auth, (currentUser) => {
     setCurrUser(currentUser);
   });
+
+  const getOneAndSetOne = (userEmail) => {
+    axios
+      .get(`http://localhost:8080/api/users/info/${userEmail}`)
+      .then((res) => {
+        dispatch(updateActiveUser(res.data));
+      })
+      .catch((err) => {
+        console.error(err.message);
+      });
+  };
 
   const login = async () => {
     try {
@@ -37,8 +53,15 @@ const Login = () => {
         auth,
         userInfo.email,
         userInfo.password,
-      );
-      console.log(user);
+      )
+        .then((res) => {
+          console.log(res);
+          getOneAndSetOne(res.user.email.split('@')[0]);
+          navigate('Home');
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     } catch (err) {
       console.error(err.message);
     }
@@ -48,74 +71,99 @@ const Login = () => {
     await signOut(auth);
   };
 
-  const loginHandler = () => {};
-
   return registration ? (
-    <Registration setRegistration={setRegistration} />
+    <Registration
+      setRegistration={setRegistration}
+      getOneAndSetOne={getOneAndSetOne}
+    />
   ) : (
     <SafeAreaView style={styles.container}>
-      <View>
-        <View style={{ border: '2px solid black' }}>
-          <Text style={styles.regHeader}>Vegetation Station</Text>
-          <Text>User is :{currUser ? currUser.email.split('@')[0] : ''}</Text>
-        </View>
-        <View style={styles.loginInputsContainer}>
+      {!currUser ? (
+        <View>
           <View>
-            <Text style={styles.registerLabels}>Email</Text>
+            <Text style={styles.regHeader}>Vegetation Station</Text>
           </View>
-          <TextInput
-            placeholder="Enter your email..."
-            style={styles.loginInputs}
-            onChangeText={(text) => {
-              setUserInfo(userInfo, (userInfo.email = text));
+          <View style={styles.loginInputsContainer}>
+            <View>
+              <Text style={styles.registerLabels}>Email</Text>
+            </View>
+            <TextInput
+              placeholder="Enter your email..."
+              style={styles.loginInputs}
+              onChangeText={(text) => {
+                setUserInfo(userInfo, (userInfo.email = text));
+              }}
+            />
+            <View>
+              <Text style={styles.registerLabels}>Password</Text>
+            </View>
+            <TextInput
+              placeholder="Enter password..."
+              style={styles.loginInputs}
+              secureTextEntry
+              onChangeText={(text) => {
+                setUserInfo(userInfo, (userInfo.password = text));
+              }}
+            />
+          </View>
+          <View
+            style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}
+          >
+            <View style={styles.logSubmitContainer}>
+              <Button
+                style={styles.regButton}
+                color="black"
+                title="Login"
+                onPress={() => {
+                  login();
+                }}
+              />
+              <Ionicons name="checkmark-done-circle-sharp" size="23px" />
+            </View>
+            <View style={styles.logSubmitContainer}>
+              <Button
+                style={styles.regButton}
+                color="black"
+                title="Register"
+                onPress={() => {
+                  setRegistration(true);
+                }}
+              />
+            </View>
+            <View style={styles.logSubmitContainer}>
+              <Button
+                style={styles.regButton}
+                color="black"
+                title="Logout"
+                onPress={() => {
+                  logout();
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      ) : (
+        <View>
+          <Text
+            style={{
+              fontSize: 30,
+              color: 'white',
+              alignSelf: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {`Welcome ${currUser.email.split('@')[0]}`}
+          </Text>
+          <Button
+            style={styles.regButton}
+            color="black"
+            title="signOut"
+            onPress={() => {
+              logout();
             }}
           />
-          <View>
-            <Text style={styles.registerLabels}>Password</Text>
-          </View>
-          <TextInput
-            placeholder="Enter password..."
-            style={styles.loginInputs}
-            secureTextEntry
-            onChangeText={(text) => {
-              setUserInfo(userInfo, (userInfo.password = text));
-            }}
-          />
         </View>
-        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}>
-          <View style={styles.logSubmitContainer}>
-            <Button
-              style={styles.regButton}
-              color="black"
-              title="Login"
-              onPress={() => {
-                login();
-              }}
-            />
-            <Ionicons name="checkmark-done-circle-sharp" size="23px" />
-          </View>
-          <View style={styles.logSubmitContainer}>
-            <Button
-              style={styles.regButton}
-              color="black"
-              title="Register"
-              onPress={() => {
-                setRegistration(true);
-              }}
-            />
-          </View>
-          <View style={styles.logSubmitContainer}>
-            <Button
-              style={styles.regButton}
-              color="black"
-              title="signOut"
-              onPress={() => {
-                logout();
-              }}
-            />
-          </View>
-        </View>
-      </View>
+      )}
     </SafeAreaView>
   );
 };
