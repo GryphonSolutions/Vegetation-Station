@@ -11,27 +11,30 @@ import {
   Image,
   TextInput,
   ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
 import styles from './StyleSheet';
+import plantData from './sampleData.js';
 
 const Post = () => {
+  // hooks for camera
   const [type, setType] = useState(CameraType.back); // set to back camera by default
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [showCamera, setShowCamera] = useState(false);
   const [image, setImage] = useState(null); // to access photo library
   const isFocused = useIsFocused(); // this is to unmount camera when it is not in focus
-  // const [formInfo, setFormInfo] = useState({
-  //   title: '',
-  //   species: '',
-  //   preferedTrades: '',
-  //   description: '',
-  // });
+  // hooks for form data
   const [title, setTitle] = useState('');
   const [trades, setTrades] = useState('');
   const [description, setDescription] = useState('');
+  // hooks for DropDownPicker
+  const [isDropOpen, setIsDropOpen] = useState(false);
+  const [dropValue, setDropValue] = useState([]);
+  const [dropItems, setDropItems] = useState([]);
 
   // page is still checking camera priveledges
   if (!permission) {
@@ -70,7 +73,7 @@ const Post = () => {
   };
 
   return (
-    <View style={styles.page}>
+    <KeyboardAvoidingView style={styles.page}>
       {!showCamera && (
         <ScrollView style={styles.container}>
           <View style={styles.container}>
@@ -102,7 +105,6 @@ const Post = () => {
 
             <Text style={styles.inputLabel}>PLANT SPECIES</Text>
 
-            <Text style={styles.inputLabel}>PREFERED TRADES (OPTIONAL)</Text>
             <TextInput
               style={styles.input}
               onChangeText={setTrades}
@@ -117,7 +119,7 @@ const Post = () => {
               onChangeText={setDescription}
               value={description}
               placeholder="Enter description"
-              numberOfLines={4}
+              maxLength={60}
             />
           </View>
         </ScrollView>
@@ -150,7 +152,7 @@ const Post = () => {
           </View>
         )
       }
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
