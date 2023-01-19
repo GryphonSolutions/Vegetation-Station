@@ -18,6 +18,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Registration from './Registration.jsx';
 import styles from './assets/StyleSheet.jsx';
 import { auth } from '../../../../server/database/firebase.js';
@@ -75,68 +76,74 @@ const Login = () => {
     />
   ) : (
     <SafeAreaView style={styles.container}>
-      <View>
+      <KeyboardAwareScrollView>
         <View>
-          <Text style={styles.regHeader}>Vegetation Station</Text>
-        </View>
-        <View style={styles.loginInputsContainer}>
           <View>
-            <Text style={styles.registerLabels}>Email</Text>
+            <Text style={styles.regHeader}>Vegetation Station</Text>
           </View>
-          <TextInput
-            placeholder="Enter your email..."
-            style={styles.loginInputs}
-            onChangeText={(text) => {
-              setUserInfo(userInfo, (userInfo.email = text));
-            }}
-          />
-          <View>
-            <Text style={styles.registerLabels}>Password</Text>
+          <View style={styles.loginInputsContainer}>
+            <View>
+              <Text style={styles.registerLabels}>Email</Text>
+            </View>
+            <TextInput
+              placeholder="Enter your email..."
+              style={styles.loginInputs}
+              clearButtonMode="always"
+              onChangeText={(text) => {
+                setUserInfo(userInfo, (userInfo.email = text));
+              }}
+            />
+            <View>
+              <Text style={styles.registerLabels}>Password</Text>
+            </View>
+            <TextInput
+              placeholder="Enter password..."
+              style={styles.loginInputs}
+              secureTextEntry
+              clearButtonMode="always"
+              onChangeText={(text) => {
+                setUserInfo(userInfo, (userInfo.password = text));
+              }}
+            />
           </View>
-          <TextInput
-            placeholder="Enter password..."
-            style={styles.loginInputs}
-            secureTextEntry
-            onChangeText={(text) => {
-              setUserInfo(userInfo, (userInfo.password = text));
-            }}
-          />
+          <View
+            style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}
+          >
+            <View style={styles.logSubmitContainer}>
+              <Button
+                style={styles.regButton}
+                color="black"
+                title="Login"
+                onPress={() => {
+                  login();
+                }}
+              />
+              <Ionicons name="checkmark-done-circle-sharp" size="23px" />
+            </View>
+            <View style={styles.logSubmitContainer}>
+              <Button
+                style={styles.regButton}
+                color="black"
+                title="Register"
+                onPress={() => {
+                  setRegistration(true);
+                }}
+              />
+            </View>
+            <View style={styles.logSubmitContainer}>
+              <Button
+                style={styles.regButton}
+                color="black"
+                title="Logout"
+                onPress={() => {
+                  logout();
+                  dispatch(updateActiveUser({}));
+                }}
+              />
+            </View>
+          </View>
         </View>
-        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}>
-          <View style={styles.logSubmitContainer}>
-            <Button
-              style={styles.regButton}
-              color="black"
-              title="Login"
-              onPress={() => {
-                login();
-              }}
-            />
-            <Ionicons name="checkmark-done-circle-sharp" size="23px" />
-          </View>
-          <View style={styles.logSubmitContainer}>
-            <Button
-              style={styles.regButton}
-              color="black"
-              title="Register"
-              onPress={() => {
-                setRegistration(true);
-              }}
-            />
-          </View>
-          <View style={styles.logSubmitContainer}>
-            <Button
-              style={styles.regButton}
-              color="black"
-              title="Logout"
-              onPress={() => {
-                logout();
-                dispatch(updateActiveUser({}));
-              }}
-            />
-          </View>
-        </View>
-      </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
