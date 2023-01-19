@@ -17,14 +17,18 @@ import { updateHomeSearchText, updateCurrentPosts } from '../../reducers';
 export default function SearchBar() {
   const { isDarkMode } = useSelector((state) => state.app);
   const { homeSearchText } = useSelector((state) => state.home);
-  const { catalog, currentPosts, filteredCatalog, users } = useSelector((state) => state.data);
+  const { catalog, currentPosts, filteredCatalog, users } = useSelector(
+    (state) => state.data,
+  );
   const dispatch = useDispatch();
 
   const updateSearch = (val) => {
     dispatch(updateHomeSearchText(val));
     const filtered = catalog.filter((item) => {
-      return (item.commonName.toLowerCase()).includes(val.toLowerCase())
-      && (item.isPosted === true || item.isTraded === false);
+      return (
+        item.commonName.toLowerCase().includes(val.toLowerCase()) &&
+        (item.isPosted === true || item.isTraded === false)
+      );
     });
     dispatch(updateCurrentPosts(filtered));
   };
@@ -39,9 +43,7 @@ export default function SearchBar() {
     return 0;
   };
 
-  const sortLocation = () => {
-
-  };
+  const sortLocation = () => {};
 
   // sort alphabetically by color
   const sortColor = () => {
@@ -58,7 +60,9 @@ export default function SearchBar() {
 
   // sort highest to lowest trade count
   const sortTopSellers = () => {
-    const sortedUsers = users.sort((a, b) => compare(b.tradeCount, a.tradeCount));
+    const sortedUsers = users.sort((a, b) =>
+      compare(b.tradeCount, a.tradeCount),
+    );
     const sorted = catalog.sort((a, b) => {
       const index1 = sortedUsers.map((e) => e.username).indexOf(a.poster);
       const index2 = sortedUsers.map((e) => e.username).indexOf(b.poster);

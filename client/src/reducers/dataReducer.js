@@ -8,24 +8,18 @@ import testPlants from '../../../server/data/plants.js';
 import testUsers from '../../../server/data/users.js';
 
 const initialState = {
-  activeUser: testUsers[0],
-  selectedUser: testUsers[1],
-  currentPlant: testCatalog[0],
-  currentOffers: testOffers.filter((item) => {
-    return (
-      item.buyer.id === testUsers[0].id || item.seller.id === testUsers[0].id
-    );
-  }),
-  currentPosts: testCatalog.filter((item) => {
-    return item.isPosted === true || item.isTraded === false;
-  }),
-  catalog: testCatalog,
-  filteredCatalog: testCatalog,
-  offers: testOffers,
-  plants: testPlants,
-  users: testUsers,
-  chatMessages: testChatMessages,
-  chats: testChats,
+  activeUser: {},
+  selectedUser: {},
+  currentPlant: {},
+  currentOffers: [],
+  currentPosts: [],
+  filteredCatalog: [],
+  catalog: [],
+  offers: [],
+  plants: [],
+  users: [],
+  chatMessages: [],
+  chats: [],
 };
 
 const dataSlice = createSlice({
@@ -43,6 +37,12 @@ const dataSlice = createSlice({
     },
     updateCurrentPosts: (state, action) => {
       state.currentPosts = action.payload;
+    },
+    updateCurrentOffers: (state, action) => {
+      state.currentOffers = action.payload;
+    },
+    updateFilteredCatalog: (state, action) => {
+      state.filteredCatalog = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -74,7 +74,13 @@ const dataSlice = createSlice({
   },
 });
 
-export const { updateActiveUser, updateSelectedUser, updateCurrentPlant, updateCurrentPosts } =
-  dataSlice.actions;
+export const {
+  updateActiveUser,
+  updateSelectedUser,
+  updateCurrentPlant,
+  updateCurrentPosts,
+  updateCurrentOffers,
+  updateFilteredCatalog,
+} = dataSlice.actions;
 
 export const dataReducer = dataSlice.reducer;

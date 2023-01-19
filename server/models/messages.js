@@ -1,6 +1,7 @@
 const {
   getFirestore,
   collection,
+  onSnapshot,
   getDoc,
   getDocs,
   doc,
@@ -21,6 +22,17 @@ module.exports.getFromMessagesDB = async (parameters) => {
     return Promise.reject(err);
   }
 };
+
+// module.exports.getFromMessagesDB = async (parameters) => {
+//   // const docRef = doc(db, 'chatMessages', parameters);
+//   try {
+//     const data = await onSnapshot(doc(db, 'chatMessages', parameters));
+//     return Promise.resolve(data);
+//   } catch (err) {
+//     console.error(err);
+//     return Promise.reject(err);
+//   }
+// };
 
 module.exports.postToMessagesDB = async (parameters) => {
   const id = parameters;
