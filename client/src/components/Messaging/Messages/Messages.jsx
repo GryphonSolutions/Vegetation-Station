@@ -93,6 +93,13 @@ const Messages = () => {
     lobbyStatusMessage: {
       fontFamily: 'JosefinSans',
     },
+    lobbySectionHeader: {
+      fontFamily: 'JosefinSans',
+      marginTop: 10,
+      paddingVertical: 5,
+      alignSelf: 'center',
+      color: '#283618',
+    },
   });
 
   const users = testUsers;
@@ -210,7 +217,9 @@ const Messages = () => {
             style={{ marginBottom: 118 }}
           >
             <View style={{ maxHeight: '50%' }}>
-              <Text>Start a New Conversation</Text>
+              <Text style={styles.lobbySectionHeader}>
+                Start a New Conversation
+              </Text>
               <ScrollView>
                 {!checkUsersLength && (
                   <ListItem
@@ -234,7 +243,7 @@ const Messages = () => {
               </ScrollView>
             </View>
             <View style={{ height: '50%' }}>
-              <Text>Your Conversations</Text>
+              <Text style={styles.lobbySectionHeader}>Your Conversations</Text>
               <ScrollView>
                 {!checkFilterChatsLength && (
                   <ListItem
