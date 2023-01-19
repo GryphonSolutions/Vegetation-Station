@@ -190,7 +190,7 @@ const Chat = () => {
         params: { activeUser: String(activeUser.id) },
       })
       .then((res) => {
-        console.log('ORDERED IN CHATS');
+        // console.log('ORDERED IN CHATS');
         dispatch(
           updateChats(
             Object.entries(res.data).sort(

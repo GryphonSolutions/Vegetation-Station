@@ -49,7 +49,7 @@ const Messages = () => {
         params: { activeUser: String(activeUser.id) },
       })
       .then((res) => {
-        console.log('ORDERED IN MESSAGES');
+        // console.log('ORDERED IN MESSAGES');
         dispatch(
           updateChats(
             Object.entries(res.data).sort(
