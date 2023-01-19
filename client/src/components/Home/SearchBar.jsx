@@ -29,6 +29,35 @@ export default function SearchBar() {
     dispatch(updateCurrentPosts(filtered));
   };
 
+  const compare = (a, b) => {
+    if (a < b) {
+      return -1;
+    }
+    if (a > b) {
+      return 1;
+    }
+    return 0;
+  };
+
+  const sortLocation = () => {
+
+  };
+
+  const sortColor = () => {
+
+  };
+
+  const sortSize = () => {
+    const size = { small: 1, medium: 2, large: 3 };
+    const sorted = catalog.sort((a, b) => compare(size[a.size], size[b.size]));
+    console.log(sorted);
+  };
+
+  const sortTopSellers = () => {
+
+  };
+
+  sortSize();
   return (
     <View style={styles.searchBarContainer}>
       <TextInput
