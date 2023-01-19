@@ -10,6 +10,7 @@ module.exports = [
     preferredTrade: 'Flamant rose',
     isPosted: true,
     isTraded: false,
+    postTitle: 'Jenny Craig Could Never',
   },
   {
     id: '10739101',
@@ -22,6 +23,7 @@ module.exports = [
     preferredTrade: "Oreille d'lphant",
     isPosted: true,
     isTraded: false,
+    postTitle: 'Bye Ditch',
   },
   {
     id: '10739102',
@@ -34,6 +36,7 @@ module.exports = [
     preferredTrade: 'Flamant rose',
     isPosted: true,
     isTraded: false,
+    postTitle: 'I will make God beg for mercy',
   },
   {
     id: '10739103',
@@ -46,6 +49,7 @@ module.exports = [
     preferredTrade: 'Flamant rose',
     isPosted: true,
     isTraded: false,
+    postTitle: "It's Uglier than people I know",
   },
   {
     id: '10739104',
@@ -58,6 +62,7 @@ module.exports = [
     preferredTrade: 'Aglaonema',
     isPosted: true,
     isTraded: false,
+    postTitle: "She's Dead",
   },
   {
     id: '10739105',
@@ -65,11 +70,12 @@ module.exports = [
     images: ['https://i.imgur.com/XjsCfJB.png'],
     size: 'small',
     color: 'reddish green',
-    poster: 'chillywilly',
+    poster: 'officiallywilly',
     description: 'Need this gone ASAP so I can play league',
     preferredTrade: 'Herringbone',
     isPosted: true,
     isTraded: false,
+    postTitle: 'Plants are in the way of my League Success',
   },
   {
     id: '10739106',
@@ -82,6 +88,7 @@ module.exports = [
     preferredTrade: 'Peace lily',
     isPosted: true,
     isTraded: false,
+    postTitle: "I'm tired of crashing on Discord",
   },
   {
     id: '10739107',
@@ -94,6 +101,7 @@ module.exports = [
     preferredTrade: 'Guzmania',
     isPosted: true,
     isTraded: false,
+    postTitle: "Spreadin' the Love",
   },
   {
     id: '10739108',
@@ -106,6 +114,7 @@ module.exports = [
     preferredTrade: 'Peace lily',
     isPosted: true,
     isTraded: false,
+    postTitle: "Green? I don't know her...",
   },
   {
     id: '10739109',
@@ -118,5 +127,6 @@ module.exports = [
     preferredTrade: 'Giant Candelabra tree',
     isPosted: true,
     isTraded: false,
+    postTitle: 'I want a lot more pot for my trees',
   },
 ];

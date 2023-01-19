@@ -34,7 +34,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
-  // ----Camera---------------------------------
+  // ----Camera and image---------------------------------
   camera: {
     flex: 1,
     justifyContent: 'center',
@@ -48,8 +48,8 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   imageContainer: {
-    width: '50%',
-    height: '50%',
+    width: 150,
+    height: 150,
     alignSelf: 'center',
     borderWidth: 2,
     borderColor: 'black',
@@ -73,8 +73,10 @@ export default StyleSheet.create({
     borderWidth: 1,
     alignSelf: 'center',
     width: '65%',
-    height: '5%',
+    height: 100,
     marginBottom: 10,
-    flex: 1,
+    // flex: 1,
+    minHeight: '20%',
+    maxHeight: '20%',
   },
 });

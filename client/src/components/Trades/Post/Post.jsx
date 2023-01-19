@@ -11,27 +11,42 @@ import {
   Image,
   TextInput,
   ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
 import styles from './StyleSheet';
+import plantData from './sampleData.js';
 
 const Post = () => {
+  // is this a trade
+  const [isTrade, setIsTrade] = useState(false);
+  // hooks for camera
   const [type, setType] = useState(CameraType.back); // set to back camera by default
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [showCamera, setShowCamera] = useState(false);
-  const [image, setImage] = useState(null); // to access photo library
+  const [image, setImage] = useState(null); // to access image from photo library
   const isFocused = useIsFocused(); // this is to unmount camera when it is not in focus
-  // const [formInfo, setFormInfo] = useState({
-  //   title: '',
-  //   species: '',
-  //   preferedTrades: '',
-  //   description: '',
-  // });
+  // hooks for form data
   const [title, setTitle] = useState('');
-  const [trades, setTrades] = useState('');
   const [description, setDescription] = useState('');
+  // hooks for DropDownPicker
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [dropdownValue, setDropdownValue] = useState([]);
+  const [dropdownItems, setDropdownItems] = useState([]);
+
+  useEffect(() => {
+    const plantNames = plantData.map((plant) => {
+      return {
+        label: plant.latinName,
+        value: plant,
+      };
+    });
+    setDropdownItems(plantNames);
+    console.log(plantNames);
+  }, []);
 
   // page is still checking camera priveledges
   if (!permission) {
@@ -70,7 +85,7 @@ const Post = () => {
   };
 
   return (
-    <View style={styles.page}>
+    <KeyboardAvoidingView style={styles.page}>
       {!showCamera && (
         <ScrollView style={styles.container}>
           <View style={styles.container}>
@@ -101,13 +116,15 @@ const Post = () => {
             />
 
             <Text style={styles.inputLabel}>PLANT SPECIES</Text>
-
-            <Text style={styles.inputLabel}>PREFERED TRADES (OPTIONAL)</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setTrades}
-              value={trades}
-              placeholder="Enter species"
+            <DropDownPicker
+              open={isDropdownOpen}
+              value={dropdownValue}
+              items={dropdownItems}
+              setOpen={setIsDropdownOpen}
+              setValue={setDropdownValue}
+              setItems={setDropdownItems}
+              searchable
+              searchPlaceholder="Search for species..."
             />
 
             <Text style={styles.inputLabel}>DESCRIPTIOIN</Text>
@@ -117,11 +134,26 @@ const Post = () => {
               onChangeText={setDescription}
               value={description}
               placeholder="Enter description"
-              numberOfLines={4}
+              maxLength={60}
             />
+
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                // clear out all form data
+                Alert.alert('Plant has been posted');
+                setTitle('');
+                setDescription('');
+                setDropdownValue('');
+                setImage(null);
+              }}
+            >
+              <Text style={styles.buttonText}>Submit Plant</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       )}
+      {}
       {
         // show camera
         showCamera && isFocused && (
@@ -150,7 +182,7 @@ const Post = () => {
           </View>
         )
       }
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

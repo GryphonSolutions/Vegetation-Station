@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar, PixelRatio, Dimensions } from 'react-native';
 
+const screenWidth = Dimensions.get('window').width;
+const imageWidth = (screenWidth - 30) / 3.5;
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -9,17 +11,24 @@ export default StyleSheet.create({
     // paddingTop: 60,
   },
   imageContainer: {
-    flex: 2,
+    marginTop: 10,
+    // flex: 2,
   },
   plantPic: {
     // flex: 2,
-    // aspectRation: 1.5,
+    // // aspectRation: 1.5,
+    position: 'fixed',
     height: '100%',
     width: '100%',
     resizeMode: 'contain',
+    // width: imageWidth,
+    // height: undefined,
+    // aspectRatio: 1,
+    // borderRadius: imageWidth / 15,
+    // margin: (screenWidth - 30) / 45,
   },
   postContainer: {
-    flex: 3,
+    flex: 2,
     backgroundColor: '#283618',
   },
   postTitle: {
@@ -68,7 +77,7 @@ export default StyleSheet.create({
   /* ----------------- Button Container ----------------- */
 
   buttonContainer: {
-    flex: -1,
+    // flex: -1,
     display: 'flex',
     flexDirection: 'row',
     marginTop: 10,
@@ -125,15 +134,17 @@ export default StyleSheet.create({
 
   LocationContainer: {
     margin: 10,
-    flex: 1,
+    // flex: 1,
     // marginLeft: 10,
     // marginRight: 10,
     // marginBottom: 5,
     // width: 100,
     // height: 100,
   },
-  LocationImage: {
-    flex: 1,
+  LocationMap: {
+    flex: 0,
+    width: '100%',
+    height: '100%',
     // overflow: 'hidden',
   },
 
@@ -146,6 +157,7 @@ export default StyleSheet.create({
     backgroundColor: '#DDA15E',
     paddingLeft: 25,
     paddingRight: 25,
+    marginTop: 10,
   },
   profileInfoContainer: {
     flexDirection: 'row',

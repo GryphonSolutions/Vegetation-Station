@@ -11,13 +11,16 @@ const initialState = {
   activeUser: testUsers[0],
   selectedUser: testUsers[1],
   currentPlant: testCatalog[0],
-  currentOffers: (testOffers.filter((item) => {
-    return item.buyer.id === testUsers[0].id || item.seller.id === testUsers[0].id;
-  })),
-  currentPosts: (testCatalog.filter((item) => {
+  currentOffers: testOffers.filter((item) => {
+    return (
+      item.buyer.id === testUsers[0].id || item.seller.id === testUsers[0].id
+    );
+  }),
+  currentPosts: testCatalog.filter((item) => {
     return item.isPosted === true || item.isTraded === false;
-  })),
+  }),
   catalog: testCatalog,
+  filteredCatalog: testCatalog,
   offers: testOffers,
   plants: testPlants,
   users: testUsers,
@@ -36,7 +39,10 @@ const dataSlice = createSlice({
       state.selectedUser = action.payload;
     },
     updateCurrentPlant: (state, action) => {
-      state.selectedUser = action.payload;
+      state.currentPlant = action.payload;
+    },
+    updateCurrentPosts: (state, action) => {
+      state.currentPosts = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -68,6 +74,7 @@ const dataSlice = createSlice({
   },
 });
 
-export const { updateActiveUser, updateSelectedUser, updateCurrentPlant } = dataSlice.actions;
+export const { updateActiveUser, updateSelectedUser, updateCurrentPlant, updateCurrentPosts } =
+  dataSlice.actions;
 
 export const dataReducer = dataSlice.reducer;

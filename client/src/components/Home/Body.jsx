@@ -19,17 +19,15 @@ import SearchBar from './SearchBar';
 
 export default function Body() {
   const { isDarkMode } = useSelector((state) => state.app);
-  const {
-    activeUser,
-    selectedUser,
-    users,
-    catalog,
-    currentPosts,
-    currentOffers,
-  } = useSelector((state) => state.data);
+  const { activeUser, users, catalog, currentPosts, currentOffers } =
+    useSelector((state) => state.data);
+
+  const dispatch = useDispatch();
 
   const goToPlant = (item) => {
-    console.log('GO TO PLANT: ', item);
+    const target = users.filter((user) => user.username === item.poster);
+    dispatch(updateSelectedUser(target[0]));
+    dispatch(updateCurrentPlant(item));
     navigation.navigate('Details');
   };
 
@@ -45,7 +43,6 @@ export default function Body() {
       />
     </Pressable>
   );
-
   return (
     <View style={[styles.contentContainer]}>
       <SearchBar />

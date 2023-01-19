@@ -81,9 +81,30 @@ const NavBar = () => {
         <Tab.Screen name="Post" component={Post} />
         <Tab.Screen name="Messages" component={Messages} />
         <Tab.Screen name="Profile" component={Profile} />
-        <Tab.Screen name="Details" component={Details} />
-        <Tab.Screen name="Chat" component={Chat} />
-        <Tab.Screen name="Login" component={Login} />
+        <Tab.Screen
+          name="Details"
+          component={Details}
+          options={{
+            tabBarButton: () => null,
+            tabBarVisible: false, // if you don't want to see the tab bar
+          }}
+        />
+        <Tab.Screen
+          name="Chat"
+          component={Chat}
+          options={{
+            tabBarButton: () => null,
+            tabBarVisible: false, // if you don't want to see the tab bar
+          }}
+        />
+        <Tab.Screen
+          name="Login"
+          component={Login}
+          // options={{
+          //   tabBarButton: () => null,
+          //   tabBarVisible: false, // if you don't want to see the tab bar
+          // }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
