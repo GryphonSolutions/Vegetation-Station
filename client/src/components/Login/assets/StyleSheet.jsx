@@ -13,11 +13,13 @@ export default StyleSheet.create({
     margin: '5%',
     height: 30,
     width: 200,
+    padding: 5,
   },
   registerLabels: {
-    fontSize: 22,
-    color: 'white',
+    fontSize: 25,
+    color: '#283618',
     alignSelf: 'flex-start',
+    fontFamily: 'JosefinSans',
   },
 
   loginInputsContainer: {
@@ -39,6 +41,8 @@ export default StyleSheet.create({
     height: '44%',
     width: '70%',
     alignSelf: 'center',
+    margin: 20,
+    padding: 20,
   },
 
   backButton: {
@@ -56,6 +60,18 @@ export default StyleSheet.create({
     paddingTop: 50,
     color: 'black',
     fontFamily: 'JosefinSans',
+    // anonymous pro for emailand pass --NO
+    // padding in login -- YES
+    // font for button smaller --NO
+    // no vegi stegi --YES
+    // space between buttons center instead --YES
+    // padding horizontal on button views ref message in profile
+    // no border on button --YES
+  },
+  regButton: {
+    fontFamily: 'JosefinSans',
+    fontSize: 2,
+    padding: 10,
   },
 
   regSubmitContainer: {
@@ -72,10 +88,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: 'black',
-    backgroundColor: 'grey',
-
+    borderWidth: 0,
+    backgroundColor: '#dda15e',
+    marginTop: 25,
+    marginLeft: 12,
+    fontFamily: 'JosefinSans',
     borderRadius: 7,
   },
 });

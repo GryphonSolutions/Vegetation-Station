@@ -80,9 +80,6 @@ const Login = () => {
     <SafeAreaView style={styles.container}>
       <KeyboardAwareScrollView>
         <View>
-          <View>
-            <Text style={styles.regHeader}>Vegetation Station</Text>
-          </View>
           <Image source={logo} style={styles.logoStyles} />
           <View style={styles.loginInputsContainer}>
             <View>
@@ -90,6 +87,7 @@ const Login = () => {
             </View>
             <TextInput
               placeholder="Enter your email..."
+              placeholderTextColor="#283618"
               style={styles.loginInputs}
               clearButtonMode="always"
               onChangeText={(text) => {
@@ -102,6 +100,7 @@ const Login = () => {
             <TextInput
               placeholder="Enter password..."
               style={styles.loginInputs}
+              placeholderTextColor="black"
               secureTextEntry
               clearButtonMode="always"
               onChangeText={(text) => {
@@ -110,13 +109,18 @@ const Login = () => {
             />
           </View>
           <View
-            style={{ justifyContent: 'space-evenly', flexDirection: 'row' }}
+            style={{
+              justifyContent: 'center',
+              flexDirection: 'row',
+              fontFamily: 'AnonymousPro',
+            }}
           >
             <View style={styles.logSubmitContainer}>
               <Button
                 style={styles.regButton}
-                color="black"
+                color="#283618"
                 title="Login"
+                textStyle={{ fontFamily: 'JosefinSans' }}
                 onPress={() => {
                   login();
                 }}
@@ -125,8 +129,8 @@ const Login = () => {
             </View>
             <View style={styles.logSubmitContainer}>
               <Button
-                style={styles.regButton}
-                color="black"
+                style={{ fontFamily: 'AnonymousPro' }}
+                color="#283618"
                 title="Register"
                 onPress={() => {
                   setRegistration(true);
@@ -136,7 +140,7 @@ const Login = () => {
             <View style={styles.logSubmitContainer}>
               <Button
                 style={styles.regButton}
-                color="black"
+                color="#283618"
                 title="Logout"
                 onPress={() => {
                   logout();
