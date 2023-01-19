@@ -10,15 +10,24 @@ import {
   Alert,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 import styles from './assets/stylesheet';
 import data from './fakeData';
-
-import { updateHomeSearchText } from '../../reducers';
+import { updateHomeSearchText, updateCurrentPosts } from '../../reducers';
 
 export default function SearchBar() {
-  const { isDarkMode, homeSearchText } = useSelector((state) => state.app);
+  const { isDarkMode } = useSelector((state) => state.app);
+  const { homeSearchText } = useSelector((state) => state.home);
+  const { catalog, filteredCatalog } = useSelector((state) => state.data);
   const dispatch = useDispatch();
+
+  const updateSearch = (val) => {
+    dispatch(updateHomeSearchText(val));
+    const filtered = catalog.filter((item) => {
+      return (item.commonName.toLowerCase()).includes(val.toLowerCase())
+      && (item.isPosted === true || item.isTraded === false);
+    });
+    dispatch(updateCurrentPosts(filtered));
+  };
 
   return (
     <View style={styles.searchBarContainer}>
@@ -30,7 +39,7 @@ export default function SearchBar() {
             backgroundColor: isDarkMode ? '#656464' : '#d5dec6',
           },
         ]}
-        onChangeText={(val) => dispatch(updateHomeSearchText(val))}
+        onChangeText={(val) => updateSearch(val)}
         value={homeSearchText}
         placeholder="search for plants"
       />
