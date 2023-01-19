@@ -10,7 +10,7 @@ const {
   where,
   query,
 } = require('firebase/firestore');
-const { db, usersCol } = require('../database');
+const { db, usersCol, chatsCol } = require('../database');
 
 // Currently querying all data, refactor if need to specify data
 module.exports.getFromUsersDB = async (params) => {
@@ -49,6 +49,7 @@ module.exports.postToUsersDB = async (params) => {
   params.id = id;
   try {
     await setDoc(doc(usersCol, id), params);
+    await setDoc(doc(chatsCol, id), {});
     return Promise.resolve();
   } catch (err) {
     console.error(err);
