@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { persistor } from '../../store';
 import {
   Details,
   Home,
@@ -24,6 +25,7 @@ import {
   updateCurrentOffers,
   updateCurrentPosts,
   updateFilteredCatalog,
+  updateIsNavShown,
 } from '../../reducers';
 
 const Tab = createBottomTabNavigator();
@@ -56,11 +58,15 @@ const NavBar = () => {
     'AnonymousPro-Bold': require('../../assets/fonts/AnonymousPro-Bold.ttf'),
     JosefinSans: require('../../assets/fonts/JosefinSans-Regular.ttf'),
   });
-  const { isDarkMode } = useSelector((state) => state.app);
-  const { activeUser } = useSelector((state) => state.data);
+  const { isDarkMode, isNavShown } = useSelector((state) => state.app);
+  const { activeUser, offers, currentOffers } = useSelector(
+    (state) => state.data,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
+    persistor.purge();
+    dispatch(getOffers({ url: 'offers/archive' }));
     dispatch(getUsers({ url: 'users/info' }));
     dispatch(getCatalog({ url: 'catalog/listings' }))
       .unwrap()
@@ -75,23 +81,28 @@ const NavBar = () => {
           console.error(err);
         }
       });
-    dispatch(getOffers({ url: 'offers/archive' }))
-      .unwrap()
-      .then(async (res) => {
+    dispatch(getPlants({ url: 'plants/details' }));
+  }, []);
+
+  useEffect(() => {
+    if (activeUser?.id) {
+      const test = async () => {
         try {
-          const offers = await res.filter((item) => {
+          const offers1 = await offers.filter((item) => {
             return (
-              item.buyer.id === activeUser.id ||
-              item.seller.id === activeUser.id
+              item?.buyer?.id === activeUser?.id ||
+              item?.seller?.id === activeUser?.id
             );
           });
-          dispatch(updateCurrentOffers(offers));
+          console.log('OFFERS IN NAV', offers1);
+          dispatch(updateCurrentOffers(offers1));
         } catch (err) {
           console.error(err);
         }
-      });
-    dispatch(getPlants({ url: 'plants/details' }));
-  }, []);
+      };
+      test();
+    }
+  }, [activeUser, offers]);
 
   if (!fontsLoaded) {
     return null;
@@ -148,14 +159,7 @@ const NavBar = () => {
             tabBarVisible: false, // if you don't want to see the tab bar
           }}
         />
-        <Tab.Screen
-          name="Login"
-          component={Login}
-          // options={{
-          //   tabBarButton: () => null,
-          //   tabBarVisible: false, // if you don't want to see the tab bar
-          // }}
-        />
+        <Tab.Screen name="Login" component={Login} />
       </Tab.Navigator>
     </NavigationContainer>
   );

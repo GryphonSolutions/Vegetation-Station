@@ -8,9 +8,9 @@ import testPlants from '../../../server/data/plants.js';
 import testUsers from '../../../server/data/users.js';
 
 const initialState = {
-  activeUser: testUsers[0],
-  selectedUser: testUsers[1],
-  currentPlant: testCatalog[0],
+  activeUser: {},
+  selectedUser: {},
+  currentPlant: {},
   currentOffers: [],
   currentPosts: [],
   filteredCatalog: [],
@@ -42,7 +42,7 @@ const dataSlice = createSlice({
       state.currentOffers = action.payload;
     },
     updateFilteredCatalog: (state, action) => {
-      state.currentOffers = action.payload;
+      state.filteredCatalog = action.payload;
     },
   },
   extraReducers: (builder) => {

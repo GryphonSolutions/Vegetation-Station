@@ -22,26 +22,41 @@ const Offers = ({ navigation }) => {
   const { username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
 
-  const offers = [
+  let offers = [
     {
       title: 'Your Offers',
-      data: currentOffers.filter((item) => activeUser.id === item.seller.id),
+      data: currentOffers.filter((item) => activeUser?.id === item.seller.id),
     },
   ];
-  const requests = [
+  let requests = [
     {
       title: 'Your Requests',
-      data: currentOffers.filter((item) => activeUser.id === item.buyer.id),
+      data: currentOffers.filter((item) => activeUser?.id === item.buyer.id),
     },
   ];
 
+  useEffect(() => {
+    offers = [
+      {
+        title: 'Your Offers',
+        data: currentOffers.filter((item) => activeUser?.id === item.seller.id),
+      },
+    ];
+    requests = [
+      {
+        title: 'Your Requests',
+        data: currentOffers.filter((item) => activeUser?.id === item.buyer.id),
+      },
+    ];
+  }, [activeUser]);
+
   const findBuyer = (item) => {
-    const target = users.filter((user) => item.seller.id === user.id);
+    const target = users.filter((user) => item.seller.id === user?.id);
     return target[0]?.username;
   };
 
   const findSeller = (item) => {
-    const target = users.filter((user) => item.buyer.id === user.id);
+    const target = users.filter((user) => item.buyer.id === user?.id);
     return target[0]?.username;
   };
 
