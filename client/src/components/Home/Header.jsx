@@ -5,9 +5,17 @@ import { Text, View } from 'react-native';
 import styles from './assets/stylesheet';
 
 export default function Header() {
+  const { isDarkMode } = useSelector((state) => state.app);
   return (
     <View style={styles.headerContainer}>
-      <Text style={styles.headerText}>Vegetation Station</Text>
+      <Text
+        style={[
+          styles.headerText,
+          { color: isDarkMode ? '#d39b52' : '#283618' },
+        ]}
+      >
+        Vegetation Station
+      </Text>
     </View>
   );
 }

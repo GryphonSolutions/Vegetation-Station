@@ -5,6 +5,7 @@ import {
   PERSIST,
   REHYDRATE,
   REGISTER,
+  PURGE,
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -43,6 +44,7 @@ const store = configureStore({
           REHYDRATE,
           PERSIST,
           REGISTER,
+          PURGE,
           'offers/archive/rejected',
           'catalog/listings/rejected',
           'offers/archive/rejected',
