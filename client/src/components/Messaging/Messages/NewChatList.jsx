@@ -10,11 +10,12 @@ import {
   updateSearchMessages,
   updateUserMessageSearch,
 } from '../../../reducers/messagesReducer.js';
+import { updateSelectedUser } from '../../../reducers/dataReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const NewChatList = ({ user }) => {
-  // const { activeUser } = useSelector((state) => state.data);
-  const { chats, activeUser } = useSelector((state) => state.messages);
+  const { activeUser, selectedUser } = useSelector((state) => state.data);
+  const { chats } = useSelector((state) => state.messages);
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
@@ -53,7 +54,7 @@ const NewChatList = ({ user }) => {
   };
 
   const navigateTo = async (Id, username, profilePicture) => {
-    const activeUserId = activeUser.toString();
+    const activeUserId = activeUser.id;
     const userId = Id.toString();
     const combinedId =
       activeUserId > userId ? activeUserId + userId : userId + activeUserId;
@@ -69,7 +70,7 @@ const NewChatList = ({ user }) => {
       axios
         .post('http://localhost:8080/api/chats/data', {
           params: {
-            id: activeUser,
+            id: activeUser.id,
             combinedId,
             userId: user.id,
             profilePicture: user.profilePicture,
@@ -87,9 +88,9 @@ const NewChatList = ({ user }) => {
           params: {
             id: user.id,
             combinedId,
-            userId: activeUser,
+            userId: activeUser.id,
             profilePicture: user.profilePicture,
-            username: 'AuthDone',
+            username: activeUser.username,
           },
         })
         .then((res) => {
@@ -120,6 +121,7 @@ const NewChatList = ({ user }) => {
     <ListItem
       onPress={() => {
         navigateTo(user.id, user.username, user.profilePicture);
+        dispatch(updateSelectedUser(user));
       }}
     >
       <Avatar

@@ -28,13 +28,9 @@ import * as RootNavigation from '../../NavBar/navigation.js';
 
 const Chat = () => {
   const { isDarkMode } = useSelector((state) => state.app);
-  const {
-    senderInput,
-    currentCombinedId,
-    chatHeaderInfo,
-    currentChat,
-    activeUser,
-  } = useSelector((state) => state.messages);
+  const { activeUser } = useSelector((state) => state.data);
+  const { senderInput, currentCombinedId, chatHeaderInfo, currentChat } =
+    useSelector((state) => state.messages);
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
@@ -139,7 +135,7 @@ const Chat = () => {
     axios
       .patch('http://localhost:8080/api/messages/data', {
         params: {
-          senderId: activeUser,
+          senderId: activeUser.id,
           text: senderInput,
           combinedId: currentCombinedId,
         },
@@ -155,7 +151,7 @@ const Chat = () => {
     axios
       .patch('http://localhost:8080/api/chats/data', {
         params: {
-          id: activeUser,
+          id: activeUser.id,
           currentCombinedId,
           read: true,
           text: senderInput,
@@ -191,7 +187,7 @@ const Chat = () => {
   const getChats = () => {
     axios
       .get('http://localhost:8080/api/chats/data', {
-        params: { activeUser },
+        params: { activeUser: activeUser.id },
       })
       .then((res) => {
         dispatch(updateChats(Object.entries(res.data)));
@@ -255,7 +251,7 @@ const Chat = () => {
             >
               {currentChat.messages !== undefined &&
                 currentChat.messages.map((data) => {
-                  return data.senderID === activeUser ? (
+                  return data.senderID === activeUser.id ? (
                     <View key={data.id} style={styles.sender}>
                       <Text style={styles.senderText}>{data.text}</Text>
                     </View>

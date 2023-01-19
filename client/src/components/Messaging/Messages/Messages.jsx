@@ -36,8 +36,8 @@ import { db, chatsCol, chatMessagesCol } from '../../../../../server/database';
 
 const Messages = () => {
   const { isDarkMode } = useSelector((state) => state.app);
-  // const { activeUser } = useSelector((state) => state.data);
-  const { activeUser, searchMessages, userMessageSearch, chats } = useSelector(
+  const { activeUser } = useSelector((state) => state.data);
+  const { searchMessages, userMessageSearch, chats } = useSelector(
     (state) => state.messages,
   );
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ const Messages = () => {
   const getChats = () => {
     axios
       .get('http://localhost:8080/api/chats/data', {
-        params: { activeUser },
+        params: { activeUser: activeUser.id },
       })
       .then((res) => {
         dispatch(updateChats(Object.entries(res.data)));

@@ -10,9 +10,11 @@ import {
   updateSearchMessages,
   updateUserMessageSearch,
 } from '../../../reducers/messagesReducer.js';
+import { updateSelectedUser } from '../../../reducers/dataReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const ChatList = ({ chat }) => {
+  const { activeUser, selectedUser } = useSelector((state) => state.data);
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
