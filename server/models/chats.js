@@ -3,17 +3,23 @@ const {
   collection,
   getDocs,
   doc,
+  getDoc,
   setDoc,
   deleteDoc,
   updateDoc,
+  serverTimestamp,
 } = require('firebase/firestore');
 const { db, chatsCol, chatMessagesCol } = require('../database');
 
 module.exports.getFromChatsDB = async (parameters) => {
+  console.log('Chats model');
+  const allDocs = [];
   try {
-    // Query Here
-    const data = await getDocs();
-    return Promise.resolve(data);
+    const data = await getDocs(chatsCol);
+    data.forEach((document) => {
+      allDocs.push(document.data());
+    });
+    return Promise.resolve(allDocs);
   } catch (err) {
     console.error(err);
     return Promise.reject(err);
@@ -21,9 +27,19 @@ module.exports.getFromChatsDB = async (parameters) => {
 };
 
 module.exports.postToChatsDB = async (parameters) => {
+  const { combinedId } = parameters;
   try {
-    // Query Here
-    await setDoc();
+    await updateDoc(doc(chatsCol, parameters.id), {
+      [`${combinedId}.chattingWith`]: {
+        id: parameters.userId,
+        profilePicture: parameters.profilePicture,
+        username: parameters.username,
+      },
+      [`${combinedId}.date`]: serverTimestamp(),
+      [`${combinedId}.id`]: parameters.id,
+      [`${combinedId}.lastMessage`]: '',
+      [`${combinedId}.read`]: true,
+    });
     return Promise.resolve();
   } catch (err) {
     console.error(err);

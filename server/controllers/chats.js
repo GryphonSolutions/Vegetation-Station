@@ -8,19 +8,20 @@ const {
 } = require('../models');
 
 module.exports.getFromChats = async (req, res) => {
-  console.log('query ', req.query.combinedId);
-  // try {
-  //   const data = await getFromChatsDB();
-  //   res.send(data);
-  // } catch (err) {
-  //   console.log(err);
-  //   res.sendStatus(400);
-  // }
+  console.log('Chats Controller');
+  try {
+    const data = await getFromChatsDB();
+    res.send(data);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
 };
 
 module.exports.postToChats = async (req, res) => {
+  console.log(req.body.params);
   try {
-    await postToChatsDB(req.body);
+    await postToChatsDB(req.body.params);
     res.sendStatus(201);
   } catch (err) {
     console.error(err);

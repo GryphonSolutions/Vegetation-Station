@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -15,19 +16,44 @@ import {
   View,
 } from 'react-native';
 import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+  deleteDoc,
+  updateDoc,
+  onSnapshot,
+} from 'firebase/firestore';
+import {
   updateSearchMessages,
   updateUserMessageSearch,
+  updateChats,
 } from '../../../reducers/messagesReducer.js';
 import ChatList from './ChatList.jsx';
 import NewChatList from './NewChatList.jsx';
+import { db, chatsCol, chatMessagesCol } from '../../../../../server/database';
 
 const Messages = () => {
   const { isDarkMode } = useSelector((state) => state.app);
   // const { activeUser } = useSelector((state) => state.data);
-  const { activeUser, searchMessages, userMessageSearch } = useSelector(
+  const { activeUser, searchMessages, userMessageSearch, chats } = useSelector(
     (state) => state.messages,
   );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:8080/api/chats/data')
+      .then((res) => {
+        dispatch(updateChats(res.data));
+      })
+      .catch((err) => {
+        console.log(err, 'error when fetching chats');
+      });
+  }, [activeUser]);
+
+  console.log(chats);
 
   const styles = StyleSheet.create({
     border: {
@@ -61,53 +87,6 @@ const Messages = () => {
       alignSelf: 'stretch',
     },
   });
-
-  const userChats = [
-    {
-      id: 89621280,
-      combinedId: 8962128089621281,
-      chattingWith: {
-        id: 89621281,
-        username: 'SaldanaThomas',
-        profilePicture: 'https://i.imgur.com/br9bWAp.png',
-      },
-      lastMessage: 'Are you trying to scam me?',
-      date: JSON.stringify(new Date()),
-    },
-    {
-      id: 89621280,
-      combinedId: 8962128089621282,
-      chattingWith: {
-        id: 89621282,
-        username: 'JustDatGuy',
-        profilePicture: 'https://i.imgur.com/br9bWAp.png',
-      },
-      lastMessage: 'Where did you go?',
-      date: JSON.stringify(new Date()),
-    },
-    {
-      id: 89621285,
-      combinedId: 8962128589621280,
-      chattingWith: {
-        id: 89621280,
-        username: 'akbarimo',
-        profilePicture: 'https://i.imgur.com/br9bWAp.png',
-      },
-      lastMessage: "Your plant isn't even nice",
-      date: JSON.stringify(new Date()),
-    },
-    {
-      id: 89621281,
-      combinedId: 8962128189621286,
-      chattingWith: {
-        id: 89621286,
-        username: 'WhenIKillGod',
-        profilePicture: 'https://i.imgur.com/br9bWAp.png',
-      },
-      lastMessage: 'Can I kill God with this plant?',
-      date: JSON.stringify(new Date()),
-    },
-  ];
 
   const users = [
     {
@@ -216,8 +195,8 @@ const Messages = () => {
     },
   ];
 
-  const activeUserChats = userChats.filter((chat) => {
-    if (chat.id === activeUser.id) {
+  const activeUserChats = chats.filter((chat) => {
+    if (chat.id === activeUser) {
       return true;
     }
     return false;
@@ -240,6 +219,7 @@ const Messages = () => {
   });
   const checkUsersLength = searchResultsUsers.length > 0;
 
+  console.log(activeUserChats);
   return (
     <SafeAreaView>
       <View style={styles.header}>
@@ -278,7 +258,7 @@ const Messages = () => {
             <ListItem>
               <ListItem.Content>
                 <ListItem.Title style={styles.name}>
-                  No chats with {userMessageSearch}.
+                  No current chats.
                 </ListItem.Title>
               </ListItem.Content>
             </ListItem>

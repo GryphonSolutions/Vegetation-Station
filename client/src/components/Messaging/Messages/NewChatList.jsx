@@ -10,7 +10,8 @@ import {
 import * as RootNavigation from '../../NavBar/navigation.js';
 
 const NewChatList = ({ user }) => {
-  const { activeUser } = useSelector((state) => state.data);
+  // const { activeUser } = useSelector((state) => state.data);
+  const { chats, activeUser } = useSelector((state) => state.messages);
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
@@ -34,13 +35,22 @@ const NewChatList = ({ user }) => {
     },
   });
 
+  const checkForCombinedId = (id) => {
+    const array = chats.filter((chat) => {
+      if (chat.combinedId === id) {
+        return true;
+      }
+      return false;
+    });
+    return array.length > 0;
+  };
+
   const navigateTo = async (Id, username, profilePicture) => {
-    console.log(activeUser.id);
-    console.log(Id);
-    const activeUserId = activeUser.id.toString();
+    const activeUserId = activeUser.toString();
     const userId = Id.toString();
     const combinedId =
       activeUserId > userId ? activeUserId + userId : userId + activeUserId;
+
     console.log(combinedId);
 
     dispatch(updateCurrentCombinedId(combinedId));
@@ -48,6 +58,40 @@ const NewChatList = ({ user }) => {
     // search userChats to see if this combined exists in the currentUser's chats
     //  if chat doesn't exist, create chat for both the sender and reciever
     //  if chat does exist, grab the messages from the chat collection
+    if (!checkForCombinedId(combinedId)) {
+      axios
+        .post('http://localhost:8080/api/chats/data', {
+          params: {
+            id: activeUser,
+            combinedId,
+            userId: user.id,
+            profilePicture: user.profilePicture,
+            username: user.username,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      axios
+        .post('http://localhost:8080/api/chats/data', {
+          params: {
+            id: user.id,
+            combinedId,
+            userId: activeUser,
+            profilePicture: user.profilePicture,
+            username: 'Thomas',
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
     RootNavigation.navigate('Chat');
   };
