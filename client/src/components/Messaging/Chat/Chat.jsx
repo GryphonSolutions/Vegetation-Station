@@ -110,20 +110,24 @@ const Chat = () => {
     },
   });
 
-  useEffect(() => {
-    console.log(currentCombinedId);
+  const getMessages = () => {
     axios
       .get('http://localhost:8080/api/messages/data', {
         params: { combinedId: currentCombinedId },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log('MESSAGES DATA ', res.data);
         updateCurrentChat(res.data);
       })
       .catch((err) => {
         console.log(err, 'error fetching messages');
       });
-  }, [senderInput]);
+  };
+
+  useEffect(() => {
+    console.log('USE EFFECT');
+    getMessages();
+  }, [activeUser]);
 
   const sendMessage = () => {
     Keyboard.dismiss();
@@ -139,6 +143,7 @@ const Chat = () => {
       })
       .then((res) => {
         console.log(res);
+        getMessages();
       })
       .catch((err) => {
         console.log(err);
