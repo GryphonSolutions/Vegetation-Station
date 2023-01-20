@@ -27,12 +27,13 @@ const ChatList = ({ chat }) => {
       borderColor: 'red',
     },
     name: {
-      fontFamily: 'JosefinSans-SemiBold',
+      fontFamily: 'JosefinSans-Bold',
+      fontSize: 19,
     },
     time: {
-      fontFamily: 'JosefinSans-Light',
+      fontFamily: 'JosefinSans',
       color: 'gray',
-      fontSize: 14,
+      fontSize: 16,
     },
     titleCont: {
       flexDirection: 'row',
@@ -42,6 +43,8 @@ const ChatList = ({ chat }) => {
     },
     chatItemText: {
       fontFamily: 'JosefinSans',
+      fontSize: 17,
+      color: '#616161',
     },
     read: {},
     unread: {
@@ -69,6 +72,7 @@ const ChatList = ({ chat }) => {
   };
 
   const getUserInfo = (username) => {
+    console.log(users);
     let userObj = {};
     users.forEach((user) => {
       if (user.username === username) {
@@ -119,6 +123,8 @@ const ChatList = ({ chat }) => {
         borderRightColor: chat[1].read ? '#09df08' : '#09df08',
         borderRightStyle: chat[1].read ? 'solid' : 'solid',
         borderRightWidth: chat[1].read ? 0 : 3,
+        paddingVertical: 12,
+        paddingHorizontal: 10,
       }}
       bottomDivider
       onPress={() => {
@@ -126,13 +132,20 @@ const ChatList = ({ chat }) => {
       }}
     >
       <Avatar
+        size={60}
         rounded
         // containerStyle={chat[1].read ? styles.read : styles.unread}
         source={{
           uri: `${chat[1].chattingWith.profilePicture}`,
         }}
       />
-      <ListItem.Content>
+      <ListItem.Content
+        style={{
+          height: 60,
+          flex: 1,
+          justifyContent: 'flex-start',
+        }}
+      >
         <View style={styles.titleCont}>
           <ListItem.Title
             style={[
@@ -144,12 +157,12 @@ const ChatList = ({ chat }) => {
             {chat[1].chattingWith.username}
           </ListItem.Title>
           <ListItem.Title style={styles.time}>
-            {formatDistanceToNow(new Date(chat[1].date.seconds * 1000))}
+            {formatDistanceToNow(new Date(chat[1].date))}
           </ListItem.Title>
         </View>
         <ListItem.Subtitle
           style={styles.chatItemText}
-          numberOfLines={1}
+          numberOfLines={2}
           ellipsizeMode="tail"
         >
           {chat[1].lastMessage}
