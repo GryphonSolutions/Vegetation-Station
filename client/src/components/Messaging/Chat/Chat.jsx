@@ -34,31 +34,37 @@ const Chat = () => {
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
+    headerContainer: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      marginTop: '5%',
+      paddingBottom: '5%',
+    },
+    backButtonContainer: {
+      left: '4%',
+      top: -3,
+      position: 'absolute',
+      alignItems: 'flex-end',
+    },
+    backButton: {
+      color: '#283618',
+    },
+    contentContainer: {
+      paddingTop: 10,
+    },
+    // point of no return
+
     border: {
       borderStyle: 'solid',
       borderWidth: '2',
       borderColor: 'red',
-    },
-    header: {
-      backgroundColor: '#fff',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      borderBottomColor: 'gray',
-      borderBottomStyles: 'solid',
-      borderBottomWidth: 1,
-      paddingBottom: 3,
-      paddingRight: 10,
-      paddingLeft: 10,
     },
     footer: {
       flexDirection: 'row',
       alignItems: 'center',
       width: '100%',
       padding: 10,
-    },
-    container: {
-      height: '100%',
     },
     textInput: {
       bottom: 0,
@@ -233,40 +239,62 @@ const Chat = () => {
   const scrollViewRef = useRef();
 
   return (
-    <SafeAreaView>
-      <KeyboardAvoidingView
-        behavior="padding"
-        style={styles.container}
-        // keyboardVerticalOffset={90}
+    <View
+      style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
+    >
+      <View
+        style={{
+          backgroundColor: isDarkMode ? '#656464' : '#e4e9dc',
+          marginBottom: '-5%',
+          paddingBottom: '5%',
+        }}
       >
-        <View style={styles.header}>
-          <TouchableOpacity onPress={backToMessages} activeOpacity={0.5}>
-            <Ionicons
-              name="arrow-back-circle-outline"
-              size="40"
-              color={isDarkMode ? 'white' : 'black'}
-            />
-          </TouchableOpacity>
-          <View style={{ alignItems: 'center' }}>
-            <Avatar
-              rounded
-              size="medium"
-              source={{
-                uri: `${selectedUser.profilePicture}`,
-              }}
-            />
-            <Text style={{ fontSize: 20 }}>{selectedUser.username}</Text>
-          </View>
-          <Ionicons
-            name="arrow-back-circle-outline"
-            size="40"
-            color={isDarkMode ? 'black' : 'white'}
-          />
-        </View>
+        <SafeAreaView />
+      </View>
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <>
+          <View
+            style={[
+              { backgroundColor: isDarkMode ? '#656464' : '#e4e9dc' },
+              styles.headerContainer,
+            ]}
+          >
+            <TouchableOpacity
+              style={styles.backButtonContainer}
+              onPress={backToMessages}
+              activeOpacity={0.5}
+            >
+              <Ionicons
+                style={styles.backButton}
+                name="arrow-back-circle-outline"
+                size="40"
+                color={isDarkMode ? 'white' : 'black'}
+              />
+            </TouchableOpacity>
+            <View style={{ alignItems: 'center' }}>
+              <Avatar
+                containerStyle={{ marginBottom: 5, marginTop: -10 }}
+                rounded
+                size="medium"
+                source={{
+                  uri: `${selectedUser.profilePicture}`,
+                }}
+              />
+              <Text
+                style={{
+                  fontFamily: 'JosefinSans-Medium',
+                  fontSize: 15,
+                }}
+              >
+                {selectedUser.username}
+              </Text>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+        <View style={{ flex: 1 }}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <ScrollView
-              contentContainerStyle={{ paddingTop: 10 }}
+              contentContainerStyle={styles.contentContainer}
               ref={scrollViewRef}
               onContentSizeChange={() => {
                 scrollViewRef.current.scrollToEnd({ animated: true });
@@ -285,26 +313,31 @@ const Chat = () => {
                   );
                 })}
             </ScrollView>
-            <View style={styles.footer}>
-              <TextInput
-                value={senderInput}
-                onChangeText={(text) => dispatch(updateSenderInput(text))}
-                onSubmitEditing={sendMessage}
-                placeholder="message"
-                style={styles.textInput}
-              />
-              <TouchableOpacity onPress={sendMessage} activeOpacity={0.5}>
-                <Ionicons
-                  name="arrow-up-circle-outline"
-                  size="34"
-                  color={isDarkMode ? 'white' : 'black'}
-                />
-              </TouchableOpacity>
-            </View>
-          </>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </View>
+        <View
+          style={[
+            { backgroundColor: isDarkMode ? '#656464' : '#e4e9dc' },
+            styles.footer,
+          ]}
+        >
+          <TextInput
+            value={senderInput}
+            onChangeText={(text) => dispatch(updateSenderInput(text))}
+            onSubmitEditing={sendMessage}
+            placeholder="message"
+            style={styles.textInput}
+          />
+          <TouchableOpacity onPress={sendMessage} activeOpacity={0.5}>
+            <Ionicons
+              name="arrow-up-circle-outline"
+              size="34"
+              color={isDarkMode ? 'white' : 'black'}
+            />
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 };
 
