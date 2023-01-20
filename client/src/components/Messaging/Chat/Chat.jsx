@@ -132,7 +132,7 @@ const Chat = () => {
         unSub();
       };
     }
-  }, []);
+  }, [currentCombinedId]);
 
   const getMessages = (combinedId) => {
     axios
