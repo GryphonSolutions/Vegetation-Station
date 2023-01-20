@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
@@ -12,7 +13,11 @@ import {
   Alert,
 } from 'react-native';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../../actions';
-import { updateSelectedUser } from '../../../reducers';
+import {
+  updateSelectedUser,
+  updateSearchMessages,
+  updateUserMessageSearch,
+} from '../../../reducers';
 import styles from './assets/StyleSheet.jsx';
 
 const Offers = ({ navigation }) => {
@@ -49,6 +54,17 @@ const Offers = ({ navigation }) => {
       },
     ];
   }, [activeUser]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = () => {
+        dispatch(updateSearchMessages(false));
+        dispatch(updateUserMessageSearch(''));
+      };
+
+      return unsubscribe();
+    }, []),
+  );
 
   const findBuyer = (item) => {
     const target = users.filter((user) => item.seller.id === user?.id);
@@ -176,7 +192,9 @@ const Offers = ({ navigation }) => {
   const chatWithUser = (id) => {
     const target = users.filter((user) => user.id === id);
     dispatch(updateSelectedUser(target[0]));
-    navigation.navigate('Chat');
+    dispatch(updateSearchMessages(true));
+    dispatch(updateUserMessageSearch(target[0].username));
+    navigation.navigate('Messages');
   };
 
   const renderTrade = (item) => {

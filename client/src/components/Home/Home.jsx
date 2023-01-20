@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StatusBar } from 'expo-status-bar';
 import {
@@ -11,7 +11,11 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import Header from './Header';
 import Body from './Body';
-import { updateIsDarkMode } from '../../reducers';
+import {
+  updateIsDarkMode,
+  updateSearchMessages,
+  updateUserMessageSearch,
+} from '../../reducers';
 
 const Home = () => {
   const { activeUser, selectedUser, users, catalog, currentOffers } =
@@ -19,6 +23,11 @@ const Home = () => {
   const { isDarkMode } = useSelector((state) => state.app);
   const dispatch = useDispatch();
   // dispatch(updateIsDarkMode(false));
+
+  useEffect(() => {
+    dispatch(updateSearchMessages(false));
+    dispatch(updateUserMessageSearch(''));
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

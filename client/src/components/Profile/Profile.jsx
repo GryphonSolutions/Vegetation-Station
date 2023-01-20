@@ -13,7 +13,12 @@ import {
   Alert,
 } from 'react-native';
 import { persistor } from '../../store';
-import { updateActiveUser, updateSelectedUser } from '../../reducers';
+import {
+  updateActiveUser,
+  updateSelectedUser,
+  updateUserMessageSearch,
+  updateSearchMessages,
+} from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
 
@@ -29,6 +34,9 @@ const Profile = ({ navigation }) => {
   } = useSelector((state) => state.data);
   const { id, username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
+
+  dispatch(updateSearchMessages(false));
+  dispatch(updateUserMessageSearch(''));
 
   const openTrades = offers.filter((item) => {
     return item.isOpen && (item.buyer.id === id || item.seller.id === id);

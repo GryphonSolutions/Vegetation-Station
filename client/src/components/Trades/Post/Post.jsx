@@ -17,6 +17,11 @@ import { Camera, CameraType, takePictureAsync } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
+import {
+  updateSelectedUser,
+  updateSearchMessages,
+  updateUserMessageSearch,
+} from '../../../reducers';
 import styles from './StyleSheet';
 import plantData from '../../../../../server/data/plants.js';
 import catalog from '../../../../../server/data/catalog.js';
@@ -40,6 +45,8 @@ const Post = () => {
   const [dropdownValue, setDropdownValue] = useState([]);
   const [dropdownItems, setDropdownItems] = useState([]);
 
+  const dispatch = useDispatch();
+
   const { currentPlant } = useSelector((state) => state.data);
   useEffect(() => {
     const plantNames = plantData.map((plant) => {
@@ -49,6 +56,8 @@ const Post = () => {
       };
     });
     setDropdownItems(plantNames);
+    dispatch(updateSearchMessages(false));
+    dispatch(updateUserMessageSearch(''));
   }, []);
 
   // page is still checking camera priveledges
