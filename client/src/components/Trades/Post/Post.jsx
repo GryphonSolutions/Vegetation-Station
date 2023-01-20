@@ -35,6 +35,9 @@ const Post = () => {
   // hooks for form data
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [plantColor, setPlantColor] = useState();
+  const [plantSize, setPlantSize] = useState();
+
   // hooks for DropDownPicker
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownValue, setDropdownValue] = useState([]);
@@ -45,10 +48,10 @@ const Post = () => {
     const plantNames = plantData.map((plant) => {
       return {
         label: plant['Latin name'],
-        value: plant,
+        value: '',
       };
     });
-    setDropdownItems(plantNames);
+    setDropdownValue(plantNames);
   }, []);
 
   // page is still checking camera priveledges
@@ -149,6 +152,22 @@ const Post = () => {
               searchPlaceholder="Search for species..."
             />
 
+            <Text style={styles.inputLabel}>SIZE</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setPlantSize}
+              value={plantSize}
+              placeholder="Enter description"
+            />
+
+            <Text style={styles.inputLabel}>COLOR</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setPlantColor}
+              value={plantColor}
+              placeholder="Enter Title"
+            />
+
             <Text style={styles.inputLabel}>DESCRIPTIOIN</Text>
             <TextInput
               multiline
@@ -166,6 +185,8 @@ const Post = () => {
                 Alert.alert('Plant has been posted');
                 setTitle('');
                 setDescription('');
+                setPlantSize('');
+                setPlantColor('');
                 setDropdownValue('');
                 setImage(null);
               }}
