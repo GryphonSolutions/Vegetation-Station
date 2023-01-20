@@ -123,7 +123,7 @@ const Chat = () => {
         doc(db, 'chatMessages', currentCombinedId),
         { includeMetadataChanges: true },
         (document) => {
-          console.log(document.data());
+          // console.log(document.data());
           dispatch(updateCurrentChat(document.data()));
         },
       );
