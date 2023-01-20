@@ -29,7 +29,7 @@ const UserProfile = ({ navigation }) => {
   });
 
   const closedTrades = offers.filter((item) => {
-    return !item.isOpen && (item.buyer.id === id || item.seller.id === id);
+    return !item.isOpen && (item.buyer.id === id || item.seller.id === id) && item.reason === 'accepted';
   });
 
   const signOut = () => {

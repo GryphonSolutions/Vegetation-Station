@@ -19,8 +19,7 @@ import SearchBar from './SearchBar';
 
 export default function Body() {
   const { isDarkMode } = useSelector((state) => state.app);
-  const { activeUser, users, catalog, currentPosts, currentOffers } =
-    useSelector((state) => state.data);
+  const { users, currentPosts } = useSelector((state) => state.data);
 
   const dispatch = useDispatch();
 
@@ -56,9 +55,7 @@ export default function Body() {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={<Text>There are no plants to show</Text>}
           renderItem={({ item, index }) => renderImage(item, index)}
-          ItemSeparatorComponent={
-            <View style={{ height: '1.5%', width: '1.5%' }} />
-          }
+          ItemSeparatorComponent={() => { <View style={{ height: '1.5%', width: '1.5%' }} />; }}
         />
       </View>
     </View>
