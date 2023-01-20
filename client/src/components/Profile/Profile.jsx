@@ -21,6 +21,7 @@ import {
 } from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
+import { logout } from '../Login/authLogout.js';
 
 const Profile = ({ navigation }) => {
   const { activeUser, selectedUser, users, catalog, offers, currentOffers } =
@@ -28,6 +29,7 @@ const Profile = ({ navigation }) => {
   const { isDarkMode } = useSelector((state) => state.app);
   const { id, username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
+
 
   const openTrades = offers.filter((item) => {
     return item.isOpen && (item.buyer.id === id || item.seller.id === id);
@@ -44,6 +46,7 @@ const Profile = ({ navigation }) => {
   const signOut = () => {
     persistor.purge();
     dispatch(updateActiveUser({}));
+    logout();
     navigation.navigate('Login');
   };
 

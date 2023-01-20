@@ -12,6 +12,14 @@ export default StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     marginBottom: '6%',
+    marginTop: '85%',
+  },
+
+  regInputContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: '6%',
+    marginTop: '4%',
   },
 
   inputLabels: {
@@ -21,11 +29,29 @@ export default StyleSheet.create({
     color: '#283618',
     marginTop: '8%',
   },
+  regAccLabel: {
+    width: Dimensions.get('window').width * 0.84,
+    fontFamily: 'JosefinSans-Medium',
+    fontSize: 35,
+    color: '#283618',
+    marginTop: '8%',
+    paddingLeft: '5%',
+  },
 
   loginInputs: {
     backgroundColor: '#d5dec6',
     fontFamily: 'JosefinSans',
     width: '100%',
+    fontSize: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: '8%',
+    marginTop: '4%',
+  },
+  regInputs: {
+    backgroundColor: '#d5dec6',
+    fontFamily: 'JosefinSans',
+    width: '80%',
     fontSize: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,

@@ -25,14 +25,7 @@ const Location = ({ coordinates }) => {
           latitudeDelta: 0.04,
           longitudeDelta: 0.05,
         }}
-        // provider={PROVIDER_GOOGLE}
       >
-        {/* <Marker
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
-          /> */}
         <Circle
           center={{
             latitude: location.latitude,

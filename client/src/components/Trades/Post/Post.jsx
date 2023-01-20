@@ -52,8 +52,6 @@ const Post = () => {
   const [dropdownValue, setDropdownValue] = useState(null);
   const [dropdownItems, setDropdownItems] = useState([]);
   const [dropdownImg, setDropdownImg] = useState([]);
-
-  const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
   const dispatch = useDispatch();
 
   // for selecting size
@@ -159,16 +157,19 @@ const Post = () => {
   //  send form data
   const updatePosts = () => {
     const formInfo = {
-      commonName: dropdownImg[dropdownValue].commonName,
-      images: [dropdownImg[dropdownValue].imgLink],
-      size: sizeDropdownValue,
-      color: plantColor,
+      commonName: dropdownImg[dropdownValue]?.commonName || 'Missing Info',
+      images: [
+        dropdownImg[dropdownValue]?.imgLink ||
+          'https://t4.ftcdn.net/jpg/00/89/55/15/360_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg',
+      ],
+      size: sizeDropdownValue || 'small',
+      color: plantColor || 'green',
       poster: activeUser.username,
-      description: plantDescription,
-      preferedTrade: dropdownImg[preferredValue].commonName,
+      description: plantDescription || 'Missing Info',
+      preferedTrade: dropdownImg[preferredValue]?.commonName || 'Missing Info',
       isPosted: true,
       isTraded: false,
-      postTitle: title,
+      postTitle: title || 'Missing Info',
     };
     axios
       .post(
@@ -244,6 +245,8 @@ const Post = () => {
               setOpen={setIsDropdownOpen}
               setValue={setDropdownValue}
               setItems={setDropdownItems}
+              zIndex={3000}
+              zIndexInverse={1000}
               dropDownContainerStyle={{
                 width: '66%',
                 marginHorizontal: '17%',
@@ -268,6 +271,8 @@ const Post = () => {
               setOpen={setIsPreferredOpen}
               setValue={setPreferredValue}
               setItems={setDropdownItems}
+              zIndex={2000}
+              zIndexInverse={2000}
               dropDownContainerStyle={{
                 width: '66%',
                 marginHorizontal: '17%',
@@ -288,6 +293,8 @@ const Post = () => {
               open={isSizeDropdownOpen}
               value={sizeDropdownValue}
               items={sizeDropdownItems}
+              zIndex={1000}
+              zIndexInverse={3000}
               onOpen={onSizeOpen}
               setOpen={setIsSizeDropdownOpen}
               setValue={setSizeDropdownValue}
@@ -341,7 +348,7 @@ const Post = () => {
       {
         // show camera
         showCamera && isFocused && (
-          <View style={styles.page}>
+          <View style={styles.cameraContainer}>
             <Camera
               style={styles.camera}
               type={type}
@@ -354,7 +361,7 @@ const Post = () => {
                     toggleCameraType();
                   }}
                 >
-                  <Text style={styles.text}>Flip Camera</Text>
+                  <Text style={styles.buttonCameraText}>Flip</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -364,7 +371,7 @@ const Post = () => {
                     setShowCamera(false);
                   }}
                 >
-                  <Text style={styles.text}>Take picture</Text>
+                  <Text style={styles.buttonCameraText}>Take picture</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -374,7 +381,7 @@ const Post = () => {
                     setStatusBarHidden(false, 'slide');
                   }}
                 >
-                  <Text style={styles.text}>Leave Camera</Text>
+                  <Text style={styles.buttonCameraText}>Exit</Text>
                 </TouchableOpacity>
               </View>
             </Camera>
