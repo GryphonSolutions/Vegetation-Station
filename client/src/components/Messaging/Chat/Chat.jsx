@@ -163,6 +163,7 @@ const Chat = () => {
             currentCombinedId,
             read: true,
             text: senderInput,
+            time: true,
           },
         },
       )
@@ -183,6 +184,7 @@ const Chat = () => {
             currentCombinedId,
             read: false,
             text: senderInput,
+            time: true,
           },
         },
       )

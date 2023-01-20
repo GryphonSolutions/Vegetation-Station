@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   StyleSheet,
@@ -16,7 +17,8 @@ import { persistor } from '../../store';
 import {
   updateActiveUser,
   updateSelectedUser,
-  updateIsNavShown,
+  updateSearchMessages,
+  updateUserMessageSearch,
 } from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
@@ -27,6 +29,17 @@ const UserProfile = ({ navigation }) => {
   const { isDarkMode } = useSelector((state) => state.app);
   const { id, username, profilePicture, tradeCount, location } = activeUser;
   const dispatch = useDispatch();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = () => {
+        dispatch(updateSearchMessages(false));
+        dispatch(updateUserMessageSearch(''));
+      };
+
+      return unsubscribe();
+    }, []),
+  );
 
   const openTrades = offers.filter((item) => {
     return item.isOpen && (item.buyer.id === id || item.seller.id === id);
