@@ -99,7 +99,7 @@ const Chat = () => {
     },
   });
 
-  useEffect(() => {
+  ct(() => {
     if (currentCombinedId) {
       const unSub = onSnapshot(
         doc(db, 'chatMessages', currentCombinedId),
