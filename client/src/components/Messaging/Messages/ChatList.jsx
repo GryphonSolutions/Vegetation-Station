@@ -27,7 +27,7 @@ const ChatList = ({ chat }) => {
       borderColor: 'red',
     },
     name: {
-      fontFamilt: 'JosefinSans-Bold',
+      fontFamily: 'JosefinSans-SemiBold',
     },
     time: {
       fontFamily: 'JosefinSans-Light',
