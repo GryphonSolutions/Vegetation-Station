@@ -344,7 +344,10 @@ const Chat = () => {
         >
           <TextInput
             value={senderInput}
-            onChangeText={(text) => dispatch(updateSenderInput(text))}
+            onChangeText={(text) => {
+              dispatch(updateSenderInput(text));
+              scrollViewRef.current.scrollToEnd({ animated: true });
+            }}
             onSubmitEditing={sendMessage}
             placeholder="message"
             style={styles.textInput}
