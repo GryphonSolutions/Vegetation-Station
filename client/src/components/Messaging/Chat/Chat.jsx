@@ -45,75 +45,55 @@ const Chat = () => {
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
-    border: {
-      borderStyle: 'solid',
-      borderWidth: '2',
-      borderColor: 'red',
-    },
-    header: {
-      backgroundColor: '#fff',
+    headerContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      borderBottomColor: 'gray',
-      borderBottomStyles: 'solid',
-      borderBottomWidth: 1,
-      paddingBottom: 3,
-      paddingRight: 10,
-      paddingLeft: 10,
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      marginTop: '5%',
+      paddingBottom: '5%',
     },
-    footer: {
+    backButtonContainer: {
+      left: '4%',
+      top: -3,
+      position: 'absolute',
+      alignItems: 'flex-end',
+    },
+    backButton: {
+      color: '#283618',
+    },
+    contentContainer: {
+      paddingTop: 10,
+      marginHorizontal: '4%',
+    },
+    messageBubble: {
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      borderRadius: 20,
+      marginBottom: 10,
+      maxWidth: '80%',
+      position: 'relative',
+    },
+    messageText: {
+      fontFamily: 'JosefinSans-Medium',
+      fontSize: 16,
+      marginLeft: 0,
+      marginRight: 0,
+    },
+    inputContainer: {
       flexDirection: 'row',
+      justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
-      padding: 10,
-    },
-    container: {
-      height: '100%',
+      paddingVertical: '2%',
     },
     textInput: {
-      bottom: 0,
-      height: 40,
-      width: '85%',
-      marginRight: 15,
-      borderColor: 'transparent',
-      backgroundColor: '#ECECEC',
-      borderWidth: 1,
+      flex: 1,
+      fontFamily: 'JosefinSans-Medium',
+      fontSize: 16,
+      marginHorizontal: '4%',
+      backgroundColor: '#bdcab6',
       padding: 10,
-      color: 'grey',
+      color: '#212b21',
       borderRadius: 30,
-    },
-    receiver: {
-      padding: 10,
-      backgroundColor: '#ECECEC',
-      alignSelf: 'flex-start',
-      borderRadius: 20,
-      marginLeft: 10,
-      marginBottom: 10,
-      maxWidth: '80%',
-      position: 'relative',
-    },
-    recieverText: {
-      color: 'black',
-      fontWeight: '500',
-      marginLeft: 0,
-      marginRight: 0,
-    },
-    sender: {
-      padding: 10,
-      backgroundColor: '#2B68E6',
-      alignSelf: 'flex-end',
-      borderRadius: 20,
-      marginRight: 10,
-      marginBottom: 10,
-      maxWidth: '80%',
-      position: 'relative',
-    },
-    senderText: {
-      color: 'white',
-      fontWeight: '500',
-      marginRight: 0,
-      marginLeft: 0,
     },
   });
 
@@ -263,40 +243,62 @@ const Chat = () => {
   const scrollViewRef = useRef();
 
   return (
-    <SafeAreaView>
-      <KeyboardAvoidingView
-        behavior="padding"
-        style={styles.container}
-        // keyboardVerticalOffset={90}
+    <View
+      style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
+    >
+      <View
+        style={{
+          backgroundColor: isDarkMode ? '#656464' : '#e4e9dc',
+          marginBottom: '-5%',
+          paddingBottom: '5%',
+        }}
       >
-        <View style={styles.header}>
-          <TouchableOpacity onPress={backToMessages} activeOpacity={0.5}>
-            <Ionicons
-              name="arrow-back-circle-outline"
-              size="40"
-              color={isDarkMode ? 'white' : 'black'}
-            />
-          </TouchableOpacity>
-          <View style={{ alignItems: 'center' }}>
-            <Avatar
-              rounded
-              size="medium"
-              source={{
-                uri: `${selectedUser.profilePicture}`,
-              }}
-            />
-            <Text style={{ fontSize: 20 }}>{selectedUser.username}</Text>
-          </View>
-          <Ionicons
-            name="arrow-back-circle-outline"
-            size="40"
-            color={isDarkMode ? 'black' : 'white'}
-          />
-        </View>
+        <SafeAreaView />
+      </View>
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <>
+          <View
+            style={[
+              { backgroundColor: isDarkMode ? '#656464' : '#e4e9dc' },
+              styles.headerContainer,
+            ]}
+          >
+            <TouchableOpacity
+              style={styles.backButtonContainer}
+              onPress={backToMessages}
+              activeOpacity={0.5}
+            >
+              <Ionicons
+                style={styles.backButton}
+                name="arrow-back-circle-outline"
+                size={40}
+                color={isDarkMode ? 'white' : 'black'}
+              />
+            </TouchableOpacity>
+            <View style={{ alignItems: 'center' }}>
+              <Avatar
+                containerStyle={{ marginBottom: 5, marginTop: -10 }}
+                rounded
+                size="medium"
+                source={{
+                  uri: `${selectedUser.profilePicture}`,
+                }}
+              />
+              <Text
+                style={{
+                  fontFamily: 'JosefinSans-Medium',
+                  fontSize: 15,
+                }}
+              >
+                {selectedUser.username}
+              </Text>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+        <View style={{ flex: 1 }}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <ScrollView
-              contentContainerStyle={{ paddingTop: 10 }}
+              contentContainerStyle={styles.contentContainer}
               ref={scrollViewRef}
               onContentSizeChange={() => {
                 scrollViewRef.current.scrollToEnd({ animated: true });
@@ -305,36 +307,61 @@ const Chat = () => {
               {currentChat.messages !== undefined &&
                 currentChat.messages.map((data) => {
                   return String(data.senderId) === String(activeUser.id) ? (
-                    <View key={data.id} style={styles.sender}>
-                      <Text style={styles.senderText}>{data.text}</Text>
+                    <View
+                      key={data.id}
+                      style={[
+                        { backgroundColor: '#457dec', alignSelf: 'flex-end' },
+                        styles.messageBubble,
+                      ]}
+                    >
+                      <Text style={[{ color: 'white' }, styles.messageText]}>
+                        {data.text}
+                      </Text>
                     </View>
                   ) : (
-                    <View key={data.id} style={styles.receiver}>
-                      <Text style={styles.recieverText}>{data.text}</Text>
+                    <View
+                      key={data.id}
+                      style={[
+                        { backgroundColor: '#f0e4be', alignSelf: 'flex-start' },
+                        styles.messageBubble,
+                      ]}
+                    >
+                      <Text style={[{ color: 'black' }, styles.messageText]}>
+                        {data.text}
+                      </Text>
                     </View>
                   );
                 })}
             </ScrollView>
-            <View style={styles.footer}>
-              <TextInput
-                value={senderInput}
-                onChangeText={(text) => dispatch(updateSenderInput(text))}
-                onSubmitEditing={sendMessage}
-                placeholder="message"
-                style={styles.textInput}
-              />
-              <TouchableOpacity onPress={sendMessage} activeOpacity={0.5}>
-                <Ionicons
-                  name="arrow-up-circle-outline"
-                  size="34"
-                  color={isDarkMode ? 'white' : 'black'}
-                />
-              </TouchableOpacity>
-            </View>
-          </>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </View>
+        <View
+          style={[
+            { backgroundColor: isDarkMode ? '#656464' : '#e4e9dc' },
+            styles.inputContainer,
+          ]}
+        >
+          <TextInput
+            value={senderInput}
+            onChangeText={(text) => dispatch(updateSenderInput(text))}
+            onSubmitEditing={sendMessage}
+            placeholder="message"
+            style={styles.textInput}
+          />
+          <TouchableOpacity
+            style={{ marginRight: '4%' }}
+            onPress={sendMessage}
+            activeOpacity={0.5}
+          >
+            <Ionicons
+              name="arrow-up-circle-outline"
+              size={35}
+              color={isDarkMode ? 'white' : 'black'}
+            />
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </View>
   );
 };
 

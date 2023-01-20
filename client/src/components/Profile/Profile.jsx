@@ -136,6 +136,13 @@ const Profile = ({ navigation }) => {
         </View>
         <View style={styles.tradesListContainer}>
           <Text style={styles.tradesListHeader}>Open Trades</Text>
+          <View
+            style={{
+              borderBottomWidth: 1,
+              marginTop: '4%',
+              borderColor: '#cccfcc',
+            }}
+          />
 
           <View style={styles.tradesListBodyContainer}>
             {openTrades?.map((item, i) => {
@@ -153,6 +160,13 @@ const Profile = ({ navigation }) => {
         </View>
         <View style={styles.tradesListContainer}>
           <Text style={styles.tradesListHeader}>Closed Trades</Text>
+          <View
+            style={{
+              borderBottomWidth: 1,
+              marginTop: '4%',
+              borderColor: '#cccfcc',
+            }}
+          />
           <View style={styles.tradesListBodyContainer}>
             {closedTrades?.map((item, i) => {
               return (
