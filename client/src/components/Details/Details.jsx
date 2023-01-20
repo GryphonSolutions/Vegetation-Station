@@ -67,7 +67,7 @@ const Details = () => {
               <Text style={styles.plantNameText}>
                 Trader&apos;s General Location:
               </Text>
-              <Location />
+              {/* <Location /> */}
             </View>
           </ScrollView>
           <TouchableOpacity onPress={() => navigateSelectedProfile()}>
