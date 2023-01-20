@@ -22,7 +22,7 @@ export default StyleSheet.create({
   backButton: {
     position: 'absolute',
     color: '#283618',
-    left: 10,
+    left: '4%',
   },
 
   contentContainer: {
@@ -87,7 +87,7 @@ export default StyleSheet.create({
   },
 
   tradesListContainer: {
-    marginVertical: '8%',
+    marginVertical: '16%',
   },
 
   tradesListHeader: {
@@ -96,7 +96,7 @@ export default StyleSheet.create({
   },
 
   tradesListBodyContainer: {
-    marginTop: '8%',
+    marginTop: '4%',
   },
 
   itemsRow: {

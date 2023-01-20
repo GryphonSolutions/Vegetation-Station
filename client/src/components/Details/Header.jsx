@@ -11,6 +11,7 @@ import { updateSelectedUser } from '../../reducers';
 const Header = () => {
   const dispatch = useDispatch();
   const { selectedUser, activeUser } = useSelector((state) => state.data);
+  const { isDarkMode } = useSelector((state) => state.app);
   const returnHome = () => {
     persistor.purge();
     navigation.navigate('Home');
@@ -20,12 +21,26 @@ const Header = () => {
       <Ionicons
         style={styles.backButton}
         name="arrow-undo"
-        size="25px"
+        size={30}
         onPress={() => returnHome()}
       />
-      <View style={{ flex: 1 }}>
-        <Text style={styles.headerText}>Item Information</Text>
-      </View>
+
+      <Text
+        style={[
+          styles.headerText,
+          { color: isDarkMode ? '#d39b52' : '#283618' },
+        ]}
+      >
+        Item
+      </Text>
+      <Text
+        style={[
+          styles.headerText,
+          { color: isDarkMode ? '#d39b52' : '#283618' },
+        ]}
+      >
+        Information
+      </Text>
     </View>
   );
 };

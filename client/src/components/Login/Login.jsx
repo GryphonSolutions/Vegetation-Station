@@ -10,6 +10,8 @@ import {
   Separator,
   SafeAreaView,
   Image,
+  TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import axios from 'axios';
@@ -33,6 +35,11 @@ const Login = () => {
 
   const [userInfo, setUserInfo] = useState({ email: '', password: '' });
   const [currUser, setCurrUser] = useState({});
+  const [aspectRatio, setAspectRatio] = useState(
+    Image.resolveAssetSource(logo).height /
+      Image.resolveAssetSource(logo).width,
+  );
+  const { isDarkMode } = useSelector((state) => state.app);
 
   const dispatch = useDispatch();
 
@@ -81,82 +88,82 @@ const Login = () => {
       getOneAndSetOne={getOneAndSetOne}
     />
   ) : (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView>
-        <View>
-          <Image source={logo} style={styles.logoStyles} />
-          <View style={styles.loginInputsContainer}>
-            <View>
-              <Text style={styles.registerLabels}>Email</Text>
-            </View>
-            <TextInput
-              placeholder="Enter your email..."
-              placeholderTextColor="#283618"
-              style={styles.loginInputs}
-              clearButtonMode="always"
-              value={userInfo.email}
-              onChangeText={(text) => {
-                setUserInfo({ ...userInfo, email: text });
-              }}
-            />
-            <View>
-              <Text style={styles.registerLabels}>Password</Text>
-            </View>
-            <TextInput
-              placeholder="Enter password..."
-              style={styles.loginInputs}
-              placeholderTextColor="black"
-              value={userInfo.password}
-              secureTextEntry
-              clearButtonMode="always"
-              onChangeText={(text) => {
-                setUserInfo({ ...userInfo, password: text });
-              }}
-            />
+    <View
+      style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
+    >
+      <SafeAreaView />
+      <View
+        style={{ flex: 1, marginHorizontal: '8%', justifyContent: 'center' }}
+      >
+        <Image
+          source={logo}
+          style={[
+            {
+              width: '100%',
+              height: Dimensions.get('window').width * 0.86 * aspectRatio,
+            },
+            styles.logoStyles,
+          ]}
+        />
+        <View style={styles.loginInputsContainer}>
+          <View>
+            <Text style={styles.inputLabels}>Email</Text>
           </View>
-          <View
-            style={{
-              justifyContent: 'center',
-              flexDirection: 'row',
-              fontFamily: 'AnonymousPro',
+          <TextInput
+            placeholder="Enter your email..."
+            placeholderTextColor="#283618"
+            style={styles.loginInputs}
+            clearButtonMode="always"
+            value={userInfo.email}
+            onChangeText={(text) => {
+              setUserInfo({ ...userInfo, email: text });
+            }}
+          />
+          <View>
+            <Text style={styles.inputLabels}>Password</Text>
+          </View>
+          <TextInput
+            placeholder="Enter password..."
+            style={styles.loginInputs}
+            placeholderTextColor="black"
+            value={userInfo.password}
+            secureTextEntry
+            clearButtonMode="always"
+            onChangeText={(text) => {
+              setUserInfo({ ...userInfo, password: text });
+            }}
+          />
+        </View>
+
+        <View
+          style={{
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+          }}
+        >
+          <TouchableOpacity style={styles.button} onPress={login}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              setRegistration(true);
             }}
           >
-            <View style={styles.logSubmitContainer}>
-              <Button
-                style={styles.regButton}
-                color="#283618"
-                title="Login"
-                textStyle={{ fontFamily: 'JosefinSans' }}
-                onPress={() => {
-                  login();
-                }}
-              />
-            </View>
-            <View style={styles.logSubmitContainer}>
-              <Button
-                style={{ fontFamily: 'AnonymousPro' }}
-                color="#283618"
-                title="Register"
-                onPress={() => {
-                  setRegistration(true);
-                }}
-              />
-            </View>
-            <View style={styles.logSubmitContainer}>
-              <Button
-                style={styles.regButton}
-                color="#283618"
-                title="Logout"
-                onPress={() => {
-                  logout();
-                  dispatch(updateActiveUser({}));
-                }}
-              />
-            </View>
-          </View>
+            <Text style={styles.buttonText}>Register</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              logout();
+              dispatch(updateActiveUser({}));
+            }}
+          >
+            <Text style={styles.buttonText}>Log Out</Text>
+          </TouchableOpacity>
         </View>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
+      </View>
+    </View>
   );
 };
 export default Login;

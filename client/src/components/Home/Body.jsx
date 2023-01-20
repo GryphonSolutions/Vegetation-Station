@@ -56,7 +56,7 @@ export default function Body() {
           ListEmptyComponent={<Text>There are no plants to show</Text>}
           renderItem={({ item, index }) => renderImage(item, index)}
           ItemSeparatorComponent={() => (
-            <View style={{ height: '1.5%', width: '1.5%' }} />
+            <View style={{ height: '0.75%', width: '0.75%' }} />
           )}
         />
       </View>

@@ -17,9 +17,8 @@ import { updateHomeSearchText, updateCurrentPosts } from '../../reducers';
 export default function SearchBar() {
   const { isDarkMode } = useSelector((state) => state.app);
   const { homeSearchText } = useSelector((state) => state.home);
-  const { activeUser, catalog, currentPosts, filteredCatalog, users } = useSelector(
-    (state) => state.data,
-  );
+  const { activeUser, catalog, currentPosts, filteredCatalog, users } =
+    useSelector((state) => state.data);
   const dispatch = useDispatch();
 
   const updateSearch = (val) => {
@@ -27,7 +26,9 @@ export default function SearchBar() {
     const filtered = catalog.filter((item) => {
       return (
         item.commonName.toLowerCase().includes(val.toLowerCase()) &&
-        (item.isPosted === true && item.isTraded === false) && item.poster !== activeUser.username
+        item.isPosted === true &&
+        item.isTraded === false &&
+        item.poster !== activeUser.username
       );
     });
     dispatch(updateCurrentPosts(filtered));
@@ -60,7 +61,9 @@ export default function SearchBar() {
 
   // sort highest to lowest trade count
   const sortTopSellers = () => {
-    const sortedUsers = users.sort((a, b) => compare(b.tradeCount, a.tradeCount));
+    const sortedUsers = users.sort((a, b) =>
+      compare(b.tradeCount, a.tradeCount),
+    );
     const sorted = catalog.sort((a, b) => {
       const index1 = sortedUsers.map((e) => e.username).indexOf(a.poster);
       const index2 = sortedUsers.map((e) => e.username).indexOf(b.poster);
@@ -82,7 +85,7 @@ export default function SearchBar() {
         ]}
         onChangeText={(val) => updateSearch(val)}
         value={homeSearchText}
-        placeholder="search for plants"
+        placeholder="search plants..."
         placeholderTextColor="#6d6d6d"
       />
       <Pressable
