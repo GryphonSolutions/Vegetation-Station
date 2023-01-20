@@ -29,6 +29,7 @@ const Profile = ({ navigation }) => {
   const { id, username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
 
+
   const openTrades = offers.filter((item) => {
     return item.isOpen && (item.buyer.id === id || item.seller.id === id);
   });
