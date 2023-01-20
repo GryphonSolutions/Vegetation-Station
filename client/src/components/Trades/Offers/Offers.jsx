@@ -12,12 +12,13 @@ import {
   Alert,
 } from 'react-native';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../../actions';
-import { updateSelectedUser, updateCatalog, updateOffers, updateUsers } from '../../../reducers';
+import { updateSelectedUser, updateCatalog, updateOffers, updateUsers, updateCurrentPosts, updateCurrentOffers } from '../../../reducers';
 import styles from './assets/StyleSheet.jsx';
 
 const Offers = ({ navigation }) => {
   const { activeUser, selectedUser, users, catalog, currentOffers } =
     useSelector((state) => state.data);
+  const { homeSearchText } = useSelector((state) => state.home);
   const { isDarkMode } = useSelector((state) => state.app);
   const { username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const Offers = ({ navigation }) => {
         }),
       },
     ];
-  }, [activeUser]);
+  }, [currentOffers]);
 
   const findBuyer = (item) => {
     const target = users.filter((user) => item.seller.id === user?.id);
@@ -86,7 +87,18 @@ const Offers = ({ navigation }) => {
         temp1,
       )
       .then(() => {
-        console.log('RETRIEVE OFFERS');
+        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive')
+          .then(({ data }) => {
+            dispatch(updateOffers(data));
+            const offers1 = data.filter((offer) => {
+              return (
+                offer?.buyer?.id === activeUser?.id ||
+                offer?.seller?.id === activeUser?.id
+              );
+            });
+            dispatch(updateCurrentOffers(offers1));
+          })
+          .catch((err) => console.error(err));
       })
       .catch((err) => console.error(err));
 
@@ -110,7 +122,19 @@ const Offers = ({ navigation }) => {
             temp3,
           )
           .then(() => {
-            console.log('RETRIEVE LISTINGS');
+            axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings')
+              .then(({ data }) => {
+                dispatch(updateCatalog(data));
+                const filtered = data.filter((plant) => {
+                  return (
+                    plant.commonName.toLowerCase().includes(homeSearchText.toLowerCase())
+                    && (plant.isPosted === true && plant.isTraded === false)
+                    && plant.poster !== activeUser.username
+                  );
+                });
+                dispatch(updateCurrentPosts(filtered));
+              })
+              .catch((err) => console.error(err));
           })
           .catch((err) => console.error(err));
       })
@@ -136,12 +160,15 @@ const Offers = ({ navigation }) => {
             temp5,
           )
           .then(() => {
-            console.log('RETREIVE USERS');
+            axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info')
+              .then(({ data }) => {
+                dispatch(updateCatalog(data));
+              })
+              .catch((err) => console.error(err));
           })
           .catch((err) => console.error(err));
       })
       .catch((err) => console.error(err));
-
   };
 
   const declineTrade = (item) => {
@@ -156,7 +183,12 @@ const Offers = ({ navigation }) => {
         temp1,
       )
       .then(() => {
-        console.log('RETIEVE OFFERS');
+        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive')
+          .then(({ data }) => {
+            console.log('OFFERS: ', data);
+            dispatch(updateOffers(data));
+          })
+          .catch((err) => console.error(err));
       })
       .catch((err) => console.error(err));
     const target = catalog.filter((plant) => buyerListingID === plant.id);
@@ -169,7 +201,12 @@ const Offers = ({ navigation }) => {
         temp2,
       )
       .then(() => {
-        console.log('RETIREVE CATALOG');
+        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings')
+          .then(({ data }) => {
+            console.log('CATALOG: ', data);
+            dispatch(updateCatalog(data));
+          })
+          .catch((err) => console.error(err));
       })
       .catch((err) => console.error(err));
   };

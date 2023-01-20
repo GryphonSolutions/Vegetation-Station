@@ -27,7 +27,7 @@ export default function SearchBar() {
     const filtered = catalog.filter((item) => {
       return (
         item.commonName.toLowerCase().includes(val.toLowerCase()) &&
-        (item.isPosted === true || item.isTraded === false) && item.poster !== activeUser.username
+        (item.isPosted === true && item.isTraded === false) && item.poster !== activeUser.username
       );
     });
     dispatch(updateCurrentPosts(filtered));
