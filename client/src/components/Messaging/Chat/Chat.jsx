@@ -52,63 +52,37 @@ const Chat = () => {
     },
     contentContainer: {
       paddingTop: 10,
+      marginHorizontal: '4%',
     },
-    // point of no return
-
-    border: {
-      borderStyle: 'solid',
-      borderWidth: '2',
-      borderColor: 'red',
+    messageBubble: {
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      borderRadius: 20,
+      marginBottom: 10,
+      maxWidth: '80%',
+      position: 'relative',
     },
-    footer: {
+    messageText: {
+      fontFamily: 'JosefinSans-Medium',
+      fontSize: 16,
+      marginLeft: 0,
+      marginRight: 0,
+    },
+    inputContainer: {
       flexDirection: 'row',
+      justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
-      padding: 10,
+      paddingVertical: '2%',
     },
     textInput: {
-      bottom: 0,
-      height: 40,
-      width: '85%',
-      marginRight: 15,
-      borderColor: 'transparent',
-      backgroundColor: '#ECECEC',
-      borderWidth: 1,
+      flex: 1,
+      fontFamily: 'JosefinSans-Medium',
+      fontSize: 16,
+      marginHorizontal: '4%',
+      backgroundColor: '#cac9c6',
       padding: 10,
-      color: 'grey',
+      color: '#212b21',
       borderRadius: 30,
-    },
-    receiver: {
-      padding: 10,
-      backgroundColor: '#ECECEC',
-      alignSelf: 'flex-start',
-      borderRadius: 20,
-      marginLeft: 10,
-      marginBottom: 10,
-      maxWidth: '80%',
-      position: 'relative',
-    },
-    recieverText: {
-      color: 'black',
-      fontWeight: '500',
-      marginLeft: 0,
-      marginRight: 0,
-    },
-    sender: {
-      padding: 10,
-      backgroundColor: '#2B68E6',
-      alignSelf: 'flex-end',
-      borderRadius: 20,
-      marginRight: 10,
-      marginBottom: 10,
-      maxWidth: '80%',
-      position: 'relative',
-    },
-    senderText: {
-      color: 'white',
-      fontWeight: '500',
-      marginRight: 0,
-      marginLeft: 0,
     },
   });
 
@@ -303,12 +277,28 @@ const Chat = () => {
               {currentChat.messages !== undefined &&
                 currentChat.messages.map((data) => {
                   return String(data.senderId) === String(activeUser.id) ? (
-                    <View key={data.id} style={styles.sender}>
-                      <Text style={styles.senderText}>{data.text}</Text>
+                    <View
+                      key={data.id}
+                      style={[
+                        { backgroundColor: '#457dec', alignSelf: 'flex-end' },
+                        styles.messageBubble,
+                      ]}
+                    >
+                      <Text style={[{ color: 'white' }, styles.messageText]}>
+                        {data.text}
+                      </Text>
                     </View>
                   ) : (
-                    <View key={data.id} style={styles.receiver}>
-                      <Text style={styles.recieverText}>{data.text}</Text>
+                    <View
+                      key={data.id}
+                      style={[
+                        { backgroundColor: '#f0e4be', alignSelf: 'flex-start' },
+                        styles.messageBubble,
+                      ]}
+                    >
+                      <Text style={[{ color: 'black' }, styles.messageText]}>
+                        {data.text}
+                      </Text>
                     </View>
                   );
                 })}
@@ -318,7 +308,7 @@ const Chat = () => {
         <View
           style={[
             { backgroundColor: isDarkMode ? '#656464' : '#e4e9dc' },
-            styles.footer,
+            styles.inputContainer,
           ]}
         >
           <TextInput
@@ -328,10 +318,14 @@ const Chat = () => {
             placeholder="message"
             style={styles.textInput}
           />
-          <TouchableOpacity onPress={sendMessage} activeOpacity={0.5}>
+          <TouchableOpacity
+            style={{ marginRight: '4%' }}
+            onPress={sendMessage}
+            activeOpacity={0.5}
+          >
             <Ionicons
               name="arrow-up-circle-outline"
-              size="34"
+              size={35}
               color={isDarkMode ? 'white' : 'black'}
             />
           </TouchableOpacity>
