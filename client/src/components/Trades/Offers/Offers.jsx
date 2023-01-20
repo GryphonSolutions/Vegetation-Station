@@ -84,7 +84,6 @@ const Offers = ({ navigation }) => {
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
         temp1,
-        { headers: { 'content-type': 'application/json' } },
       )
       .then(() => console.log('success'))
       .catch((err) => console.error(err));
@@ -96,26 +95,24 @@ const Offers = ({ navigation }) => {
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
         temp2,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        const target2 = catalog.filter((plant) => buyerListingID === plant.id);
+        const temp3 = {};
+        Object.assign(temp3, target2[0]);
+        temp3.isTraded = true;
+        axios
+          .patch(
+            'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
+            temp3,
+          )
+          .then(() => {
+            console.log('RETRIEVE LISTINGS');
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
-    const target2 = catalog.filter((plant) => buyerListingID === plant.id);
-    const temp3 = {};
-    Object.assign(temp3, target2[0]);
-    temp3.isTraded = true;
-    axios
-      .patch(
-        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
-        temp3,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
-      )
-      .then(() => console.log('success'))
-      .catch((err) => console.error(err));
+
     const target4 = users.filter((user) => item.seller.id === user?.id);
     const temp4 = {};
     Object.assign(temp4, target4[0]);
@@ -124,9 +121,6 @@ const Offers = ({ navigation }) => {
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info',
         temp4,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
       )
       .then(() => console.log('success'))
       .catch((err) => console.error(err));
@@ -138,9 +132,6 @@ const Offers = ({ navigation }) => {
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info',
         temp5,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
       )
       .then(() => console.log('success'))
       .catch((err) => console.error(err));
@@ -156,9 +147,6 @@ const Offers = ({ navigation }) => {
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
         temp1,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
       )
       .then(() => console.log('success'))
       .catch((err) => console.error(err));
@@ -170,9 +158,6 @@ const Offers = ({ navigation }) => {
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
         temp2,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
       )
       .then(() => console.log('success'))
       .catch((err) => console.error(err));
@@ -189,9 +174,6 @@ const Offers = ({ navigation }) => {
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
         temp1,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
       )
       .then(() => console.log('success'))
       .catch((err) => console.error(err));
@@ -203,9 +185,6 @@ const Offers = ({ navigation }) => {
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
         temp2,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
       )
       .then(() => console.log('success'))
       .catch((err) => console.error(err));
@@ -217,9 +196,6 @@ const Offers = ({ navigation }) => {
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
         temp3,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
       )
       .then(() => console.log('success'))
       .catch((err) => console.error(err));
