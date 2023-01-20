@@ -12,7 +12,7 @@ import {
   Alert,
 } from 'react-native';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../../actions';
-import { updateSelectedUser } from '../../../reducers';
+import { updateSelectedUser, updateCatalog, updateOffers, updateUsers } from '../../../reducers';
 import styles from './assets/StyleSheet.jsx';
 
 const Offers = ({ navigation }) => {
@@ -85,8 +85,11 @@ const Offers = ({ navigation }) => {
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
         temp1,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        console.log('RETRIEVE OFFERS');
+      })
       .catch((err) => console.error(err));
+
     const target1 = catalog.filter((plant) => sellerListingID === plant.id);
     const temp2 = {};
     Object.assign(temp2, target1[0]);
@@ -122,19 +125,23 @@ const Offers = ({ navigation }) => {
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info',
         temp4,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        const target5 = users.filter((user) => item.buyer.id === user?.id);
+        const temp5 = {};
+        Object.assign(temp5, target5[0]);
+        temp5.tradeCount += 1;
+        axios
+          .patch(
+            'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info',
+            temp5,
+          )
+          .then(() => {
+            console.log('RETREIVE USERS');
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
-    const target5 = users.filter((user) => item.buyer.id === user?.id);
-    const temp5 = {};
-    Object.assign(temp5, target5[0]);
-    temp5.tradeCount += 1;
-    axios
-      .patch(
-        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info',
-        temp5,
-      )
-      .then(() => console.log('success'))
-      .catch((err) => console.error(err));
+
   };
 
   const declineTrade = (item) => {
@@ -148,7 +155,9 @@ const Offers = ({ navigation }) => {
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
         temp1,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        console.log('RETIEVE OFFERS');
+      })
       .catch((err) => console.error(err));
     const target = catalog.filter((plant) => buyerListingID === plant.id);
     const temp2 = {};
@@ -159,7 +168,9 @@ const Offers = ({ navigation }) => {
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
         temp2,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        console.log('RETIREVE CATALOG');
+      })
       .catch((err) => console.error(err));
   };
 
@@ -175,7 +186,13 @@ const Offers = ({ navigation }) => {
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
         temp1,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive')
+          .then(({ data }) => {
+            dispatch(updateOffers(data));
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
     const target1 = catalog.filter((plant) => sellerListingID === plant.id);
     const temp2 = {};
@@ -186,18 +203,25 @@ const Offers = ({ navigation }) => {
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
         temp2,
       )
-      .then(() => console.log('success'))
-      .catch((err) => console.error(err));
-    const target2 = catalog.filter((plant) => buyerListingID === plant.id);
-    const temp3 = {};
-    Object.assign(temp3, target2[0]);
-    temp3.isTraded = true;
-    axios
-      .patch(
-        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
-        temp3,
-      )
-      .then(() => console.log('success'))
+      .then(() => {
+        const target2 = catalog.filter((plant) => buyerListingID === plant.id);
+        const temp3 = {};
+        Object.assign(temp3, target2[0]);
+        temp3.isTraded = true;
+        axios
+          .patch(
+            'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
+            temp3,
+          )
+          .then(() => {
+            axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings')
+              .then(({ data }) => {
+                dispatch(updateCatalog(data));
+              })
+              .catch((err) => console.error(err));
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
   };
 
