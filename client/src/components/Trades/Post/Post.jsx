@@ -17,6 +17,7 @@ import { Camera, CameraType, takePictureAsync } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
+import SelectDropdown from 'react-native-select-dropdown';
 import styles from './StyleSheet';
 import plantData from '../../../../../server/data/plants.js';
 import catalog from '../../../../../server/data/catalog.js';
@@ -41,16 +42,17 @@ const Post = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownValue, setDropdownValue] = useState([]);
   const [dropdownItems, setDropdownItems] = useState([]);
+  const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
 
   const { currentPlant } = useSelector((state) => state.data);
   useEffect(() => {
-    const plantNames = plantData.map((plant) => {
+    const plantNames = plantData.map((plant, index) => {
       return {
         label: plant['Latin name'],
-        value: plant,
+        value: index,
       };
     });
-    setDropdownItems(plantNames);
+    setDropdownItems(plantNames.slice(0, 100));
   }, []);
 
   // page is still checking camera priveledges
@@ -72,9 +74,7 @@ const Post = () => {
 
   // toggle front and back camera
   function toggleCameraType() {
-    setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back,
-    );
+    setType((current) => current === CameraType.back ? CameraType.front : CameraType.back);
   }
 
   // take picture
@@ -141,12 +141,16 @@ const Post = () => {
 
             <Text style={styles.inputLabel}>PLANT SPECIES</Text>
             <DropDownPicker
+              style={{ width: '66%', marginVertical: 10, marginHorizontal: '17%', backgroundColor: '#d5dec6' }}
               open={isDropdownOpen}
               value={dropdownValue}
               items={dropdownItems}
               setOpen={setIsDropdownOpen}
               setValue={setDropdownValue}
               setItems={setDropdownItems}
+              dropDownContainerStyle={{
+                width: '66%', marginHorizontal: '17%', backgroundColor: '#d5dec6',
+              }}
               searchable
               searchPlaceholder="Search for species..."
             />
