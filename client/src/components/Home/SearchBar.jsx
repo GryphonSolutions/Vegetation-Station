@@ -20,11 +20,8 @@ import SearchModal from './SearchDropdown.jsx';
 export default function SearchBar() {
   const { isDarkMode } = useSelector((state) => state.app);
   const { homeSearchText } = useSelector((state) => state.home);
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const { catalog, currentPosts, filteredCatalog, users } = useSelector(
-    (state) => state.data,
-  );
+  const { activeUser, catalog, currentPosts, filteredCatalog, users } =
+    useSelector((state) => state.data);
   const dispatch = useDispatch();
 
   const updateSearch = (val) => {
@@ -32,7 +29,9 @@ export default function SearchBar() {
     const filtered = catalog.filter((item) => {
       return (
         item.commonName.toLowerCase().includes(val.toLowerCase()) &&
-        (item.isPosted === true || item.isTraded === false)
+        item.isPosted === true &&
+        item.isTraded === false &&
+        item.poster !== activeUser.username
       );
     });
     dispatch(updateCurrentPosts(filtered));
@@ -121,6 +120,7 @@ export default function SearchBar() {
         onChangeText={(val) => updateSearch(val)}
         value={homeSearchText}
         placeholder="search for plants"
+        placeholderTextColor="#6d6d6d"
       />
 
       <Pressable
