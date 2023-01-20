@@ -57,31 +57,33 @@ export default StyleSheet.create({
   },
 
   username: {
-    fontFamily: 'JosefinSans-SemiBold',
-    fontSize: 20,
+    fontFamily: 'JosefinSans-Bold',
+    fontSize: 23,
   },
 
   userLocation: {
-    fontSize: 16,
+    fontSize: 17,
     marginTop: 10,
   },
 
   userTrades: {
-    fontSize: 16,
-    marginTop: 5,
+    fontSize: 14,
+    marginTop: 7,
   },
 
   button: {
     backgroundColor: '#dda15e',
     borderRadius: '5%',
     marginTop: 10,
-    width: 100,
-    padding: 5,
+    width: 130,
+    height: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   buttonText: {
-    textAlign: 'center',
     fontFamily: 'JosefinSans',
+    fontSize: 15,
   },
 
   tradesListContainer: {
