@@ -55,7 +55,8 @@ export default StyleSheet.create({
     margin: 30,
   },
   modalHeaderText: {
-    fontSize: 30,
+    fontSize: 40,
+    padding: 7,
     alignSelf: 'center',
     fontFamily: 'JosefinSans-Medium',
     color: '#283618',
@@ -68,7 +69,7 @@ export default StyleSheet.create({
   modalCatsText: {
     margin: 10,
     padding: 5,
-    fontSize: 26,
+    fontSize: 28,
     fontFamily: 'AnonymousPro',
     color: '#283618',
   },

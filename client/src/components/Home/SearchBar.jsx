@@ -94,9 +94,11 @@ export default function SearchBar() {
   const filterChoice = (val) => {
     if (whatToSort === val) {
       setWhatToSort('');
+      setModalVisible(false);
     } else {
       setWhatToSort(val);
       howToSort[val]();
+      setModalVisible(false);
     }
     console.log(whatToSort);
   };
