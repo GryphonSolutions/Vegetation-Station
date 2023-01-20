@@ -20,7 +20,7 @@ const Location = ({ coordinates }) => {
       <View style={styles.LocationContainer}>
         <MapView
           style={styles.LocationMap}
-          initialCamera={{
+          region={{
             latitude: location.latitude,
             longitude: location.longitude,
             latitudeDelta: 0.04,
@@ -28,12 +28,12 @@ const Location = ({ coordinates }) => {
           }}
           // provider={PROVIDER_GOOGLE}
         >
-          <Marker
+          {/* <Marker
             coordinate={{
               latitude: location.latitude,
               longitude: location.longitude,
             }}
-          />
+          /> */}
           <Circle
             center={{
               latitude: location.latitude,
