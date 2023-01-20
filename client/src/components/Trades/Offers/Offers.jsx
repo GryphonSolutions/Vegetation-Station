@@ -351,7 +351,8 @@ const Offers = ({ navigation }) => {
       <SafeAreaView style={{ flex: 0 }} />
       <View style={{ flex: 1 }}>
         <View style={[styles.headerContainer]}>
-          <Text style={styles.headerText}>Trade Proposals</Text>
+          <Text style={styles.headerText}>Trade</Text>
+          <Text style={styles.headerText}>Proposals</Text>
         </View>
         <View style={styles.contentContainer}>
           {currentOffers.length ? (

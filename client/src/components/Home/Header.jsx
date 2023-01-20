@@ -14,7 +14,15 @@ export default function Header() {
           { color: isDarkMode ? '#d39b52' : '#283618' },
         ]}
       >
-        Vegetation Station
+        Vegetation
+      </Text>
+      <Text
+        style={[
+          styles.headerText,
+          { color: isDarkMode ? '#d39b52' : '#283618' },
+        ]}
+      >
+        Station
       </Text>
     </View>
   );
