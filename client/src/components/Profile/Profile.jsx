@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   StyleSheet,
@@ -30,6 +31,16 @@ const Profile = ({ navigation }) => {
   const { id, username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = () => {
+        dispatch(updateSearchMessages(false));
+        dispatch(updateUserMessageSearch(''));
+      };
+
+      return unsubscribe();
+    }, []),
+  );
 
   const openTrades = offers.filter((item) => {
     return item.isOpen && (item.buyer.id === id || item.seller.id === id);
@@ -52,6 +63,8 @@ const Profile = ({ navigation }) => {
 
   const navMessage = () => {
     persistor.purge();
+    dispatch(updateSearchMessages(true));
+    dispatch(updateUserMessageSearch(username));
     navigation.navigate('Messages');
   };
 
