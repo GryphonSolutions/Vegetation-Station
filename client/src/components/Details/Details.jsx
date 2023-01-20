@@ -65,7 +65,7 @@ const Details = () => {
             </View>
             <View style={styles.LocationContainer}>
               <Text style={styles.plantNameText}>
-                Trader's General Location:
+                Trader&apos;s General Location:
               </Text>
               <Location />
             </View>
