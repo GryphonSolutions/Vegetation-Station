@@ -3,27 +3,19 @@ import { StyleSheet, StatusBar, PixelRatio, Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 const imageWidth = (screenWidth - 30) / 3.5;
 export default StyleSheet.create({
-  container: {
+  contentContainer: {
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    backgroundColor: '#f0f4f1',
-    // paddingTop: 60,
+    marginHorizontal: '4%',
   },
-  imageContainer: {
-    // marginTop: 10,
-    // flex: 2,
-  },
-  plantPic: {
-    // flex: 2,
-    // // aspectRation: 1.5,
-    position: 'fixed',
-    height: '100%',
-    width: '100%',
+  plantImageContainer: {},
+  plantImage: {
+    // height: undefined,
+    width: screenWidth,
     resizeMode: 'contain',
+    maxHeight: 500,
     // width: imageWidth,
     // height: undefined,
-    // aspectRatio: 1,
+    aspectRatio: 1,
     // borderRadius: imageWidth / 15,
     // margin: (screenWidth - 30) / 45,
   },
