@@ -1,16 +1,16 @@
-// import React, { useState } from 'react';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { StatusBar } from 'expo-status-bar';
-// // import GOOGLE_API_KEY from 'dotenv';
-// import MapView, {
-//   Marker,
-//   Callout,
-//   Circle,
-//   PROVIDER_GOOGLE,
-// } from 'react-native-maps';
-// import { Image, StyleSheet, Text, View, Button } from 'react-native';
-// import styles from './assets/StyleSheet';
+import React, { useState } from 'react';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useDispatch, useSelector } from 'react-redux';
+import { StatusBar } from 'expo-status-bar';
+// import GOOGLE_API_KEY from 'dotenv';
+import MapView, {
+  Marker,
+  Callout,
+  Circle,
+  PROVIDER_GOOGLE,
+} from 'react-native-maps';
+import { Image, StyleSheet, Text, View, Button } from 'react-native';
+import styles from './assets/StyleSheet';
 
 const Location = ({ coordinates }) => {
   const { selectedUser } = useSelector((state) => state.data);
@@ -25,14 +25,7 @@ const Location = ({ coordinates }) => {
           latitudeDelta: 0.04,
           longitudeDelta: 0.05,
         }}
-        // provider={PROVIDER_GOOGLE}
       >
-        {/* <Marker
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
-          /> */}
         <Circle
           center={{
             latitude: location.latitude,
@@ -53,4 +46,4 @@ const Location = ({ coordinates }) => {
   );
 };
 
-// export default Location;
+export default Location;
