@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Platform,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import Header from './Header';
 import Location from './Location';
@@ -28,6 +29,7 @@ const Details = () => {
   const { description, images, preferredTrade, commonName, postTitle } =
     currentPlant;
   const dispatch = useDispatch();
+  const [aspectRatio, setAspectRatio] = useState(null);
 
   const navigateMessages = () => {
     dispatch(updateSearchMessages(true));
@@ -35,45 +37,67 @@ const Details = () => {
     navigation.navigate('Messages');
   };
 
+  Image.getSize(currentPlant.images[0], (width, height) => {
+    setAspectRatio(height / width);
+    console.log(height / width);
+    console.log(Dimensions.get('window').width);
+  });
+
   return (
     <View
       style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
     >
-      <SafeAreaView style={{ flex: 0 }} />
+      <SafeAreaView />
       <View style={{ flex: 1 }}>
         <Header />
         <View style={styles.contentContainer}>
-          <ScrollView>
-            <View style={styles.plantImageContainer}>
-              <Image
-                style={styles.plantImage}
-                source={{ uri: currentPlant.images[0] }}
-              />
-            </View>
-            <View style={styles.postContainer}>
-              <Text style={styles.postTitle}>{postTitle}</Text>
-              <View style={styles.plantNameContainer}>
+          <ScrollView style={{ flex: 1 }}>
+            <Image
+              style={{
+                width: Dimensions.get('window').width,
+                height: Dimensions.get('window').width * aspectRatio,
+              }}
+              source={{ uri: currentPlant.images[0] }}
+            />
+            <View style={styles.innerContentContainer}>
+              <View style={styles.postContainer}>
+                <Text style={styles.postTitle}>{postTitle}</Text>
                 <Text style={styles.plantNameText}>{commonName}</Text>
-              </View>
-              <View style={styles.postDescContainer}>
-                <View style={styles.prefTradesContainer}>
-                  <Text style={styles.descTradesText}>Preferred trades: </Text>
-                  <Text style={styles.prefTradeText}>{preferredTrade}</Text>
+
+                <Text style={{ marginBottom: 20 }}>
+                  <Text style={styles.preferredTradesHeader}>
+                    Preferred trades:{' '}
+                  </Text>
+                  <Text style={styles.preferredTradesText}>
+                    {preferredTrade}
+                  </Text>
+                </Text>
+                <View
+                  style={{
+                    paddingTop: 20,
+                    borderTopWidth: 1,
+                    paddingBottom: 20,
+                    borderBottomWidth: 1,
+                    borderColor: '#bbc4b0',
+                  }}
+                >
+                  <Text style={styles.postDescriptionText}>{description}</Text>
                 </View>
-                <Text style={styles.plantPostDesc}>{description}</Text>
               </View>
-            </View>
-            <View style={styles.LocationContainer}>
-              <Text style={styles.plantNameText}>
-                Trader&apos;s General Location:
-              </Text>
-              <Location />
+              <View style={styles.locationContainer}>
+                <Text style={styles.locationHeaderText}>
+                  Trader&apos;s General Location:
+                </Text>
+                {/* <View style={{ height: 200 }}> */}
+                <Location />
+                {/* </View> */}
+              </View>
             </View>
           </ScrollView>
           <TouchableOpacity onPress={() => navigateSelectedProfile()}>
             <ProfileRibbon />
           </TouchableOpacity>
-          <View style={styles.buttonContainer}>
+          {/* <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.detailPageButton}>
               <Text style={styles.buttonText}>Save</Text>
             </TouchableOpacity>
@@ -93,7 +117,7 @@ const Details = () => {
             >
               <Text style={styles.buttonText}>Message</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </View>
     </View>

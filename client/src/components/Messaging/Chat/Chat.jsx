@@ -241,7 +241,7 @@ const Chat = () => {
               <Ionicons
                 style={styles.backButton}
                 name="arrow-back-circle-outline"
-                size="40"
+                size={40}
                 color={isDarkMode ? 'white' : 'black'}
               />
             </TouchableOpacity>

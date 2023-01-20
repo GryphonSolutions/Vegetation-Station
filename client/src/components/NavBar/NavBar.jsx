@@ -59,6 +59,7 @@ const NavBar = () => {
     'AnonymousPro-Bold': require('../../assets/fonts/AnonymousPro-Bold.ttf'),
     JosefinSans: require('../../assets/fonts/JosefinSans-Regular.ttf'),
     'JosefinSans-Light': require('../../assets/fonts/JosefinSans-Light.ttf'),
+    'JosefinSans-LightItalic': require('../../assets/fonts/JosefinSans-LightItalic.ttf'),
     'JosefinSans-Medium': require('../../assets/fonts/JosefinSans-Medium.ttf'),
     'JosefinSans-SemiBold': require('../../assets/fonts/JosefinSans-SemiBold.ttf'),
     'JosefinSans-Bold': require('../../assets/fonts/JosefinSans-Bold.ttf'),

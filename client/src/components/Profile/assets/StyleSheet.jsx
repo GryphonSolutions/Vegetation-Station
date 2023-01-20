@@ -22,7 +22,7 @@ export default StyleSheet.create({
   backButton: {
     position: 'absolute',
     color: '#283618',
-    left: 10,
+    left: '4%',
   },
 
   contentContainer: {
