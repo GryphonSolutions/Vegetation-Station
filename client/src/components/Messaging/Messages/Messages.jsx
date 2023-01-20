@@ -91,7 +91,7 @@ const Messages = () => {
         unSub();
       };
     }
-  }, []);
+  }, [activeUser]);
 
   const styles = StyleSheet.create({
     headerContainer: {},
