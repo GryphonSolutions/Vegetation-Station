@@ -55,15 +55,27 @@ export default StyleSheet.create({
     margin: 30,
   },
   modalHeaderText: {
-    fontSize: 30,
+    fontSize: 40,
+    padding: 7,
     alignSelf: 'center',
+    fontFamily: 'JosefinSans-Medium',
+    color: '#283618',
   },
   modalCats: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
   },
   modalCatsText: {
     margin: 10,
-    fontSize: 20,
-    color: 'black',
+    padding: 5,
+    fontSize: 28,
+    fontFamily: 'AnonymousPro',
+    color: '#283618',
+  },
+  iconStyling: {
+    justifyContent: 'flex-end',
+    padding: 12,
+    color: '#dda15e',
   },
 });
