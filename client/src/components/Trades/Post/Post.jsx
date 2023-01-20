@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StatusBar, setStatusBarHidden } from 'expo-status-bar';
 import {
@@ -17,9 +17,11 @@ import { Camera, CameraType, takePictureAsync } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useIsFocused } from '@react-navigation/native';
+import axios from 'axios';
 import styles from './StyleSheet';
 import plantData from '../../../../../server/data/plants.js';
 import catalog from '../../../../../server/data/catalog.js';
+import { updateCurrentPosts } from '../../../reducers/dataReducer.js';
 
 const Post = () => {
   // is this a trade
@@ -34,24 +36,41 @@ const Post = () => {
   const photoRef = useRef(null); // to create reference to take a photo
   // hooks for form data
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [plantColor, setPlantColor] = useState();
-  const [plantSize, setPlantSize] = useState();
+  const [plantDescription, setPlantDescription] = useState('');
+  const [plantColor, setPlantColor] = useState('');
+  const [plantPreferredTrade, setPlantPreferredTrade] = useState('');
   // hooks for DropDownPicker
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [dropdownValue, setDropdownValue] = useState([]);
+  const [dropdownValue, setDropdownValue] = useState(null);
   const [dropdownItems, setDropdownItems] = useState([]);
 
-  const { currentPlant } = useSelector((state) => state.data);
+  const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState(false);
+  const [sizeDropdownValue, setSizeDropdownValue] = useState(null);
+  const [sizeDropdownItems, setSizeDropdownItems] = useState([
+    { label: 'small', value: 'small' },
+    { label: 'medium', value: 'medium' },
+    { label: 'large', value: 'large' },
+  ]);
+
+  const { activeUser, currentPlant, currentPosts } = useSelector(
+    (state) => state.data,
+  );
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const plantNames = plantData.map((plant) => {
       return {
         label: plant['Latin name'],
-        value: plant,
+        value: plant['Common name'],
       };
     });
     setDropdownItems(plantNames);
   }, []);
+
+  // make sure only one drop box is open at a time
+  const onPlantsOpen = useCallback(() => setIsSizeDropdownOpen(false));
+
+  const onSizeOpen = useCallback(() => setIsDropdownOpen(false));
 
   // page is still checking camera priveledges
   if (!permission) {
@@ -94,6 +113,34 @@ const Post = () => {
     }
   };
 
+  //  send form data
+  const updatePosts = () => {
+    const form = {
+      commonName: dropdownValue,
+      images: [image],
+      size: sizeDropdownValue,
+      color: plantColor,
+      poster: activeUser.username,
+      description: plantDescription,
+      preferedTrade: plantPreferredTrade,
+      isPosted: true,
+      isTraded: false,
+      postTitle: title,
+    };
+    axios
+      .post(
+        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    dispatch(updateCurrentPosts(form));
+  };
+
   return (
     <KeyboardAvoidingView style={styles.page}>
       {!showCamera && (
@@ -119,6 +166,7 @@ const Post = () => {
               onPress={() => {
                 setShowCamera(true);
                 setStatusBarHidden(true, 'slide');
+                updatePosts();
               }}
             >
               <Text style={styles.buttonText}>Take Photo</Text>
@@ -144,6 +192,7 @@ const Post = () => {
               open={isDropdownOpen}
               value={dropdownValue}
               items={dropdownItems}
+              onOpen={onPlantsOpen}
               setOpen={setIsDropdownOpen}
               setValue={setDropdownValue}
               setItems={setDropdownItems}
@@ -152,11 +201,16 @@ const Post = () => {
             />
 
             <Text style={styles.inputLabel}>SIZE</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setPlantSize}
-              value={plantSize}
-              placeholder="Enter plant size..."
+            <DropDownPicker
+              open={isSizeDropdownOpen}
+              value={sizeDropdownValue}
+              items={sizeDropdownItems}
+              onOpen={onSizeOpen}
+              setOpen={setIsSizeDropdownOpen}
+              setValue={setSizeDropdownValue}
+              setItems={setSizeDropdownItems}
+              searchable
+              searchPlaceholder="Search for species..."
             />
 
             <Text style={styles.inputLabel}>COLOR</Text>
@@ -171,8 +225,8 @@ const Post = () => {
             <TextInput
               multiline
               style={styles.inputDescription}
-              onChangeText={setDescription}
-              value={description}
+              onChangeText={setPlantDescription}
+              value={plantDescription}
               placeholder="Enter description..."
               maxLength={60}
             />
@@ -182,11 +236,12 @@ const Post = () => {
               onPress={() => {
                 // clear out all form data
                 Alert.alert('Plant has been posted');
+                updatePosts();
                 setTitle('');
                 setPlantColor('');
-                setPlantSize('');
-                setDescription('');
-                setDropdownValue('');
+                setSizeDropdownValue('');
+                setPlantDescription('');
+                setDropdownValue({});
                 setImage(null);
               }}
             >
