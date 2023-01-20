@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Text,
@@ -8,15 +8,20 @@ import {
   FlatList,
   Image,
   Alert,
+  Modal,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from './assets/stylesheet';
 import data from './fakeData';
 import { updateHomeSearchText, updateCurrentPosts } from '../../reducers';
+import SearchModal from './SearchDropdown.jsx';
 
 export default function SearchBar() {
   const { isDarkMode } = useSelector((state) => state.app);
   const { homeSearchText } = useSelector((state) => state.home);
+  const [modalVisible, setModalVisible] = useState(false);
+
   const { catalog, currentPosts, filteredCatalog, users } = useSelector(
     (state) => state.data,
   );
@@ -71,9 +76,40 @@ export default function SearchBar() {
     // dispatch(updateCurrentPosts(sorted));
   };
 
+  const modalClick = () => {
+    const temp = {};
+    Object.assign(temp, styles.modalCatsText);
+    styles.modalCatsText.color = 'red';
+  };
+
+  const filterChoice = () => {};
+
   // sortTopSellers();
   return (
     <View style={styles.searchBarContainer}>
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        presentationStyle="formSheet"
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}
+      >
+        <View>
+          <View style={styles.modalTitle}>
+            <Text style={styles.modalHeaderText}>Sort By...</Text>
+          </View>
+          <View>
+            <View style={styles.modalCats}>
+              <Text style={styles.modalCatsText}>Alphabetically</Text>
+              <Ionicons name="checkbox-outline" size="30px" />
+            </View>
+            <Text style={styles.modalCatsText}>Size</Text>
+            <Text style={styles.modalCatsText}>Trade Count</Text>
+          </View>
+        </View>
+      </Modal>
+
       <TextInput
         style={[
           styles.searchBar,
@@ -86,9 +122,11 @@ export default function SearchBar() {
         value={homeSearchText}
         placeholder="search for plants"
       />
+
       <Pressable
         onPress={() => {
-          Alert.alert('Sort By:');
+          setModalVisible(true);
+          console.log('pressed');
         }}
       >
         <MaterialIcons
@@ -96,6 +134,7 @@ export default function SearchBar() {
           size={40}
           color={isDarkMode ? '#B3CB84' : '#f3b736'}
         />
+        <View />
       </Pressable>
     </View>
   );
