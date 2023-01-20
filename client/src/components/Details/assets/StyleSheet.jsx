@@ -89,7 +89,7 @@ export default StyleSheet.create({
   },
   locationHeaderText: {
     fontFamily: 'JosefinSans-Medium',
-    fontSize: 28,
+    fontSize: 20,
     marginBottom: 20,
   },
 
