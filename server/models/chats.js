@@ -74,6 +74,38 @@ module.exports.updateChatsDB = async (parameters) => {
   }
 };
 
+// USE THE BELOW UPDATE IF YOU WANT READ AND UNREAD TO WORK
+
+// module.exports.updateChatsDB = async (parameters) => {
+//   const { id, currentCombinedId, read, text, time } = parameters;
+//   const docRef = doc(db, 'chats', id);
+
+//   if (!time) {
+//     try {
+//       await updateDoc(docRef, {
+//         [`${currentCombinedId}.lastMessage`]: text,
+//         [`${currentCombinedId}.read`]: read,
+//       });
+//       return Promise.resolve();
+//     } catch (err) {
+//       console.error(err);
+//       return Promise.reject(err);
+//     }
+//   } else {
+//     try {
+//       await updateDoc(docRef, {
+//         [`${currentCombinedId}.lastMessage`]: text,
+//         [`${currentCombinedId}.date`]: serverTimestamp(),
+//         [`${currentCombinedId}.read`]: read,
+//       });
+//       return Promise.resolve();
+//     } catch (err) {
+//       console.error(err);
+//       return Promise.reject(err);
+//     }
+//   }
+// };
+
 module.exports.deleteFromChatsDB = async (parameters) => {
   try {
     // Query Here

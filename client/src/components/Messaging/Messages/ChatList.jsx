@@ -97,6 +97,7 @@ const ChatList = ({ chat }) => {
               currentCombinedId: combinedId,
               read: true,
               text: chat[1].lastMessage,
+              time: false,
             },
           },
         )
