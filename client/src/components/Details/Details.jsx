@@ -16,6 +16,7 @@ import Location from './Location';
 import ProfileRibbon from './ProfileRibbon';
 import * as navigation from '../NavBar/navigation';
 import styles from './assets/StyleSheet';
+import { updateUserMessageSearch, updateSearchMessages } from '../../reducers';
 
 const navigateSelectedProfile = () => {
   navigation.navigate('Profile');
@@ -27,6 +28,13 @@ const Details = () => {
   const { description, images, preferredTrade, commonName, postTitle } =
     currentPlant;
   const dispatch = useDispatch();
+
+  const navigateMessages = () => {
+    dispatch(updateSearchMessages(true));
+    dispatch(updateUserMessageSearch(selectedUser.username));
+    navigation.navigate('Messages');
+  };
+
   return (
     <View
       style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
@@ -80,7 +88,7 @@ const Details = () => {
             <TouchableOpacity
               style={styles.detailPageButton}
               onPress={() => {
-                navigation.navigate('Messages');
+                navigateMessages();
               }}
             >
               <Text style={styles.buttonText}>Message</Text>
