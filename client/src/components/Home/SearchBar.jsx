@@ -120,13 +120,13 @@ export default function SearchBar() {
               <View style={styles.modalCats}>
                 <Text
                   onPress={() => {
-                    filterChoice('alph');
+                    filterChoice('trades');
                   }}
                   style={styles.modalCatsText}
                 >
-                  - Color
+                  - Top Traders
                 </Text>
-                {whatToSort === 'alph' ? (
+                {whatToSort === 'trades' ? (
                   <Ionicons
                     name="checkbox-outline"
                     size="30px"
@@ -167,12 +167,12 @@ export default function SearchBar() {
                 <Text
                   style={styles.modalCatsText}
                   onPress={() => {
-                    filterChoice('trades');
+                    filterChoice('alph');
                   }}
                 >
-                  - Trades
+                  - Color
                 </Text>
-                {whatToSort === 'trades' ? (
+                {whatToSort === 'alph' ? (
                   <Ionicons
                     name="checkbox-outline"
                     size="30px"
