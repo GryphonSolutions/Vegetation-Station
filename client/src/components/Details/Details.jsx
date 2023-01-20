@@ -88,7 +88,7 @@ const Details = () => {
             <TouchableOpacity
               style={styles.detailPageButton}
               onPress={() => {
-                navigation.navigate('Messages');
+                navigateMessages();
               }}
             >
               <Text style={styles.buttonText}>Message</Text>
