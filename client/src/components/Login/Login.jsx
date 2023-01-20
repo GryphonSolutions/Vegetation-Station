@@ -105,63 +105,65 @@ const Login = () => {
             styles.logoStyles,
           ]}
         />
-        <View style={styles.loginInputsContainer}>
-          <View>
-            <Text style={styles.inputLabels}>Email</Text>
+        <KeyboardAwareScrollView>
+          <View style={styles.loginInputsContainer}>
+            <View>
+              <Text style={styles.inputLabels}>Email</Text>
+            </View>
+            <TextInput
+              placeholder="Enter your email..."
+              placeholderTextColor="#283618"
+              style={styles.loginInputs}
+              clearButtonMode="always"
+              value={userInfo.email}
+              onChangeText={(text) => {
+                setUserInfo({ ...userInfo, email: text });
+              }}
+            />
+            <View>
+              <Text style={styles.inputLabels}>Password</Text>
+            </View>
+            <TextInput
+              placeholder="Enter password..."
+              style={styles.loginInputs}
+              placeholderTextColor="black"
+              value={userInfo.password}
+              secureTextEntry
+              clearButtonMode="always"
+              onChangeText={(text) => {
+                setUserInfo({ ...userInfo, password: text });
+              }}
+            />
           </View>
-          <TextInput
-            placeholder="Enter your email..."
-            placeholderTextColor="#283618"
-            style={styles.loginInputs}
-            clearButtonMode="always"
-            value={userInfo.email}
-            onChangeText={(text) => {
-              setUserInfo({ ...userInfo, email: text });
-            }}
-          />
-          <View>
-            <Text style={styles.inputLabels}>Password</Text>
-          </View>
-          <TextInput
-            placeholder="Enter password..."
-            style={styles.loginInputs}
-            placeholderTextColor="black"
-            value={userInfo.password}
-            secureTextEntry
-            clearButtonMode="always"
-            onChangeText={(text) => {
-              setUserInfo({ ...userInfo, password: text });
-            }}
-          />
-        </View>
 
-        <View
-          style={{
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-          }}
-        >
-          <TouchableOpacity style={styles.button} onPress={login}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              setRegistration(true);
+          <View
+            style={{
+              justifyContent: 'space-evenly',
+              flexDirection: 'row',
             }}
           >
-            <Text style={styles.buttonText}>Register</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+            <TouchableOpacity style={styles.button} onPress={login}>
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                setRegistration(true);
+              }}
+            >
+              <Text style={styles.buttonText}>Register</Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity
             style={styles.button}
             onPress={() => {
               logout();
               dispatch(updateActiveUser({}));
             }}
-          >
-            <Text style={styles.buttonText}>Log Out</Text>
-          </TouchableOpacity>
-        </View>
+          > */}
+            {/* <Text style={styles.buttonText}>Log Out</Text> */}
+            {/* </TouchableOpacity> */}
+          </View>
+        </KeyboardAwareScrollView>
       </View>
     </View>
   );
