@@ -9,6 +9,7 @@ import {
   Image,
   Alert,
   Modal,
+  SafeAreaView,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -93,77 +94,104 @@ export default function SearchBar() {
   const filterChoice = (val) => {
     if (whatToSort === val) {
       setWhatToSort('');
+      setModalVisible(false);
     } else {
       setWhatToSort(val);
       howToSort[val]();
+      setModalVisible(false);
     }
     console.log(whatToSort);
   };
   // sortTopSellers();
   return (
     <View style={styles.searchBarContainer}>
-      <Modal
-        style={{ height: '50%' }}
-        animationType="slide"
-        visible={modalVisible}
-        presentationStyle="formSheet"
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}
-      >
-        <View>
-          <View style={styles.modalTitle}>
-            <Text style={styles.modalHeaderText}>Sort By...</Text>
-          </View>
-          <View>
-            <View style={styles.modalCats}>
-              <Text
-                onPress={() => {
-                  filterChoice('alph');
-                }}
-                style={styles.modalCatsText}
-              >
-                Color
-              </Text>
-              {whatToSort === 'alph' ? (
-                <Ionicons name="checkbox-outline" size="30px" />
-              ) : (
-                <Text />
-              )}
+      <View>
+        <Modal
+          animationType="slide"
+          visible={modalVisible}
+          presentationStyle="formSheet"
+          onRequestClose={() => {
+            setModalVisible(false);
+          }}
+        >
+          <SafeAreaView>
+            <View style={styles.modalTitle}>
+              <Text style={styles.modalHeaderText}>Sort By...</Text>
             </View>
-            <View style={styles.modalCats}>
-              <Text
-                style={styles.modalCatsText}
-                onPress={() => {
-                  filterChoice('size');
-                }}
-              >
-                Size
-              </Text>
-              {whatToSort === 'size' ? (
-                <Ionicons name="checkbox-outline" size="30px" />
-              ) : (
-                <Text />
-              )}
+            <View>
+              <View style={styles.modalCats}>
+                <Text
+                  onPress={() => {
+                    filterChoice('trades');
+                  }}
+                  style={styles.modalCatsText}
+                >
+                  - Top Traders
+                </Text>
+                {whatToSort === 'trades' ? (
+                  <Ionicons
+                    name="checkbox-outline"
+                    size="30px"
+                    style={styles.iconStyling}
+                  />
+                ) : (
+                  <Ionicons
+                    name="square-outline"
+                    size="30px"
+                    style={styles.iconStyling}
+                  />
+                )}
+              </View>
+              <View style={styles.modalCats}>
+                <Text
+                  style={styles.modalCatsText}
+                  onPress={() => {
+                    filterChoice('size');
+                  }}
+                >
+                  - Size
+                </Text>
+                {whatToSort === 'size' ? (
+                  <Ionicons
+                    name="checkbox-outline"
+                    size="30px"
+                    style={styles.iconStyling}
+                  />
+                ) : (
+                  <Ionicons
+                    name="square-outline"
+                    size="30px"
+                    style={styles.iconStyling}
+                  />
+                )}
+              </View>
+              <View style={styles.modalCats}>
+                <Text
+                  style={styles.modalCatsText}
+                  onPress={() => {
+                    filterChoice('alph');
+                  }}
+                >
+                  - Color
+                </Text>
+                {whatToSort === 'alph' ? (
+                  <Ionicons
+                    name="checkbox-outline"
+                    size="30px"
+                    style={styles.iconStyling}
+                  />
+                ) : (
+                  <Ionicons
+                    name="square-outline"
+                    size="30px"
+                    style={styles.iconStyling}
+                  />
+                )}
+              </View>
             </View>
-            <View style={styles.modalCats}>
-              <Text
-                style={styles.modalCatsText}
-                onPress={() => {
-                  filterChoice('trades');
-                }}
-              >
-                Trades
-              </Text>
-              {whatToSort === 'trades' ? (
-                <Ionicons name="checkbox-outline" size="30px" />
-              ) : (
-                <Text />
-              )}
-            </View>
-          </View>
-        </View>
-      </Modal>
+          </SafeAreaView>
+        </Modal>
+      </View>
 
       <TextInput
         style={[
