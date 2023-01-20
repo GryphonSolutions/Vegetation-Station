@@ -185,6 +185,7 @@ const UserProfile = ({ navigation }) => {
         </View>
         <View style={styles.contentContainer}>
           <SectionList
+            showsVerticalScrollIndicator={false}
             sections={[{ data: [1] }]}
             renderItem={({ item }) => renderBody()}
           />
