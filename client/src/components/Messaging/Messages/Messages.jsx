@@ -85,7 +85,7 @@ const Messages = () => {
       color: '#283618',
     },
     searchButtonContainer: {
-      right: 10,
+      right: '4%',
       top: -3,
       position: 'absolute',
       alignItems: 'flex-end',
@@ -93,7 +93,11 @@ const Messages = () => {
     searchButton: {
       color: '#283618',
     },
-    searchBarContainer: {},
+    searchBarContainer: {
+      marginHorizontal: '4%',
+      paddingTop: 0,
+      paddingBottom: 0,
+    },
     searchBarInputContainerStyle: {},
     searchText: {
       fontFamily: 'JosefinSans',
@@ -230,10 +234,7 @@ const Messages = () => {
             </ScrollView>
           )}
           {searchMessages && (
-            <KeyboardAvoidingView
-              behavior="padding"
-              style={{ marginBottom: 118 }}
-            >
+            <KeyboardAvoidingView behavior="padding">
               <View style={{ maxHeight: '50%' }}>
                 <Text style={styles.lobbySectionHeader}>
                   Start a New Conversation

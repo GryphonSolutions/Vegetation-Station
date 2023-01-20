@@ -56,9 +56,9 @@ export default function Body() {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={<Text>There are no plants to show</Text>}
           renderItem={({ item, index }) => renderImage(item, index)}
-          ItemSeparatorComponent={
+          ItemSeparatorComponent={() => (
             <View style={{ height: '1.5%', width: '1.5%' }} />
-          }
+          )}
         />
       </View>
     </View>
