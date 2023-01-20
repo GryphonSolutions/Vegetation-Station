@@ -1,20 +1,21 @@
-import { StyleSheet, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
   logoStyles: {
+    position: 'absolute',
+    top: '5%',
     alignSelf: 'center',
     resizeMode: 'contain',
-    backgroundColor: 'maroon',
-    marginBottom: '-16%',
   },
 
   loginInputsContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: 'lightblue',
+    marginBottom: '6%',
   },
 
   inputLabels: {
+    width: Dimensions.get('window').width * 0.84,
     fontFamily: 'JosefinSans-Medium',
     fontSize: 28,
     color: '#283618',
@@ -23,6 +24,7 @@ export default StyleSheet.create({
 
   loginInputs: {
     backgroundColor: '#d5dec6',
+    fontFamily: 'JosefinSans',
     width: '100%',
     fontSize: 20,
     paddingVertical: 10,

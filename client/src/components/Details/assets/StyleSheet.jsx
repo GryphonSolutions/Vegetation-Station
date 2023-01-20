@@ -42,6 +42,7 @@ export default StyleSheet.create({
     fontFamily: 'JosefinSans',
     color: '#6c7962',
     fontSize: 18,
+    lineHeight: 27,
   },
 
   /* ----------------- Button Container ----------------- */

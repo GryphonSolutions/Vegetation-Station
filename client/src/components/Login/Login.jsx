@@ -92,7 +92,9 @@ const Login = () => {
       style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
     >
       <SafeAreaView />
-      <View style={{ flex: 1, marginHorizontal: '8%' }}>
+      <View
+        style={{ flex: 1, marginHorizontal: '8%', justifyContent: 'center' }}
+      >
         <Image
           source={logo}
           style={[
@@ -103,43 +105,38 @@ const Login = () => {
             styles.logoStyles,
           ]}
         />
-        <KeyboardAwareScrollView
-          style={{ flex: 0, backgroundColor: 'lavender' }}
-        >
-          <View style={styles.loginInputsContainer}>
-            <View>
-              <Text style={styles.inputLabels}>Email</Text>
-            </View>
-            <TextInput
-              placeholder="Enter your email..."
-              placeholderTextColor="#283618"
-              style={styles.loginInputs}
-              clearButtonMode="always"
-              value={userInfo.email}
-              onChangeText={(text) => {
-                setUserInfo({ ...userInfo, email: text });
-              }}
-            />
-            <View>
-              <Text style={styles.inputLabels}>Password</Text>
-            </View>
-            <TextInput
-              placeholder="Enter password..."
-              style={styles.loginInputs}
-              placeholderTextColor="black"
-              value={userInfo.password}
-              secureTextEntry
-              clearButtonMode="always"
-              onChangeText={(text) => {
-                setUserInfo({ ...userInfo, password: text });
-              }}
-            />
+        <View style={styles.loginInputsContainer}>
+          <View>
+            <Text style={styles.inputLabels}>Email</Text>
           </View>
-        </KeyboardAwareScrollView>
+          <TextInput
+            placeholder="Enter your email..."
+            placeholderTextColor="#283618"
+            style={styles.loginInputs}
+            clearButtonMode="always"
+            value={userInfo.email}
+            onChangeText={(text) => {
+              setUserInfo({ ...userInfo, email: text });
+            }}
+          />
+          <View>
+            <Text style={styles.inputLabels}>Password</Text>
+          </View>
+          <TextInput
+            placeholder="Enter password..."
+            style={styles.loginInputs}
+            placeholderTextColor="black"
+            value={userInfo.password}
+            secureTextEntry
+            clearButtonMode="always"
+            onChangeText={(text) => {
+              setUserInfo({ ...userInfo, password: text });
+            }}
+          />
+        </View>
 
         <View
           style={{
-            backgroundColor: 'red',
             justifyContent: 'space-between',
             flexDirection: 'row',
           }}

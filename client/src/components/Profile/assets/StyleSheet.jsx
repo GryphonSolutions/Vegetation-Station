@@ -87,7 +87,7 @@ export default StyleSheet.create({
   },
 
   tradesListContainer: {
-    marginVertical: '8%',
+    marginVertical: '16%',
   },
 
   tradesListHeader: {
@@ -96,7 +96,7 @@ export default StyleSheet.create({
   },
 
   tradesListBodyContainer: {
-    marginTop: '8%',
+    marginTop: '4%',
   },
 
   itemsRow: {
