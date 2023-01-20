@@ -70,7 +70,10 @@ const NavBar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    persistor.purge();
+    // persistor.purge();
+    if (activeUser?.id && !isNavShown) {
+      dispatch(updateIsNavShown());
+    }
     dispatch(getOffers({ url: 'offers/archive' }));
     dispatch(getUsers({ url: 'users/info' }));
     dispatch(getCatalog({ url: 'catalog/listings' }))
@@ -79,8 +82,9 @@ const NavBar = () => {
         try {
           dispatch(updateFilteredCatalog(res));
           const listings = await res.filter((item) => {
-            return ((item.isPosted === true || item.isTraded === false)
-              && item.poster !== activeUser.username
+            return (
+              (item.isPosted === true || item.isTraded === false) &&
+              item.poster !== activeUser.username
             );
           });
           dispatch(updateCurrentPosts(listings));
@@ -117,7 +121,7 @@ const NavBar = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Tab.Navigator
-        initialRouteName="Login"
+        initialRouteName={activeUser?.id ? 'Home' : 'Login'}
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             const iconName = routes[route.name][focused ? 0 : 1];
@@ -127,6 +131,7 @@ const NavBar = () => {
           tabBarActiveTintColor: isDarkMode ? '#dda15e' : '#dda15e',
           tabBarInactiveTintColor: isDarkMode ? '#FFF' : '#000',
           tabBarStyle: {
+            display: isNavShown ? 'block' : 'none',
             backgroundColor: isDarkMode ? '#2F2E2D' : '#d5dec6',
             borderTopWidth: 0,
             height: '10%',
@@ -165,7 +170,14 @@ const NavBar = () => {
             tabBarVisible: false, // if you don't want to see the tab bar
           }}
         />
-        <Tab.Screen name="Login" component={Login} />
+        <Tab.Screen
+          name="Login"
+          component={Login}
+          options={{
+            tabBarButton: () => null,
+            tabBarVisible: false, // if you don't want to see the tab bar
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

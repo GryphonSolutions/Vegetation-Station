@@ -5,6 +5,7 @@
   "main": "client/src/index.jsx",
   "scripts": {
     "start": "npx expo start --tunnel",
+    "start-prod": "npx expo start --no-dev --tunnel",
     "start-web": "npx expo start --web",
     "start-server": "npx nodemon --watch server server/server.js",
     "start-cache": "npx expo start --tunnel -c",

@@ -24,6 +24,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { auth } from '../../../../server/database/firebase.js';
 import styles from './assets/StyleSheet.jsx';
 import { navigate } from '../NavBar/navigation.js';
+import { updateActiveUser, updateIsNavShown } from '../../reducers';
 
 const radarPublishableKey =
   'prj_live_pk_6efba0e95e7296a089fdcf13dbbe7ba2f83b84a1';
@@ -37,6 +38,8 @@ const config = {
 const Registration = ({ setRegistration, getOneAndSetOne }) => {
   const [userReg, setUserReg] = useState({});
   const [radarQuery, setRadarQuery] = useState(0);
+
+  const dispatch = useDispatch();
 
   const register = async (locationDeets) => {
     try {
@@ -84,6 +87,7 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
       .then((res) => {
         register(res);
         setRegistration(false);
+        dispatch(updateIsNavShown());
         navigate('Home');
       })
       .catch((err) => {
