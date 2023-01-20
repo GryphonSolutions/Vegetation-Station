@@ -16,6 +16,7 @@ import { persistor } from '../../store';
 import { updateActiveUser, updateSelectedUser } from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
+import { logout } from '../Login/authLogout.js';
 
 const Profile = ({ navigation }) => {
   const { activeUser, selectedUser, users, catalog, offers, currentOffers } =
@@ -29,12 +30,17 @@ const Profile = ({ navigation }) => {
   });
 
   const closedTrades = offers.filter((item) => {
-    return !item.isOpen && (item.buyer.id === id || item.seller.id === id) && item.reason === 'accepted';
+    return (
+      !item.isOpen &&
+      (item.buyer.id === id || item.seller.id === id) &&
+      item.reason === 'accepted'
+    );
   });
 
   const signOut = () => {
     persistor.purge();
     dispatch(updateActiveUser({}));
+    logout();
     navigation.navigate('Login');
   };
 

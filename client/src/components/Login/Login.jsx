@@ -138,7 +138,7 @@ const Login = () => {
                 }}
               />
             </View>
-            <View style={styles.logSubmitContainer}>
+            {/* <View style={styles.logSubmitContainer}>
               <Button
                 style={styles.regButton}
                 color="#283618"
@@ -148,7 +148,7 @@ const Login = () => {
                   dispatch(updateActiveUser({}));
                 }}
               />
-            </View>
+            </View> */}
           </View>
         </View>
       </KeyboardAwareScrollView>

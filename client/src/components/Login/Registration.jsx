@@ -116,8 +116,8 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
             placeholderTextColor="#283618"
             style={styles.loginInputs}
             clearButtonMode="always"
-            onChangeText={(e) => {
-              setUserReg(userReg, (userReg.email = e));
+            onChangeText={(text) => {
+              setUserReg({ ...userReg, email: text });
             }}
           />
           <View>
@@ -129,8 +129,8 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
             placeholderTextColor="#283618"
             secureTextEntry
             clearButtonMode="always"
-            onChangeText={(e) => {
-              setUserReg(userReg, (userReg.password = e));
+            onChangeText={(text) => {
+              setUserReg({ ...userReg, password: text });
             }}
           />
           <View>
@@ -153,8 +153,8 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
             style={styles.loginInputs}
             placeholderTextColor="#283618"
             clearButtonMode="always"
-            onChangeText={(e) => {
-              setUserReg(userReg, (userReg.profilePicture = e));
+            onChangeText={(text) => {
+              setUserReg({ ...userReg, profilePicture: text });
             }}
           />
         </View>

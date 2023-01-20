@@ -8,12 +8,10 @@ import {
   FlatList,
   Image,
   Alert,
-  Button,
-  TouchableWithoutFeedback,
+  Modal,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Modal from 'react-native-modal';
 import styles from './assets/stylesheet';
 import data from './fakeData';
 import { updateHomeSearchText, updateCurrentPosts } from '../../reducers';
@@ -103,22 +101,15 @@ export default function SearchBar() {
   return (
     <View style={styles.searchBarContainer}>
       <Modal
-        style={{ backgroundColor: 'white', opacity: 0.8 }}
-        animationStyle="slide"
-        swipeDirection="down"
+        animationType="slide"
         visible={modalVisible}
+        presentationStyle="formSheet"
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}
       >
         <View>
           <View style={styles.modalTitle}>
-            <TouchableWithoutFeedback>
-              <Ionicons
-                name="close"
-                size="60px"
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              />
-            </TouchableWithoutFeedback>
             <Text style={styles.modalHeaderText}>Sort By...</Text>
           </View>
           <View>
@@ -187,7 +178,7 @@ export default function SearchBar() {
 
       <Pressable
         onPress={() => {
-          setModalVisible(!modalVisible);
+          setModalVisible(true);
           console.log('pressed');
         }}
       >
