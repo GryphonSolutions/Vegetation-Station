@@ -35,6 +35,8 @@ const Post = () => {
   // hooks for form data
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [plantColor, setPlantColor] = useState();
+  const [plantSize, setPlantSize] = useState();
   // hooks for DropDownPicker
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownValue, setDropdownValue] = useState([]);
@@ -134,7 +136,7 @@ const Post = () => {
               style={styles.input}
               onChangeText={setTitle}
               value={title}
-              placeholder="Enter Title"
+              placeholder="Enter Title..."
             />
 
             <Text style={styles.inputLabel}>PLANT SPECIES</Text>
@@ -149,13 +151,29 @@ const Post = () => {
               searchPlaceholder="Search for species..."
             />
 
+            <Text style={styles.inputLabel}>SIZE</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setPlantSize}
+              value={plantSize}
+              placeholder="Enter plant size..."
+            />
+
+            <Text style={styles.inputLabel}>COLOR</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setPlantColor}
+              value={plantColor}
+              placeholder="Enter plant color..."
+            />
+
             <Text style={styles.inputLabel}>DESCRIPTIOIN</Text>
             <TextInput
               multiline
               style={styles.inputDescription}
               onChangeText={setDescription}
               value={description}
-              placeholder="Enter description"
+              placeholder="Enter description..."
               maxLength={60}
             />
 
@@ -165,6 +183,8 @@ const Post = () => {
                 // clear out all form data
                 Alert.alert('Plant has been posted');
                 setTitle('');
+                setPlantColor('');
+                setPlantSize('');
                 setDescription('');
                 setDropdownValue('');
                 setImage(null);
