@@ -44,6 +44,15 @@ const dataSlice = createSlice({
     updateFilteredCatalog: (state, action) => {
       state.filteredCatalog = action.payload;
     },
+    updateCatalog: (state, action) => {
+      state.catalog = action.payload;
+    },
+    updateOffers: (state, action) => {
+      state.offers = action.payload;
+    },
+    updateUsers: (state, action) => {
+      state.users = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -81,6 +90,9 @@ export const {
   updateCurrentPosts,
   updateCurrentOffers,
   updateFilteredCatalog,
+  updateCatalog,
+  updateOffers,
+  updateUsers,
 } = dataSlice.actions;
 
 export const dataReducer = dataSlice.reducer;

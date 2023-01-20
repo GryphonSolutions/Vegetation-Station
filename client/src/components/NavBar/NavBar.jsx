@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, Text, View, Button } from 'react-native';
@@ -58,6 +59,8 @@ const NavBar = () => {
     'AnonymousPro-Bold': require('../../assets/fonts/AnonymousPro-Bold.ttf'),
     JosefinSans: require('../../assets/fonts/JosefinSans-Regular.ttf'),
     'JosefinSans-Light': require('../../assets/fonts/JosefinSans-Light.ttf'),
+    'JosefinSans-Medium': require('../../assets/fonts/JosefinSans-Medium.ttf'),
+    'JosefinSans-SemiBold': require('../../assets/fonts/JosefinSans-SemiBold.ttf'),
     'JosefinSans-Bold': require('../../assets/fonts/JosefinSans-Bold.ttf'),
   });
   const { isDarkMode, isNavShown } = useSelector((state) => state.app);
@@ -76,7 +79,9 @@ const NavBar = () => {
         try {
           dispatch(updateFilteredCatalog(res));
           const listings = await res.filter((item) => {
-            return item.isPosted === true || item.isTraded === false;
+            return ((item.isPosted === true || item.isTraded === false)
+              && item.poster !== activeUser.username
+            );
           });
           dispatch(updateCurrentPosts(listings));
         } catch (err) {
