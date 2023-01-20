@@ -46,26 +46,22 @@ export default StyleSheet.create({
 
   /* ----------------- Button Container ----------------- */
 
-  buttonContainer: {
-    // flex: -1,
-    display: 'flex',
+  buttonsContainer: {
     flexDirection: 'row',
-    marginTop: 10,
-    justifyContent: 'space-evenly',
-    marginBottom: 10,
+    marginTop: '16%',
+    justifyContent: 'space-between',
   },
   detailPageButton: {
-    backgroundColor: '#DDA15E',
-    fontSize: 15,
-    display: 'flex',
+    backgroundColor: '#ffd09b',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
-    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
   },
   buttonText: {
     fontFamily: 'JosefinSans',
-    fontSize: 20,
+    fontSize: 18,
   },
   /* ------------------ Header Component ------------------*/
 
@@ -88,8 +84,7 @@ export default StyleSheet.create({
   /* -------------- Location Component --------------*/
 
   locationContainer: {
-    marginTop: 60,
-    // backgroundColor: 'brown',
+    marginTop: '16%',
   },
   locationHeaderText: {
     fontFamily: 'JosefinSans-Medium',

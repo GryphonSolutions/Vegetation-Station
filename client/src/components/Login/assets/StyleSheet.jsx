@@ -1,32 +1,70 @@
 import { StyleSheet, StatusBar } from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    color: '#283618',
-  },
-  loginInputs: {
-    border: 'solid black 1px',
-    backgroundColor: '#d5dec6',
-    borderRadius: '3%',
-    margin: '5%',
-    height: 30,
-    width: 200,
-    padding: 5,
-  },
-  registerLabels: {
-    fontSize: 25,
-    color: '#283618',
-    alignSelf: 'flex-start',
-    fontFamily: 'JosefinSans',
+  logoStyles: {
+    alignSelf: 'center',
+    resizeMode: 'contain',
+    backgroundColor: 'maroon',
+    marginBottom: '-16%',
   },
 
   loginInputsContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: 10,
+    backgroundColor: 'lightblue',
   },
+
+  inputLabels: {
+    fontFamily: 'JosefinSans-Medium',
+    fontSize: 28,
+    color: '#283618',
+    marginTop: '8%',
+  },
+
+  loginInputs: {
+    backgroundColor: '#d5dec6',
+    width: '100%',
+    fontSize: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: '8%',
+    marginTop: '4%',
+  },
+
+  button: {
+    backgroundColor: '#dda15e',
+    borderRadius: '8%',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  buttonText: {
+    fontFamily: 'JosefinSans',
+    fontSize: 18,
+  },
+
+  // buttonContainer: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   borderWidth: 0,
+  //   backgroundColor: '#dda15e',
+  //   marginTop: 25,
+  //   marginLeft: 12,
+  //   fontFamily: 'JosefinSans',
+  //   width: 82.5,
+  //   borderRadius: 7,
+  // },
+
+  // regButton: {
+  //   fontFamily: 'JosefinSans',
+  //   fontSize: 10,
+  //   padding: 10,
+  // },
+
+  // above this line: Login.jsx
 
   loginButtons: {
     color: 'white',
@@ -36,13 +74,6 @@ export default StyleSheet.create({
   appTitle: {
     fontSize: '30px',
     color: 'green',
-  },
-  logoStyles: {
-    height: '44%',
-    width: '70%',
-    alignSelf: 'center',
-    margin: 20,
-    padding: 20,
   },
 
   backButton: {
@@ -69,11 +100,6 @@ export default StyleSheet.create({
     // padding horizontal on button views ref message in profile
     // no border on button --YES
   },
-  regButton: {
-    fontFamily: 'JosefinSans',
-    fontSize: 2,
-    padding: 10,
-  },
 
   regSubmitContainer: {
     flexDirection: 'row',
@@ -81,18 +107,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#dda15e',
     width: 85,
-    borderRadius: 7,
-  },
-  logSubmitContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 0,
-    backgroundColor: '#dda15e',
-    marginTop: 25,
-    marginLeft: 12,
-    fontFamily: 'JosefinSans',
-    width: 82.5,
     borderRadius: 7,
   },
 });

@@ -84,6 +84,27 @@ const Details = () => {
                   <Text style={styles.postDescriptionText}>{description}</Text>
                 </View>
               </View>
+              <View style={styles.buttonsContainer}>
+                <TouchableOpacity style={styles.detailPageButton}>
+                  <Text style={styles.buttonText}>Save</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.detailPageButton}
+                  onPress={() => {
+                    navigation.navigate('Post');
+                  }}
+                >
+                  <Text style={styles.buttonText}>Propose Trade</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.detailPageButton}
+                  onPress={() => {
+                    navigateMessages();
+                  }}
+                >
+                  <Text style={styles.buttonText}>Message</Text>
+                </TouchableOpacity>
+              </View>
               <View style={styles.locationContainer}>
                 <Text style={styles.locationHeaderText}>
                   Trader&apos;s General Location:
@@ -97,27 +118,6 @@ const Details = () => {
           <TouchableOpacity onPress={() => navigateSelectedProfile()}>
             <ProfileRibbon />
           </TouchableOpacity>
-          {/* <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.detailPageButton}>
-              <Text style={styles.buttonText}>Save</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.detailPageButton}
-              onPress={() => {
-                navigation.navigate('Post');
-              }}
-            >
-              <Text style={styles.buttonText}>Propose Trade</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.detailPageButton}
-              onPress={() => {
-                navigateMessages();
-              }}
-            >
-              <Text style={styles.buttonText}>Message</Text>
-            </TouchableOpacity>
-          </View> */}
         </View>
       </View>
     </View>
