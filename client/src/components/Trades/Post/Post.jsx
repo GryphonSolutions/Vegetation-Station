@@ -16,7 +16,7 @@ import {
 import { Camera, CameraType, takePictureAsync } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 import {
   updateSelectedUser,
   updateSearchMessages,
@@ -58,9 +58,18 @@ const Post = () => {
       };
     });
     setDropdownItems(plantNames);
-    dispatch(updateSearchMessages(false));
-    dispatch(updateUserMessageSearch(''));
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = () => {
+        dispatch(updateSearchMessages(false));
+        dispatch(updateUserMessageSearch(''));
+      };
+
+      return unsubscribe();
+    }, []),
+  );
 
   // page is still checking camera priveledges
   if (!permission) {

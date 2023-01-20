@@ -29,15 +29,16 @@ const Profile = ({ navigation }) => {
   const { id, username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
 
-  dispatch(updateSearchMessages(false));
-  dispatch(updateUserMessageSearch(''));
-
   const openTrades = offers.filter((item) => {
     return item.isOpen && (item.buyer.id === id || item.seller.id === id);
   });
 
   const closedTrades = offers.filter((item) => {
-    return !item.isOpen && (item.buyer.id === id || item.seller.id === id) && item.reason === 'accepted';
+    return (
+      !item.isOpen &&
+      (item.buyer.id === id || item.seller.id === id) &&
+      item.reason === 'accepted'
+    );
   });
 
   const signOut = () => {

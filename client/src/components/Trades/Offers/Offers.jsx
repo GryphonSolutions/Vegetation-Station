@@ -20,6 +20,8 @@ import {
   updateUsers,
   updateCurrentPosts,
   updateCurrentOffers,
+  updateSearchMessages,
+  updateUserMessageSearch,
 } from '../../../reducers';
 import styles from './assets/StyleSheet.jsx';
 
@@ -66,6 +68,17 @@ const Offers = ({ navigation }) => {
       },
     ];
   }, [currentOffers]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = () => {
+        dispatch(updateSearchMessages(false));
+        dispatch(updateUserMessageSearch(''));
+      };
+
+      return unsubscribe();
+    }, []),
+  );
 
   const findBuyer = (item) => {
     const target = users.filter((user) => item.seller.id === user?.id);
