@@ -52,7 +52,6 @@ export default StyleSheet.create({
 
   // MODAL
   modalTitle: {
-    justifyContent: 'center',
     padding: 10,
     margin: 30,
   },
