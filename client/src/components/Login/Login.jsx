@@ -119,6 +119,7 @@ const Login = () => {
               justifyContent: 'center',
               flexDirection: 'row',
               fontFamily: 'AnonymousPro',
+              marginRight: 15,
             }}
           >
             <View style={styles.logSubmitContainer}>

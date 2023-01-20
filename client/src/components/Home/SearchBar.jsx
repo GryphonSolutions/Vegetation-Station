@@ -93,14 +93,17 @@ export default function SearchBar() {
   const filterChoice = (val) => {
     if (whatToSort === val) {
       setWhatToSort('');
+    } else {
+      setWhatToSort(val);
+      howToSort[val]();
     }
-    setWhatToSort(val);
-    howToSort[val]();
+    console.log(whatToSort);
   };
   // sortTopSellers();
   return (
     <View style={styles.searchBarContainer}>
       <Modal
+        style={{ height: '50%' }}
         animationType="slide"
         visible={modalVisible}
         presentationStyle="formSheet"
