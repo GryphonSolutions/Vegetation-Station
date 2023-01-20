@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   StyleSheet,
@@ -13,7 +14,12 @@ import {
   Alert,
 } from 'react-native';
 import { persistor } from '../../store';
-import { updateActiveUser, updateSelectedUser } from '../../reducers';
+import {
+  updateActiveUser,
+  updateSelectedUser,
+  updateSearchMessages,
+  updateUserMessageSearch,
+} from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
 
@@ -24,12 +30,27 @@ const UserProfile = ({ navigation }) => {
   const { id, username, profilePicture, tradeCount, location } = activeUser;
   const dispatch = useDispatch();
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = () => {
+        dispatch(updateSearchMessages(false));
+        dispatch(updateUserMessageSearch(''));
+      };
+
+      return unsubscribe();
+    }, []),
+  );
+
   const openTrades = offers.filter((item) => {
     return item.isOpen && (item.buyer.id === id || item.seller.id === id);
   });
 
   const closedTrades = offers.filter((item) => {
-    return !item.isOpen && (item.buyer.id === id || item.seller.id === id);
+    return (
+      !item.isOpen &&
+      (item.buyer.id === id || item.seller.id === id) &&
+      item.reason === 'accepted'
+    );
   });
 
   const signOut = () => {

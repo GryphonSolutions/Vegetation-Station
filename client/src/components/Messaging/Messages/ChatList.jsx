@@ -12,11 +12,12 @@ import {
 } from '../../../reducers/messagesReducer.js';
 import { updateSelectedUser } from '../../../reducers/dataReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
-import testUsers from '../../../../../server/data/users.js';
 
 const ChatList = ({ chat }) => {
   const { isDarkMode } = useSelector((state) => state.app);
-  const { activeUser, selectedUser } = useSelector((state) => state.data);
+  const { activeUser, selectedUser, users } = useSelector(
+    (state) => state.data,
+  );
   const dispatch = useDispatch();
 
   const styles = StyleSheet.create({
@@ -45,6 +46,12 @@ const ChatList = ({ chat }) => {
       fontSize: 17,
       color: '#616161',
     },
+    read: {},
+    unread: {
+      borderColor: '#09df08',
+      borderStyle: 'solid',
+      borderWidth: 3,
+    },
   });
 
   const getMessages = (combinedId) => {
@@ -66,7 +73,7 @@ const ChatList = ({ chat }) => {
 
   const getUserInfo = (username) => {
     let userObj = {};
-    testUsers.forEach((user) => {
+    users.forEach((user) => {
       if (user.username === username) {
         userObj = user;
       }
@@ -74,7 +81,7 @@ const ChatList = ({ chat }) => {
     return userObj;
   };
 
-  const navigateTo = (combinedId, username, profilePicture) => {
+  const navigateTo = (combinedId, username) => {
     // console.log(combinedId);
     dispatch(updateSearchMessages(false));
     dispatch(updateUserMessageSearch(''));
@@ -83,6 +90,27 @@ const ChatList = ({ chat }) => {
     // pull chat data from collection chats based on the combinedId
     // update state for chats
     getMessages(combinedId);
+    if (chat[1].read === false) {
+      axios
+        .patch(
+          'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
+          {
+            params: {
+              id: String(activeUser.id),
+              currentCombinedId: combinedId,
+              read: true,
+              text: chat[1].lastMessage,
+              time: false,
+            },
+          },
+        )
+        .then((res) => {
+          // console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
     RootNavigation.navigate('Chat');
   };
@@ -91,21 +119,21 @@ const ChatList = ({ chat }) => {
     <ListItem
       containerStyle={{
         backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
+        borderRightColor: chat[1].read ? '#09df08' : '#09df08',
+        borderRightStyle: chat[1].read ? 'solid' : 'solid',
+        borderRightWidth: chat[1].read ? 0 : 3,
         paddingVertical: 12,
         paddingHorizontal: 10,
       }}
       bottomDivider
       onPress={() => {
-        navigateTo(
-          chat[0],
-          chat[1].chattingWith.username,
-          chat[1].chattingWith.profilePicture,
-        );
+        navigateTo(chat[0], chat[1].chattingWith.username);
       }}
     >
       <Avatar
         size={60}
         rounded
+        // containerStyle={chat[1].read ? styles.read : styles.unread}
         source={{
           uri: `${chat[1].chattingWith.profilePicture}`,
         }}

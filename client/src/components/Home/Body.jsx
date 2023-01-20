@@ -19,8 +19,7 @@ import SearchBar from './SearchBar';
 
 export default function Body() {
   const { isDarkMode } = useSelector((state) => state.app);
-  const { activeUser, users, catalog, currentPosts, currentOffers } =
-    useSelector((state) => state.data);
+  const { users, currentPosts } = useSelector((state) => state.data);
 
   const dispatch = useDispatch();
 
