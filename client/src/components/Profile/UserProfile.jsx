@@ -13,7 +13,11 @@ import {
   Alert,
 } from 'react-native';
 import { persistor } from '../../store';
-import { updateActiveUser, updateSelectedUser } from '../../reducers';
+import {
+  updateActiveUser,
+  updateSelectedUser,
+  updateIsNavShown,
+} from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
 
@@ -29,12 +33,17 @@ const UserProfile = ({ navigation }) => {
   });
 
   const closedTrades = offers.filter((item) => {
-    return !item.isOpen && (item.buyer.id === id || item.seller.id === id) && item.reason === 'accepted';
+    return (
+      !item.isOpen &&
+      (item.buyer.id === id || item.seller.id === id) &&
+      item.reason === 'accepted'
+    );
   });
 
   const signOut = () => {
     persistor.purge();
     dispatch(updateActiveUser({}));
+    dispatch(updateIsNavShown());
     navigation.navigate('Login');
   };
 
