@@ -18,6 +18,16 @@ import {
   View,
 } from 'react-native';
 import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+  deleteDoc,
+  updateDoc,
+  onSnapshot,
+} from 'firebase/firestore';
+import {
   updateSenderInput,
   updateChats,
   updateCurrentChat,
@@ -25,6 +35,7 @@ import {
   updateChatIntervalId,
 } from '../../../reducers/messagesReducer.js';
 import * as RootNavigation from '../../NavBar/navigation.js';
+import { db, chatsCol, chatMessagesCol } from '../../../../../server/database';
 
 const Chat = () => {
   const { isDarkMode } = useSelector((state) => state.app);
@@ -106,6 +117,23 @@ const Chat = () => {
     },
   });
 
+  useEffect(() => {
+    if (currentCombinedId) {
+      const unSub = onSnapshot(
+        doc(db, 'chatMessages', currentCombinedId),
+        { includeMetadataChanges: true },
+        (document) => {
+          // console.log(document.data());
+          dispatch(updateCurrentChat(document.data()));
+        },
+      );
+
+      return () => {
+        unSub();
+      };
+    }
+  }, []);
+
   const getMessages = (combinedId) => {
     axios
       .get(
@@ -116,20 +144,22 @@ const Chat = () => {
       )
       .then((res) => {
         // console.log('MESSAGES DATA ', res.data);
-        dispatch(updateCurrentChat(res.data));
+        // dispatch(updateCurrentChat(res.data));
       })
       .catch((err) => {
         console.log(err, 'error fetching messages');
       });
   };
 
-  useEffect(() => {
-    // console.log('USE EFFECT');
-    // console.log(currentCombinedId);
-    if (currentCombinedId !== '') {
-      getMessages(currentCombinedId);
-    }
-  }, [activeUser]);
+  // useEffect(() => {
+  //   // console.log('USE EFFECT');
+  //   // console.log(currentCombinedId);
+  //   if (currentCombinedId !== '') {
+  //     setInterval(() => {
+  //       getMessages(currentCombinedId);
+  //     }, 5000);
+  //   }
+  // }, []);
 
   const sendMessage = () => {
     Keyboard.dismiss();
@@ -198,32 +228,32 @@ const Chat = () => {
     dispatch(updateSenderInput(''));
   };
 
-  const getChats = () => {
-    axios
-      .get(
-        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
-        {
-          params: { activeUser: String(activeUser.id) },
-        },
-      )
-      .then((res) => {
-        // console.log('ORDERED IN CHATS');
-        dispatch(
-          updateChats(
-            Object.entries(res.data).sort(
-              (a, b) => b[1].date.seconds - a[1].date.seconds,
-            ),
-          ),
-        );
-      })
-      .catch((err) => {
-        console.log(err, 'error when fetching chats');
-      });
-  };
+  // const getChats = () => {
+  //   axios
+  //     .get(
+  //       'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
+  //       {
+  //         params: { activeUser: String(activeUser.id) },
+  //       },
+  //     )
+  //     .then((res) => {
+  //       // console.log('ORDERED IN CHATS');
+  //       dispatch(
+  //         updateChats(
+  //           Object.entries(res.data).sort(
+  //             (a, b) => b[1].date.seconds - a[1].date.seconds,
+  //           ),
+  //         ),
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log(err, 'error when fetching chats');
+  //     });
+  // };
 
   const backToMessages = () => {
     // console.log('Go back to messages');
-    getChats();
+    // getChats();
     dispatch(updateSenderInput(''));
     dispatch(updateCurrentCombinedId(''));
     dispatch(updateCurrentChat({}));
