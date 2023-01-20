@@ -372,7 +372,6 @@ const Post = () => {
                   onPress={() => {
                     setShowCamera(false);
                     setStatusBarHidden(false, 'slide');
-                    updatePosts();
                   }}
                 >
                   <Text style={styles.text}>Leave Camera</Text>
