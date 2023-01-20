@@ -57,6 +57,8 @@ export default StyleSheet.create({
   modalHeaderText: {
     fontSize: 30,
     alignSelf: 'center',
+    fontFamily: 'JosefinSans-Medium',
+    color: '#283618',
   },
   modalCats: {
     flexDirection: 'row',
@@ -65,7 +67,14 @@ export default StyleSheet.create({
   },
   modalCatsText: {
     margin: 10,
-    fontSize: 20,
-    color: 'black',
+    padding: 5,
+    fontSize: 26,
+    fontFamily: 'AnonymousPro',
+    color: '#283618',
+  },
+  iconStyling: {
+    justifyContent: 'flex-end',
+    padding: 12,
+    color: '#dda15e',
   },
 });

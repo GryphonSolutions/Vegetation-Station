@@ -7,6 +7,7 @@ const imageWidth = (screenWidth - 30) / 3.5;
 export default StyleSheet.create({
   page: {
     flex: 1,
+    // alignItems: 'flex-end',
   },
   container: {
     paddingTop: 20,
@@ -20,9 +21,11 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   buttonContainer: {
+    // display: 'flex',
+    alignSelf: 'center',
     flexDirection: 'row',
     backgroundColor: 'transparent',
-    margin: 64,
+    // margin: 5,
   },
   button: {
     borderRadius: '5%',
@@ -44,17 +47,24 @@ export default StyleSheet.create({
     fontFamily: 'JosefinSans',
   },
   // ----Camera and image---------------------------------
+  cameraContainer: {
+    flex: 1,
+    opacity: '100%',
+  },
   camera: {
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: 40,
+    alignItems: 'center',
+    // justifyContent: 'center',
   },
   buttonCamera: {
-    color: 'white',
-    backgroundColor: 'blue',
+    backgroundColor: '#d5dec6',
     borderRadius: '5%',
-    alignSelf: 'flex-end',
-    width: '50%',
-    alignItems: 'center',
+    margin: 5,
+    padding: 5,
+    // alignSelf: 'flex-end',
+    // width: '50%',
+    // alignItems: 'center',
   },
   imageContainer: {
     width: 150,
@@ -63,6 +73,11 @@ export default StyleSheet.create({
     borderWidth: 2,
     borderColor: 'black',
     margin: 25,
+  },
+  buttonCameraText: {
+    fontSize: 25,
+    color: '#283618',
+    fontFamily: 'JosefinSans-Medium',
   },
   // ----INPUT---------------------------------
   input: {

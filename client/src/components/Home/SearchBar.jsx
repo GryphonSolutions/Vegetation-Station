@@ -9,6 +9,7 @@ import {
   Image,
   Alert,
   Modal,
+  SafeAreaView,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -104,7 +105,6 @@ export default function SearchBar() {
     <View style={styles.searchBarContainer}>
       <View>
         <Modal
-          style={{ elevation: 60 }}
           animationType="slide"
           visible={modalVisible}
           presentationStyle="formSheet"
@@ -112,7 +112,7 @@ export default function SearchBar() {
             setModalVisible(false);
           }}
         >
-          <View>
+          <SafeAreaView>
             <View style={styles.modalTitle}>
               <Text style={styles.modalHeaderText}>Sort By...</Text>
             </View>
@@ -127,9 +127,17 @@ export default function SearchBar() {
                   - Color
                 </Text>
                 {whatToSort === 'alph' ? (
-                  <Ionicons name="checkbox-outline" size="30px" />
+                  <Ionicons
+                    name="checkbox-outline"
+                    size="30px"
+                    style={styles.iconStyling}
+                  />
                 ) : (
-                  <Ionicons name="square-outline" size="30px" />
+                  <Ionicons
+                    name="square-outline"
+                    size="30px"
+                    style={styles.iconStyling}
+                  />
                 )}
               </View>
               <View style={styles.modalCats}>
@@ -142,9 +150,17 @@ export default function SearchBar() {
                   - Size
                 </Text>
                 {whatToSort === 'size' ? (
-                  <Ionicons name="checkbox-outline" size="30px" />
+                  <Ionicons
+                    name="checkbox-outline"
+                    size="30px"
+                    style={styles.iconStyling}
+                  />
                 ) : (
-                  <Ionicons name="square-outline" size="30px" />
+                  <Ionicons
+                    name="square-outline"
+                    size="30px"
+                    style={styles.iconStyling}
+                  />
                 )}
               </View>
               <View style={styles.modalCats}>
@@ -160,18 +176,18 @@ export default function SearchBar() {
                   <Ionicons
                     name="checkbox-outline"
                     size="30px"
-                    style={{ justifyContent: 'flex-end' }}
+                    style={styles.iconStyling}
                   />
                 ) : (
                   <Ionicons
                     name="square-outline"
                     size="30px"
-                    style={{ justifyContent: 'flex-end' }}
+                    style={styles.iconStyling}
                   />
                 )}
               </View>
             </View>
-          </View>
+          </SafeAreaView>
         </Modal>
       </View>
 
