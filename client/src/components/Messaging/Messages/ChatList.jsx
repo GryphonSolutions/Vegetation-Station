@@ -69,6 +69,7 @@ const ChatList = ({ chat }) => {
   };
 
   const getUserInfo = (username) => {
+    console.log(users);
     let userObj = {};
     users.forEach((user) => {
       if (user.username === username) {
@@ -144,7 +145,7 @@ const ChatList = ({ chat }) => {
             {chat[1].chattingWith.username}
           </ListItem.Title>
           <ListItem.Title style={styles.time}>
-            {formatDistanceToNow(new Date(chat[1].date.seconds * 1000))}
+            {formatDistanceToNow(new Date(chat[1].date))}
           </ListItem.Title>
         </View>
         <ListItem.Subtitle
