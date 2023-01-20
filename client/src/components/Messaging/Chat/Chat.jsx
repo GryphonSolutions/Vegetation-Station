@@ -79,7 +79,7 @@ const Chat = () => {
       fontFamily: 'JosefinSans-Medium',
       fontSize: 16,
       marginHorizontal: '4%',
-      backgroundColor: '#cac9c6',
+      backgroundColor: '#bdcab6',
       padding: 10,
       color: '#212b21',
       borderRadius: 30,
