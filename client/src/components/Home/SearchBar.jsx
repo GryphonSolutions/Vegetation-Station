@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Text,
@@ -8,21 +8,25 @@ import {
   FlatList,
   Image,
   Alert,
-  Modal,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import CustomModal from 'react-native-modal';
 import styles from './assets/stylesheet';
 import data from './fakeData';
 import { updateHomeSearchText, updateCurrentPosts } from '../../reducers';
-import SearchModal from './SearchDropdown.jsx';
 
 export default function SearchBar() {
+  const [modalVisible, setModalVisible] = useState(false);
   const { isDarkMode } = useSelector((state) => state.app);
+  const [whatToSort, setWhatToSort] = useState('');
+
   const { homeSearchText } = useSelector((state) => state.home);
   const { activeUser, catalog, currentPosts, filteredCatalog, users } =
     useSelector((state) => state.data);
   const dispatch = useDispatch();
+
+  // useEffect(() => {}, [whatToSort]);
 
   const updateSearch = (val) => {
     dispatch(updateHomeSearchText(val));
@@ -51,45 +55,57 @@ export default function SearchBar() {
 
   // sort alphabetically by color
   const sortColor = () => {
-    const sorted = catalog.sort((a, b) => compare(a.color, b.color));
-    // dispatch(updateCurrentPosts(sorted));
+    const sortedCat = [...catalog];
+    const sorted = sortedCat.sort((a, b) => compare(a.color, b.color));
+    dispatch(updateCurrentPosts(sorted));
   };
 
   // sort smallest to largest size
   const sortSize = () => {
     const size = { small: 1, medium: 2, large: 3 };
-    const sorted = catalog.sort((a, b) => compare(size[a.size], size[b.size]));
-    // dispatch(updateCurrentPosts(sorted));
+    const toSort = [...catalog];
+    const sorted = toSort.sort((a, b) => compare(size[a.size], size[b.size]));
+    dispatch(updateCurrentPosts(sorted));
   };
 
   // sort highest to lowest trade count
   const sortTopSellers = () => {
-    const sortedUsers = users.sort((a, b) =>
+    const spreadUsers = [...users];
+    const sortedUsers = spreadUsers.sort((a, b) =>
       compare(b.tradeCount, a.tradeCount),
     );
-    const sorted = catalog.sort((a, b) => {
+    const spreadCat = [...catalog];
+    const sorted = spreadCat.sort((a, b) => {
       const index1 = sortedUsers.map((e) => e.username).indexOf(a.poster);
       const index2 = sortedUsers.map((e) => e.username).indexOf(b.poster);
       return compare(index1, index2);
     });
-    // dispatch(updateCurrentPosts(sorted));
+    console.log(catalog, sorted);
+    dispatch(updateCurrentPosts(sorted));
   };
 
-  const modalClick = () => {
-    const temp = {};
-    Object.assign(temp, styles.modalCatsText);
-    styles.modalCatsText.color = 'red';
+  const [howToSort, setHowToSort] = useState({
+    alph: sortColor,
+    size: sortSize,
+    trades: sortTopSellers,
+  });
+
+  const filterChoice = (val) => {
+    if (whatToSort === val) {
+      setWhatToSort('');
+    }
+    setWhatToSort(val);
+    howToSort[val]();
   };
-
-  const filterChoice = () => {};
-
   // sortTopSellers();
   return (
     <View style={styles.searchBarContainer}>
-      <Modal
+      <CustomModal
         animationType="slide"
         visible={modalVisible}
-        presentationStyle="formSheet"
+        bottomHalf="true"
+        transparent="false"
+        // presentationStyle="formSheet"
         onRequestClose={() => {
           setModalVisible(false);
         }}
@@ -100,14 +116,53 @@ export default function SearchBar() {
           </View>
           <View>
             <View style={styles.modalCats}>
-              <Text style={styles.modalCatsText}>Alphabetically</Text>
-              <Ionicons name="checkbox-outline" size="30px" />
+              <Text
+                onPress={() => {
+                  filterChoice('alph');
+                }}
+                style={styles.modalCatsText}
+              >
+                Color
+              </Text>
+              {whatToSort === 'alph' ? (
+                <Ionicons name="checkbox-outline" size="30px" />
+              ) : (
+                <Text />
+              )}
             </View>
-            <Text style={styles.modalCatsText}>Size</Text>
-            <Text style={styles.modalCatsText}>Trade Count</Text>
+            <View style={styles.modalCats}>
+              <Text
+                style={styles.modalCatsText}
+                onPress={() => {
+                  filterChoice('size');
+                }}
+              >
+                Size
+              </Text>
+              {whatToSort === 'size' ? (
+                <Ionicons name="checkbox-outline" size="30px" />
+              ) : (
+                <Text />
+              )}
+            </View>
+            <View style={styles.modalCats}>
+              <Text
+                style={styles.modalCatsText}
+                onPress={() => {
+                  filterChoice('trades');
+                }}
+              >
+                Trades
+              </Text>
+              {whatToSort === 'trades' ? (
+                <Ionicons name="checkbox-outline" size="30px" />
+              ) : (
+                <Text />
+              )}
+            </View>
           </View>
         </View>
-      </Modal>
+      </CustomModal>
 
       <TextInput
         style={[
