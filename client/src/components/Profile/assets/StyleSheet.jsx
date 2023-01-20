@@ -1,7 +1,7 @@
 import { StyleSheet, StatusBar, PixelRatio, Dimensions } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
-const imageWidth = (screenWidth - 30) / 3.5;
+const imageWidth = (screenWidth * 0.92) / 3.1;
 
 export default StyleSheet.create({
   headerContainer: {
@@ -28,33 +28,27 @@ export default StyleSheet.create({
   contentContainer: {
     flex: 1,
     marginTop: '10%',
-    marginHorizontal: '8%',
+    marginHorizontal: '4%',
   },
 
   accountInfoContainer: {
-    // flex: 0,
     flexDirection: 'row',
-    // justifyContent: 'center',
-    // backgroundColor: 'red',
-    // width: '80%',
+    marginBottom: '8%',
   },
 
-  profilePictureContainer: {
-    // backgroundColor: 'yellow',
-  },
+  profilePictureContainer: {},
 
   profilePicture: {
     width: imageWidth,
     maxWidth: 150,
     height: undefined,
     aspectRatio: 1,
-    borderRadius: '50%',
+    borderRadius: imageWidth / 2,
   },
 
   profileDetailsContainer: {
     flex: 1,
-    paddingLeft: '4%',
-    // backgroundColor: 'blue',
+    paddingLeft: '6%',
     justifyContent: 'center',
   },
 
@@ -63,6 +57,7 @@ export default StyleSheet.create({
   },
 
   username: {
+    fontFamily: 'JosefinSans-SemiBold',
     fontSize: 20,
   },
 
@@ -89,59 +84,38 @@ export default StyleSheet.create({
     fontFamily: 'JosefinSans',
   },
 
-  starIcon: {
-    paddingRight: '2%',
-    color: 'gold',
+  tradesListContainer: {
+    marginVertical: '8%',
   },
 
-  body: {
-    backgroundColor: '#606C38',
+  tradesListHeader: {
+    fontFamily: 'JosefinSans-Medium',
+    fontSize: 25,
   },
 
-  item: {
-    backgroundColor: '#606C38',
+  tradesListBodyContainer: {
+    marginTop: '8%',
+  },
+
+  itemsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
-    marginVertical: 8,
+    alignItems: 'flex-end',
+    marginVertical: '0.8%',
   },
 
-  header2: {
-    fontSize: 20,
-    flex: 2,
-    // fontWeight: 600,
-    paddingLeft: '14%',
-    paddingBottom: 4,
+  itemImage: {
+    width: imageWidth,
+    height: undefined,
+    aspectRatio: 1,
+    borderRadius: imageWidth / 15,
   },
-
-  header3: {
-    // color: 'white',
-    fontSize: 20,
-    flex: 2,
-    // fontWeight: 600,
-    paddingLeft: '14%',
-    paddingTop: 4,
-    paddingBottom: 4,
-  },
-
-  row: {
+  tradeCounterContainer: {
     flexDirection: 'row',
-    marginLeft: '10%',
-    marginRight: '10%',
+    alignItems: 'center',
   },
-
-  col: {
-    borderWidth: 1,
-    flex: -1,
-    width: 80,
-    height: 80,
-    marginLeft: '5%',
-    marginRight: '5%',
-    marginBottom: '3%',
-  },
-
-  title: {
-    color: '#FEFAE0',
-    textAlign: 'center',
+  starIcon: {
+    marginRight: '3%',
+    color: 'gold',
   },
 });

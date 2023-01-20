@@ -12,12 +12,13 @@ import {
   Alert,
 } from 'react-native';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../../actions';
-import { updateSelectedUser } from '../../../reducers';
+import { updateSelectedUser, updateCatalog, updateOffers, updateUsers, updateCurrentPosts, updateCurrentOffers } from '../../../reducers';
 import styles from './assets/StyleSheet.jsx';
 
 const Offers = ({ navigation }) => {
   const { activeUser, selectedUser, users, catalog, currentOffers } =
     useSelector((state) => state.data);
+  const { homeSearchText } = useSelector((state) => state.home);
   const { isDarkMode } = useSelector((state) => state.app);
   const { username, profilePicture, tradeCount, location } = selectedUser;
   const dispatch = useDispatch();
@@ -25,13 +26,17 @@ const Offers = ({ navigation }) => {
   let offers = [
     {
       title: 'Your Offers',
-      data: currentOffers.filter((item) => activeUser?.id === item.seller.id),
+      data: currentOffers.filter((item) => {
+        return activeUser?.id === item.seller.id && item.isOpen === true;
+      }),
     },
   ];
   let requests = [
     {
       title: 'Your Requests',
-      data: currentOffers.filter((item) => activeUser?.id === item.buyer.id),
+      data: currentOffers.filter((item) => {
+        return activeUser?.id === item.buyer.id && item.isOpen === true;
+      }),
     },
   ];
 
@@ -39,16 +44,20 @@ const Offers = ({ navigation }) => {
     offers = [
       {
         title: 'Your Offers',
-        data: currentOffers.filter((item) => activeUser?.id === item.seller.id),
+        data: currentOffers.filter((item) => {
+          return activeUser?.id === item.seller.id && item.isOpen === true;
+        }),
       },
     ];
     requests = [
       {
         title: 'Your Requests',
-        data: currentOffers.filter((item) => activeUser?.id === item.buyer.id),
+        data: currentOffers.filter((item) => {
+          return activeUser?.id === item.buyer.id && item.isOpen === true;
+        }),
       },
     ];
-  }, [activeUser]);
+  }, [currentOffers]);
 
   const findBuyer = (item) => {
     const target = users.filter((user) => item.seller.id === user?.id);
@@ -68,108 +77,188 @@ const Offers = ({ navigation }) => {
   const acceptTrade = (item) => {
     const sellerListingID = item.seller.listing;
     const buyerListingID = item.buyer.listing;
-    item.isOpen = false;
-    item.reason = 'accepted';
+    const temp1 = {};
+    Object.assign(temp1, item);
+    temp1.isOpen = false;
+    temp1.reason = 'accepted';
     axios
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
-        item,
-        { headers: { 'content-type': 'application/json' } },
+        temp1,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive')
+          .then(({ data }) => {
+            dispatch(updateOffers(data));
+            const offers1 = data.filter((offer) => {
+              return (
+                offer?.buyer?.id === activeUser?.id ||
+                offer?.seller?.id === activeUser?.id
+              );
+            });
+            dispatch(updateCurrentOffers(offers1));
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
+
     const target1 = catalog.filter((plant) => sellerListingID === plant.id);
-    target1[0].isTraded = true;
+    const temp2 = {};
+    Object.assign(temp2, target1[0]);
+    temp2.isTraded = true;
     axios
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
-        target1[0],
-        {
-          headers: { 'content-type': 'application/json' },
-        },
+        temp2,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        const target2 = catalog.filter((plant) => buyerListingID === plant.id);
+        const temp3 = {};
+        Object.assign(temp3, target2[0]);
+        temp3.isTraded = true;
+        axios
+          .patch(
+            'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
+            temp3,
+          )
+          .then(() => {
+            axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings')
+              .then(({ data }) => {
+                dispatch(updateCatalog(data));
+                const filtered = data.filter((plant) => {
+                  return (
+                    plant.commonName.toLowerCase().includes(homeSearchText.toLowerCase())
+                    && (plant.isPosted === true && plant.isTraded === false)
+                    && plant.poster !== activeUser.username
+                  );
+                });
+                dispatch(updateCurrentPosts(filtered));
+              })
+              .catch((err) => console.error(err));
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
-    const target2 = catalog.filter((plant) => buyerListingID === plant.id);
-    target2[0].isTraded = true;
+
+    const target4 = users.filter((user) => item.seller.id === user?.id);
+    const temp4 = {};
+    Object.assign(temp4, target4[0]);
+    temp4.tradeCount += 1;
     axios
       .patch(
-        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
-        target2[0],
-        {
-          headers: { 'content-type': 'application/json' },
-        },
+        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info',
+        temp4,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        const target5 = users.filter((user) => item.buyer.id === user?.id);
+        const temp5 = {};
+        Object.assign(temp5, target5[0]);
+        temp5.tradeCount += 1;
+        axios
+          .patch(
+            'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info',
+            temp5,
+          )
+          .then(() => {
+            axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info')
+              .then(({ data }) => {
+                dispatch(updateCatalog(data));
+              })
+              .catch((err) => console.error(err));
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
   };
 
   const declineTrade = (item) => {
     const buyerListingID = item.buyer.listing;
-    item.isOpen = false;
-    item.reason = 'declined';
+    const temp1 = {};
+    Object.assign(temp1, item);
+    temp1.isOpen = false;
+    temp1.reason = 'declined';
     axios
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
-        item,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
+        temp1,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive')
+          .then(({ data }) => {
+            console.log('OFFERS: ', data);
+            dispatch(updateOffers(data));
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
     const target = catalog.filter((plant) => buyerListingID === plant.id);
-    target[0].isTraded = true;
+    const temp2 = {};
+    Object.assign(temp2, target[0]);
+    temp2.isTraded = true;
     axios
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
-        target[0],
-        {
-          headers: { 'content-type': 'application/json' },
-        },
+        temp2,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings')
+          .then(({ data }) => {
+            console.log('CATALOG: ', data);
+            dispatch(updateCatalog(data));
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
   };
 
   const cancelTrade = (item) => {
     const sellerListingID = item.seller.listing;
     const buyerListingID = item.buyer.listing;
-    item.isOpen = false;
-    item.reason = 'canceled';
+    const temp1 = {};
+    Object.assign(temp1, item);
+    temp1.isOpen = false;
+    temp1.reason = 'canceled';
     axios
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
-        item,
-        {
-          headers: { 'content-type': 'application/json' },
-        },
+        temp1,
       )
-      .then(() => console.log('success'))
+      .then(() => {
+        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive')
+          .then(({ data }) => {
+            dispatch(updateOffers(data));
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
     const target1 = catalog.filter((plant) => sellerListingID === plant.id);
-    target1[0].isTraded = true;
+    const temp2 = {};
+    Object.assign(temp2, target1[0]);
+    temp2.isTraded = true;
     axios
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
-        target1[0],
-        {
-          headers: { 'content-type': 'application/json' },
-        },
+        temp2,
       )
-      .then(() => console.log('success'))
-      .catch((err) => console.error(err));
-    const target2 = catalog.filter((plant) => buyerListingID === plant.id);
-    target2[0].isTraded = true;
-    axios
-      .patch(
-        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
-        target2[0],
-        {
-          headers: { 'content-type': 'application/json' },
-        },
-      )
-      .then(() => console.log('success'))
+      .then(() => {
+        const target2 = catalog.filter((plant) => buyerListingID === plant.id);
+        const temp3 = {};
+        Object.assign(temp3, target2[0]);
+        temp3.isTraded = true;
+        axios
+          .patch(
+            'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
+            temp3,
+          )
+          .then(() => {
+            axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings')
+              .then(({ data }) => {
+                dispatch(updateCatalog(data));
+              })
+              .catch((err) => console.error(err));
+          })
+          .catch((err) => console.error(err));
+      })
       .catch((err) => console.error(err));
   };
 
@@ -242,7 +331,7 @@ const Offers = ({ navigation }) => {
                 styles.decline,
                 { backgroundColor: '#64370c' },
               ]}
-              onPress={() => cancelTrade(item)}
+              onPress={() => declineTrade(item)}
             >
               <Text style={styles.buttonText}>Decline</Text>
             </TouchableOpacity>
@@ -323,7 +412,8 @@ const Offers = ({ navigation }) => {
       <SafeAreaView style={{ flex: 0 }} />
       <View style={{ flex: 1 }}>
         <View style={[styles.headerContainer]}>
-          <Text style={styles.headerText}>Trade Proposals</Text>
+          <Text style={styles.headerText}>Trade</Text>
+          <Text style={styles.headerText}>Proposals</Text>
         </View>
         <View style={styles.contentContainer}>
           {currentOffers.length ? (
