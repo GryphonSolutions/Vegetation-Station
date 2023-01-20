@@ -48,4 +48,22 @@ export default StyleSheet.create({
     borderRadius: imageWidth / 15,
     // margin: (screenWidth - 30) / 45,
   },
+
+  // MODAL
+  modalTitle: {
+    padding: 10,
+    margin: 30,
+  },
+  modalHeaderText: {
+    fontSize: 30,
+    alignSelf: 'center',
+  },
+  modalCats: {
+    flexDirection: 'row',
+  },
+  modalCatsText: {
+    margin: 10,
+    fontSize: 20,
+    color: 'black',
+  },
 });
