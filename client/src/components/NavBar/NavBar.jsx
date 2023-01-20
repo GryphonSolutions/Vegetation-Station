@@ -76,7 +76,9 @@ const NavBar = () => {
         try {
           dispatch(updateFilteredCatalog(res));
           const listings = await res.filter((item) => {
-            return item.isPosted === true || item.isTraded === false;
+            return ((item.isPosted === true || item.isTraded === false)
+              && item.poster !== activeUser.username
+            );
           });
           dispatch(updateCurrentPosts(listings));
         } catch (err) {
