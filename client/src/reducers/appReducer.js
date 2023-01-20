@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isDarkMode: false,
-  isNavShown: true,
+  isNavShown: false,
 };
 
 const appSlice = createSlice({
