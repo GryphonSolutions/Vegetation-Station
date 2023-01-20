@@ -13,7 +13,12 @@ import {
   Alert,
 } from 'react-native';
 import { persistor } from '../../store';
-import { updateActiveUser, updateSelectedUser } from '../../reducers';
+import {
+  updateActiveUser,
+  updateSelectedUser,
+  updateUserMessageSearch,
+  updateSearchMessages,
+} from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
 import { logout } from '../Login/authLogout.js';

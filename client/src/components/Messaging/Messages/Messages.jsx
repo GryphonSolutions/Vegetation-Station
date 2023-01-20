@@ -34,7 +34,6 @@ import {
 import ChatList from './ChatList.jsx';
 import NewChatList from './NewChatList.jsx';
 import { db, chatsCol, chatMessagesCol } from '../../../../../server/database';
-import testUsers from '../../../../../server/data/users.js';
 
 const Messages = () => {
   const { isDarkMode } = useSelector((state) => state.app);
@@ -113,9 +112,6 @@ const Messages = () => {
       color: '#283618',
     },
   });
-
-  // const users = testUsers;
-
   // console.log('chats ', chats);
 
   const searchResultsChats = chats.filter((chat) => {
