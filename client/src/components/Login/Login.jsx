@@ -23,7 +23,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Registration from './Registration.jsx';
 import styles from './assets/StyleSheet.jsx';
 import { auth } from '../../../../server/database/firebase.js';
-import { updateActiveUser } from '../../reducers';
+import { updateActiveUser, updateIsNavShown } from '../../reducers';
 import { navigate } from '../NavBar/navigation.js';
 import { logout } from './authLogout.js';
 import logo from './assets/whiteVegiStegi.png';
@@ -31,7 +31,7 @@ import logo from './assets/whiteVegiStegi.png';
 const Login = () => {
   const [registration, setRegistration] = useState(false);
 
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({ email: '', password: '' });
   const [currUser, setCurrUser] = useState({});
 
   const dispatch = useDispatch();
@@ -63,6 +63,8 @@ const Login = () => {
         .then((res) => {
           console.log(res);
           getOneAndSetOne(res.user.email.split('@')[0]);
+          setUserInfo({ email: '', password: '' });
+          dispatch(updateIsNavShown());
           navigate('Home');
         })
         .catch((err) => {
@@ -92,8 +94,9 @@ const Login = () => {
               placeholderTextColor="#283618"
               style={styles.loginInputs}
               clearButtonMode="always"
+              value={userInfo.email}
               onChangeText={(text) => {
-                setUserInfo(userInfo, (userInfo.email = text));
+                setUserInfo({ ...userInfo, email: text });
               }}
             />
             <View>
@@ -103,10 +106,11 @@ const Login = () => {
               placeholder="Enter password..."
               style={styles.loginInputs}
               placeholderTextColor="black"
+              value={userInfo.password}
               secureTextEntry
               clearButtonMode="always"
               onChangeText={(text) => {
-                setUserInfo(userInfo, (userInfo.password = text));
+                setUserInfo({ ...userInfo, password: text });
               }}
             />
           </View>

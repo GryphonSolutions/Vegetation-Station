@@ -19,6 +19,7 @@ import {
   updateSelectedUser,
   updateSearchMessages,
   updateUserMessageSearch,
+  updateIsNavShown,
 } from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
@@ -56,6 +57,7 @@ const UserProfile = ({ navigation }) => {
   const signOut = () => {
     persistor.purge();
     dispatch(updateActiveUser({}));
+    dispatch(updateIsNavShown());
     navigation.navigate('Login');
   };
 
