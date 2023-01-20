@@ -5,107 +5,70 @@ const imageWidth = (screenWidth - 30) / 3.5;
 export default StyleSheet.create({
   contentContainer: {
     flex: 1,
-    marginHorizontal: '4%',
   },
-  plantImageContainer: {},
-  plantImage: {
-    // height: undefined,
-    width: screenWidth,
-    resizeMode: 'contain',
-    maxHeight: 500,
-    // width: imageWidth,
-    // height: undefined,
-    aspectRatio: 1,
-    // borderRadius: imageWidth / 15,
-    // margin: (screenWidth - 30) / 45,
+  innerContentContainer: {
+    // backgroundColor: 'red',
+    marginHorizontal: '4%',
+    paddingBottom: '8%',
   },
   postContainer: {
-    flex: 2,
-    backgroundColor: '#d5dec6',
     borderRadius: imageWidth / 15,
-    marginTop: 5,
-    paddingBottom: 20,
+    marginTop: '8%',
   },
   postTitle: {
-    fontFamily: 'JosefinSans',
-    textAlign: 'center',
-    fontSize: 20,
+    fontFamily: 'JosefinSans-SemiBold',
     color: '#283618',
-    marginTop: 10,
-    marginBottom: 10,
-    fontWeight: 'bold',
-  },
-  plantNameContainer: {
-    textAlign: 'left',
-    paddingLeft: 5,
-    marginBottom: 5,
+    fontSize: 24,
+    marginBottom: 20,
   },
   plantNameText: {
-    fontFamily: 'JosefinSans',
+    fontFamily: 'JosefinSans-LightItalic',
     color: '#283618',
-    fontSize: 20,
-    fontStyle: 'italic',
-    fontWeight: 'bold',
+    fontSize: 26,
+    marginBottom: 15,
   },
-  postDescContainer: {
-    fontFamily: 'JosefinSans',
-    paddingLeft: 10,
-    paddingRight: 10,
-    // marginLeft: 30,
-    // marginRight: 25,
-  },
-  prefTradesContainer: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  descTradesText: {
-    fontFamily: 'JosefinSans',
-    fontSize: 15,
+  preferredTradesHeader: {
+    fontFamily: 'JosefinSans-Medium',
     color: '#283618',
+    fontSize: 18,
   },
-  prefTradeText: {
-    fontFamily: 'AnonymousPro-Bold',
-    fontSize: 15,
+  preferredTradesText: {
+    fontFamily: 'JosefinSans',
+    fontSize: 18,
     color: '#283618',
     fontStyle: 'italic',
   },
-  plantPostDesc: {
-    fontFamily: 'AnonymousPro-Bold',
-    color: '#283618',
-    fontSize: 15,
-    // marginBottom: 5,
+  postDescriptionText: {
+    fontFamily: 'JosefinSans',
+    color: '#6c7962',
+    fontSize: 18,
+    lineHeight: 27,
   },
 
   /* ----------------- Button Container ----------------- */
 
-  buttonContainer: {
-    // flex: -1,
-    display: 'flex',
+  buttonsContainer: {
     flexDirection: 'row',
-    marginTop: 10,
-    justifyContent: 'space-evenly',
-    marginBottom: 10,
+    marginTop: '16%',
+    justifyContent: 'space-between',
   },
   detailPageButton: {
-    backgroundColor: '#DDA15E',
-    fontSize: 15,
-    display: 'flex',
+    backgroundColor: '#ffd09b',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
-    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
   },
   buttonText: {
     fontFamily: 'JosefinSans',
-    fontSize: 20,
+    fontSize: 18,
   },
   /* ------------------ Header Component ------------------*/
 
   headerContainer: {
     flex: 0,
-    // display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     marginVertical: '5%',
   },
   headerText: {
@@ -113,78 +76,63 @@ export default StyleSheet.create({
     fontSize: 35,
     letterSpacing: 1,
     color: '#283618',
-    paddingHorizontal: '8%',
-    // textAlign: 'center',
-    // justifyContent: 'center',
   },
   backButton: {
-    // float: 'left',
-    // alignSelf: 'start',
+    position: 'absolute',
     color: '#283618',
-    marginLeft: 6,
-    // marginLeft: 5,
-    // alignItems: 'flex-start',
-    // display: 'inline-block',
+    left: '4%',
   },
   /* -------------- Location Component --------------*/
 
-  LocationContainer: {
-    margin: 10,
-    // flex: 1,
-    // marginLeft: 10,
-    // marginRight: 10,
-    // marginBottom: 5,
-    // width: 100,
-    // height: 100,
+  locationContainer: {
+    marginTop: '16%',
   },
+  locationHeaderText: {
+    fontFamily: 'JosefinSans-Medium',
+    fontSize: 20,
+    marginBottom: 20,
+  },
+
   LocationMap: {
-    flex: 0,
     width: '100%',
-    height: '100%',
-    // overflow: 'hidden',
+    aspectRatio: 1.618, // #GOLDENRATIO
   },
 
   /* -------------- Profile Ribbon Component --------------*/
 
   profileRibbon: {
-    flex: 0,
     display: 'flex',
     justifyContent: 'center',
     backgroundColor: '#DDA15E',
-    // paddingLeft: 25,
-    // paddingRight: 25,
-    marginTop: 10,
+    paddingHorizontal: '4%',
+    paddingVertical: '2%',
   },
   profileInfoContainer: {
     flexDirection: 'row',
     display: 'flex',
-    // width: 100,
-    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   profileImage: {
-    // flex: 1,
-    height: 70,
-    width: 70,
-    margin: 5,
-    borderRadius: 50,
+    height: 60,
+    aspectRatio: 1,
+    borderRadius: 30,
   },
   profileUsername: {
-    fontSize: 25,
-    color: 'black',
-    fontWeight: 'bold',
-    fontFamily: 'JosefinSans',
-    letterSpacing: 1.5,
-  },
-  tradeNumber: {
+    fontFamily: 'JosefinSans-SemiBold',
     fontSize: 20,
-    display: 'flex',
-    alignItems: 'center',
-    fontFamily: 'JosefinSans',
+    marginBottom: 3,
+    color: 'black',
   },
-  usernameContainer: {
-    // textAlign: 'center',
-    justifyContent: 'center',
-    marginLeft: 15,
+  tradeCount: {
+    fontFamily: 'JosefinSans',
+    fontSize: 17,
+    marginTop: 4,
+  },
+  tradeCounterContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  profileTextContainer: {
+    marginLeft: '4%',
   },
 });
