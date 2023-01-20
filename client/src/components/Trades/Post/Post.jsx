@@ -132,7 +132,9 @@ const Post = () => {
 
   // toggle front and back camera
   function toggleCameraType() {
-    setType((current) => current === CameraType.back ? CameraType.front : CameraType.back);
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back,
+    );
   }
 
   // take picture
@@ -156,7 +158,10 @@ const Post = () => {
   const updatePosts = () => {
     const formInfo = {
       commonName: dropdownImg[dropdownValue]?.commonName || 'Missing Info',
-      images: [dropdownImg[dropdownValue]?.imgLink || 'https://t4.ftcdn.net/jpg/00/89/55/15/360_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg'],
+      images: [
+        dropdownImg[dropdownValue]?.imgLink ||
+          'https://t4.ftcdn.net/jpg/00/89/55/15/360_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg',
+      ],
       size: sizeDropdownValue || 'small',
       color: plantColor || 'green',
       poster: activeUser.username,
@@ -343,7 +348,7 @@ const Post = () => {
       {
         // show camera
         showCamera && isFocused && (
-          <View style={styles.page}>
+          <View style={styles.cameraContainer}>
             <Camera
               style={styles.camera}
               type={type}
@@ -356,7 +361,7 @@ const Post = () => {
                     toggleCameraType();
                   }}
                 >
-                  <Text style={styles.text}>Flip Camera</Text>
+                  <Text style={styles.buttonCameraText}>Flip</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -366,7 +371,7 @@ const Post = () => {
                     setShowCamera(false);
                   }}
                 >
-                  <Text style={styles.text}>Take picture</Text>
+                  <Text style={styles.buttonCameraText}>Take picture</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -376,7 +381,7 @@ const Post = () => {
                     setStatusBarHidden(false, 'slide');
                   }}
                 >
-                  <Text style={styles.text}>Leave Camera</Text>
+                  <Text style={styles.buttonCameraText}>Exit</Text>
                 </TouchableOpacity>
               </View>
             </Camera>
