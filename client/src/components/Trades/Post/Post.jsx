@@ -61,10 +61,10 @@ const Post = () => {
     const plantNames = plantData.map((plant) => {
       return {
         label: plant['Latin name'],
-        value: plant['Common name'],
+        value: '',
       };
     });
-    setDropdownItems(plantNames);
+    setDropdownValue(plantNames);
   }, []);
 
   // make sure only one drop box is open at a time
