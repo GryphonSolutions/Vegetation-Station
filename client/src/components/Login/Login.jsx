@@ -103,7 +103,9 @@ const Login = () => {
             styles.logoStyles,
           ]}
         />
-        <KeyboardAwareScrollView {{backgroundColor: 'lavender'}}>
+        <KeyboardAwareScrollView
+          style={{ flex: 0, backgroundColor: 'lavender' }}
+        >
           <View style={styles.loginInputsContainer}>
             <View>
               <Text style={styles.inputLabels}>Email</Text>
