@@ -19,6 +19,7 @@ import {
   updateSelectedUser,
   updateSearchMessages,
   updateUserMessageSearch,
+  updateIsNavShown,
 } from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
