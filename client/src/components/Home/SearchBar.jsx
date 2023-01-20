@@ -102,68 +102,78 @@ export default function SearchBar() {
   // sortTopSellers();
   return (
     <View style={styles.searchBarContainer}>
-      <Modal
-        style={{ height: '50%' }}
-        animationType="slide"
-        visible={modalVisible}
-        presentationStyle="formSheet"
-        onRequestClose={() => {
-          setModalVisible(false);
-        }}
-      >
-        <View>
-          <View style={styles.modalTitle}>
-            <Text style={styles.modalHeaderText}>Sort By...</Text>
-          </View>
+      <View>
+        <Modal
+          style={{ elevation: 60 }}
+          animationType="slide"
+          visible={modalVisible}
+          presentationStyle="formSheet"
+          onRequestClose={() => {
+            setModalVisible(false);
+          }}
+        >
           <View>
-            <View style={styles.modalCats}>
-              <Text
-                onPress={() => {
-                  filterChoice('alph');
-                }}
-                style={styles.modalCatsText}
-              >
-                Color
-              </Text>
-              {whatToSort === 'alph' ? (
-                <Ionicons name="checkbox-outline" size="30px" />
-              ) : (
-                <Text />
-              )}
+            <View style={styles.modalTitle}>
+              <Text style={styles.modalHeaderText}>Sort By...</Text>
             </View>
-            <View style={styles.modalCats}>
-              <Text
-                style={styles.modalCatsText}
-                onPress={() => {
-                  filterChoice('size');
-                }}
-              >
-                Size
-              </Text>
-              {whatToSort === 'size' ? (
-                <Ionicons name="checkbox-outline" size="30px" />
-              ) : (
-                <Text />
-              )}
-            </View>
-            <View style={styles.modalCats}>
-              <Text
-                style={styles.modalCatsText}
-                onPress={() => {
-                  filterChoice('trades');
-                }}
-              >
-                Trades
-              </Text>
-              {whatToSort === 'trades' ? (
-                <Ionicons name="checkbox-outline" size="30px" />
-              ) : (
-                <Text />
-              )}
+            <View>
+              <View style={styles.modalCats}>
+                <Text
+                  onPress={() => {
+                    filterChoice('alph');
+                  }}
+                  style={styles.modalCatsText}
+                >
+                  - Color
+                </Text>
+                {whatToSort === 'alph' ? (
+                  <Ionicons name="checkbox-outline" size="30px" />
+                ) : (
+                  <Ionicons name="square-outline" size="30px" />
+                )}
+              </View>
+              <View style={styles.modalCats}>
+                <Text
+                  style={styles.modalCatsText}
+                  onPress={() => {
+                    filterChoice('size');
+                  }}
+                >
+                  - Size
+                </Text>
+                {whatToSort === 'size' ? (
+                  <Ionicons name="checkbox-outline" size="30px" />
+                ) : (
+                  <Ionicons name="square-outline" size="30px" />
+                )}
+              </View>
+              <View style={styles.modalCats}>
+                <Text
+                  style={styles.modalCatsText}
+                  onPress={() => {
+                    filterChoice('trades');
+                  }}
+                >
+                  - Trades
+                </Text>
+                {whatToSort === 'trades' ? (
+                  <Ionicons
+                    name="checkbox-outline"
+                    size="30px"
+                    style={{ justifyContent: 'flex-end' }}
+                  />
+                ) : (
+                  <Ionicons
+                    name="square-outline"
+                    size="30px"
+                    style={{ justifyContent: 'flex-end' }}
+                  />
+                )}
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
+      </View>
 
       <TextInput
         style={[

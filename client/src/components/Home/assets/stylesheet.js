@@ -60,6 +60,8 @@ export default StyleSheet.create({
   },
   modalCats: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
   },
   modalCatsText: {
     margin: 10,
