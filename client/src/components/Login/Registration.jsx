@@ -109,27 +109,27 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
           />
         </View>
         <View>
-          <Text style={styles.regHeader}>Register Account</Text>
+          <Text style={styles.regAccLabel}>Register Account</Text>
         </View>
-        <View style={styles.loginInputsContainer}>
+        <View style={styles.regInputContainer}>
           <View>
-            <Text style={styles.registerLabels}>Email</Text>
+            <Text style={styles.inputLabels}>Email</Text>
           </View>
           <TextInput
             placeholder="Enter your email..."
             placeholderTextColor="#283618"
-            style={styles.loginInputs}
+            style={styles.regInputs}
             clearButtonMode="always"
             onChangeText={(text) => {
               setUserReg({ ...userReg, email: text });
             }}
           />
           <View>
-            <Text style={styles.registerLabels}>Password</Text>
+            <Text style={styles.inputLabels}>Password</Text>
           </View>
           <TextInput
             placeholder="Enter password..."
-            style={styles.loginInputs}
+            style={styles.regInputs}
             placeholderTextColor="#283618"
             secureTextEntry
             clearButtonMode="always"
@@ -138,11 +138,11 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
             }}
           />
           <View>
-            <Text style={styles.registerLabels}>Zipcode</Text>
+            <Text style={styles.inputLabels}>Zipcode</Text>
           </View>
           <TextInput
             placeholder="Enter your zipcode..."
-            style={styles.loginInputs}
+            style={styles.regInputs}
             placeholderTextColor="#283618"
             clearButtonMode="always"
             onChangeText={(zip) => {
@@ -150,11 +150,11 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
             }}
           />
           <View>
-            <Text style={styles.registerLabels}>Profile Picture</Text>
+            <Text style={styles.inputLabels}>Profile Picture</Text>
           </View>
           <TextInput
             placeholder="Profile picture Url..."
-            style={styles.loginInputs}
+            style={styles.regInputs}
             placeholderTextColor="#283618"
             clearButtonMode="always"
             onChangeText={(text) => {
@@ -165,7 +165,7 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
         <View style={{ alignItems: 'center' }}>
           <View style={styles.regSubmitContainer}>
             <Button
-              style={styles.regButton}
+              style={styles.buttonText}
               color="black"
               title="Submit"
               onPress={() => {

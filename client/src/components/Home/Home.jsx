@@ -41,11 +41,7 @@ const Home = () => {
       <View
         style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
       >
-        <SafeAreaView
-          style={{
-            flex: 0,
-          }}
-        />
+        <SafeAreaView />
         <View style={{ flex: 1 }}>
           <StatusBar style="auto" />
           <Header />

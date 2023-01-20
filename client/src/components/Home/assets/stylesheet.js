@@ -16,7 +16,6 @@ export default StyleSheet.create({
     color: '#283618',
   },
   searchBarContainer: {
-    flex: 0,
     height: 40,
     flexDirection: 'row',
     marginTop: '4%',

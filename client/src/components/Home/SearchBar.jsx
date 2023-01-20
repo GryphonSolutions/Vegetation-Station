@@ -175,7 +175,7 @@ export default function SearchBar() {
         ]}
         onChangeText={(val) => updateSearch(val)}
         value={homeSearchText}
-        placeholder="search for plants"
+        placeholder="search plants..."
         placeholderTextColor="#6d6d6d"
       />
 
