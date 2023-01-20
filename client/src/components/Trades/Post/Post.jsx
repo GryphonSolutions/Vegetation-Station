@@ -16,12 +16,21 @@ import {
 import { Camera, CameraType, takePictureAsync } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
+// import SelectDropdown from 'react-native-select-dropdown';
 import axios from 'axios';
+import {
+  updateSelectedUser,
+  updateSearchMessages,
+  updateUserMessageSearch,
+} from '../../../reducers';
 import styles from './StyleSheet';
 import plantData from '../../../../../server/data/plants.js';
 import catalog from '../../../../../server/data/catalog.js';
-import { updateCurrentPosts } from '../../../reducers/dataReducer.js';
+import {
+  updateCurrentPosts,
+  updateCatalog,
+} from '../../../reducers/dataReducer.js';
 
 const Post = () => {
   // is this a trade
@@ -38,12 +47,16 @@ const Post = () => {
   const [title, setTitle] = useState('');
   const [plantDescription, setPlantDescription] = useState('');
   const [plantColor, setPlantColor] = useState('');
-  const [plantPreferredTrade, setPlantPreferredTrade] = useState('');
   // hooks for DropDownPicker
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownValue, setDropdownValue] = useState(null);
   const [dropdownItems, setDropdownItems] = useState([]);
+  const [dropdownImg, setDropdownImg] = useState([]);
 
+  const countries = ['Egypt', 'Canada', 'Australia', 'Ireland'];
+  const dispatch = useDispatch();
+
+  // for selecting size
   const [isSizeDropdownOpen, setIsSizeDropdownOpen] = useState(false);
   const [sizeDropdownValue, setSizeDropdownValue] = useState(null);
   const [sizeDropdownItems, setSizeDropdownItems] = useState([
@@ -52,26 +65,56 @@ const Post = () => {
     { label: 'large', value: 'large' },
   ]);
 
+  // for selecting a preferred plant
+  const [isPreferredOpen, setIsPreferredOpen] = useState(false);
+  const [preferredValue, setPreferredValue] = useState(null);
+
   const { activeUser, currentPlant, currentPosts } = useSelector(
     (state) => state.data,
   );
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    const plantNames = plantData.map((plant) => {
+    const plantNames = plantData.map((plant, index) => {
       return {
         label: plant['Latin name'],
-        value: '',
+        value: index,
       };
     });
-    setDropdownValue(plantNames);
+    const plantInfo = plantData.map((plant) => {
+      return {
+        imgLink: plant.img,
+        commonName: plant.commonName,
+      };
+    });
+    setDropdownItems(plantNames.slice(0, 100));
+    setDropdownImg(plantInfo.slice(0, 100));
   }, []);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = () => {
+        dispatch(updateSearchMessages(false));
+        dispatch(updateUserMessageSearch(''));
+      };
+
+      return unsubscribe();
+    }, []),
+  );
+
   // make sure only one drop box is open at a time
-  const onPlantsOpen = useCallback(() => setIsSizeDropdownOpen(false));
+  const onPlantsOpen = useCallback(() => {
+    setIsSizeDropdownOpen(false);
+    setIsPreferredOpen(false);
+  });
 
-  const onSizeOpen = useCallback(() => setIsDropdownOpen(false));
+  const onSizeOpen = useCallback(() => {
+    setIsDropdownOpen(false);
+    setIsPreferredOpen(false);
+  });
 
+  const onPreferredOpen = useCallback(() => {
+    setIsDropdownOpen(false);
+    setIsSizeDropdownOpen(false);
+  });
   // page is still checking camera priveledges
   if (!permission) {
     return <View />;
@@ -115,14 +158,14 @@ const Post = () => {
 
   //  send form data
   const updatePosts = () => {
-    const form = {
-      commonName: dropdownValue,
-      images: [image],
+    const formInfo = {
+      commonName: dropdownImg[dropdownValue].commonName,
+      images: [dropdownImg[dropdownValue].imgLink],
       size: sizeDropdownValue,
       color: plantColor,
       poster: activeUser.username,
       description: plantDescription,
-      preferedTrade: plantPreferredTrade,
+      preferedTrade: dropdownImg[preferredValue].commonName,
       isPosted: true,
       isTraded: false,
       postTitle: title,
@@ -130,15 +173,15 @@ const Post = () => {
     axios
       .post(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
+        formInfo,
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
-
-    dispatch(updateCurrentPosts(form));
+    dispatch(updateCatalog(formInfo));
   };
 
   return (
@@ -166,7 +209,6 @@ const Post = () => {
               onPress={() => {
                 setShowCamera(true);
                 setStatusBarHidden(true, 'slide');
-                updatePosts();
               }}
             >
               <Text style={styles.buttonText}>Take Photo</Text>
@@ -189,6 +231,12 @@ const Post = () => {
 
             <Text style={styles.inputLabel}>PLANT SPECIES</Text>
             <DropDownPicker
+              style={{
+                width: '66%',
+                marginVertical: 10,
+                marginHorizontal: '17%',
+                backgroundColor: '#d5dec6',
+              }}
               open={isDropdownOpen}
               value={dropdownValue}
               items={dropdownItems}
@@ -196,12 +244,47 @@ const Post = () => {
               setOpen={setIsDropdownOpen}
               setValue={setDropdownValue}
               setItems={setDropdownItems}
+              dropDownContainerStyle={{
+                width: '66%',
+                marginHorizontal: '17%',
+                backgroundColor: '#d5dec6',
+              }}
               searchable
               searchPlaceholder="Search for species..."
             />
 
+            <Text style={styles.inputLabel}>PREFERED TRADE:</Text>
+            <DropDownPicker
+              style={{
+                width: '66%',
+                marginVertical: 10,
+                marginHorizontal: '17%',
+                backgroundColor: '#d5dec6',
+              }}
+              open={isPreferredOpen}
+              value={preferredValue}
+              items={dropdownItems}
+              onOpen={onPreferredOpen}
+              setOpen={setIsPreferredOpen}
+              setValue={setPreferredValue}
+              setItems={setDropdownItems}
+              dropDownContainerStyle={{
+                width: '66%',
+                marginHorizontal: '17%',
+                backgroundColor: '#d5dec6',
+              }}
+              searchable
+              searchPlaceholder="Enter preferred species"
+            />
+
             <Text style={styles.inputLabel}>SIZE</Text>
             <DropDownPicker
+              style={{
+                width: '66%',
+                marginVertical: 10,
+                marginHorizontal: '17%',
+                backgroundColor: '#d5dec6',
+              }}
               open={isSizeDropdownOpen}
               value={sizeDropdownValue}
               items={sizeDropdownItems}
@@ -209,7 +292,11 @@ const Post = () => {
               setOpen={setIsSizeDropdownOpen}
               setValue={setSizeDropdownValue}
               setItems={setSizeDropdownItems}
-              searchable
+              dropDownContainerStyle={{
+                width: '66%',
+                marginHorizontal: '17%',
+                backgroundColor: '#d5dec6',
+              }}
               searchPlaceholder="Search for species..."
             />
 
@@ -241,7 +328,8 @@ const Post = () => {
                 setPlantColor('');
                 setSizeDropdownValue('');
                 setPlantDescription('');
-                setDropdownValue({});
+                setPreferredValue(null);
+                setDropdownValue(null);
                 setImage(null);
               }}
             >
@@ -284,6 +372,7 @@ const Post = () => {
                   onPress={() => {
                     setShowCamera(false);
                     setStatusBarHidden(false, 'slide');
+                    updatePosts();
                   }}
                 >
                   <Text style={styles.text}>Leave Camera</Text>

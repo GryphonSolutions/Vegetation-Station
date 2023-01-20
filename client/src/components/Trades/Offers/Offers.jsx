@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
@@ -12,7 +13,16 @@ import {
   Alert,
 } from 'react-native';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../../actions';
-import { updateSelectedUser, updateCatalog, updateOffers, updateUsers, updateCurrentPosts, updateCurrentOffers } from '../../../reducers';
+import {
+  updateSelectedUser,
+  updateCatalog,
+  updateOffers,
+  updateUsers,
+  updateCurrentPosts,
+  updateCurrentOffers,
+  updateSearchMessages,
+  updateUserMessageSearch,
+} from '../../../reducers';
 import styles from './assets/StyleSheet.jsx';
 
 const Offers = ({ navigation }) => {
@@ -59,6 +69,17 @@ const Offers = ({ navigation }) => {
     ];
   }, [currentOffers]);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const unsubscribe = () => {
+        dispatch(updateSearchMessages(false));
+        dispatch(updateUserMessageSearch(''));
+      };
+
+      return unsubscribe();
+    }, []),
+  );
+
   const findBuyer = (item) => {
     const target = users.filter((user) => item.seller.id === user?.id);
     return target[0]?.username;
@@ -87,7 +108,10 @@ const Offers = ({ navigation }) => {
         temp1,
       )
       .then(() => {
-        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive')
+        axios
+          .get(
+            'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
+          )
           .then(({ data }) => {
             dispatch(updateOffers(data));
             const offers1 = data.filter((offer) => {
@@ -122,14 +146,20 @@ const Offers = ({ navigation }) => {
             temp3,
           )
           .then(() => {
-            axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings')
+            axios
+              .get(
+                'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
+              )
               .then(({ data }) => {
                 dispatch(updateCatalog(data));
                 const filtered = data.filter((plant) => {
                   return (
-                    plant.commonName.toLowerCase().includes(homeSearchText.toLowerCase())
-                    && (plant.isPosted === true && plant.isTraded === false)
-                    && plant.poster !== activeUser.username
+                    plant.commonName
+                      .toLowerCase()
+                      .includes(homeSearchText.toLowerCase()) &&
+                    plant.isPosted === true &&
+                    plant.isTraded === false &&
+                    plant.poster !== activeUser.username
                   );
                 });
                 dispatch(updateCurrentPosts(filtered));
@@ -160,7 +190,10 @@ const Offers = ({ navigation }) => {
             temp5,
           )
           .then(() => {
-            axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info')
+            axios
+              .get(
+                'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/users/info',
+              )
               .then(({ data }) => {
                 dispatch(updateCatalog(data));
               })
@@ -183,7 +216,10 @@ const Offers = ({ navigation }) => {
         temp1,
       )
       .then(() => {
-        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive')
+        axios
+          .get(
+            'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
+          )
           .then(({ data }) => {
             console.log('OFFERS: ', data);
             dispatch(updateOffers(data));
@@ -201,7 +237,10 @@ const Offers = ({ navigation }) => {
         temp2,
       )
       .then(() => {
-        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings')
+        axios
+          .get(
+            'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
+          )
           .then(({ data }) => {
             console.log('CATALOG: ', data);
             dispatch(updateCatalog(data));
@@ -224,7 +263,10 @@ const Offers = ({ navigation }) => {
         temp1,
       )
       .then(() => {
-        axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive')
+        axios
+          .get(
+            'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
+          )
           .then(({ data }) => {
             dispatch(updateOffers(data));
           })
@@ -251,7 +293,10 @@ const Offers = ({ navigation }) => {
             temp3,
           )
           .then(() => {
-            axios.get('http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings')
+            axios
+              .get(
+                'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
+              )
               .then(({ data }) => {
                 dispatch(updateCatalog(data));
               })
@@ -265,7 +310,9 @@ const Offers = ({ navigation }) => {
   const chatWithUser = (id) => {
     const target = users.filter((user) => user.id === id);
     dispatch(updateSelectedUser(target[0]));
-    navigation.navigate('Chat');
+    dispatch(updateSearchMessages(true));
+    dispatch(updateUserMessageSearch(target[0].username));
+    navigation.navigate('Messages');
   };
 
   const renderTrade = (item) => {
