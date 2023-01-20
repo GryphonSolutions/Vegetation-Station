@@ -1,14 +1,13 @@
 import { StyleSheet, StatusBar, PixelRatio, Dimensions } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
-const imageWidth = (screenWidth - 30) / 3.5;
+const imageWidth = (screenWidth * 0.92) / 3.1;
 
 export default StyleSheet.create({
   // Offers Styles
   headerContainer: {
     flex: 0,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     marginVertical: '5%',
   },
 
@@ -23,11 +22,11 @@ export default StyleSheet.create({
   contentContainer: {
     flex: 1,
     marginTop: '10%',
+    marginHorizontal: '4%',
   },
 
   sectionContainer: {
     flex: 1,
-    marginHorizontal: '8%',
     marginVertical: '8%',
     paddingTop: 30,
     paddingBottom: 20,
@@ -52,7 +51,7 @@ export default StyleSheet.create({
   },
 
   subHeader: {
-    fontFamily: 'JosefinSans',
+    fontFamily: 'JosefinSans-Medium',
     fontSize: 25,
   },
 

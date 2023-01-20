@@ -31,9 +31,12 @@ export default function Body() {
     navigation.navigate('Details');
   };
 
-  const renderImage = (item) => (
+  const renderImage = (item, index) => (
     <Pressable
-      style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
+      style={({ pressed }) => [
+        { opacity: pressed ? 0.5 : 1 },
+        index % 3 === 1 ? { marginHorizontal: '1.5%' } : null,
+      ]}
       onPress={() => goToPlant(item)}
     >
       <Image
@@ -52,7 +55,10 @@ export default function Body() {
           numColumns={3}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={<Text>There are no plants to show</Text>}
-          renderItem={({ item }) => renderImage(item)}
+          renderItem={({ item, index }) => renderImage(item, index)}
+          ItemSeparatorComponent={
+            <View style={{ height: '1.5%', width: '1.5%' }} />
+          }
         />
       </View>
     </View>

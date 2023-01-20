@@ -18,15 +18,9 @@ import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
 
 const UserProfile = ({ navigation }) => {
-  const {
-    activeUser,
-    selectedUser,
-    users,
-    catalog,
-    offers,
-    currentOffers,
-    isDarkMode,
-  } = useSelector((state) => state.data);
+  const { activeUser, selectedUser, users, catalog, offers, currentOffers } =
+    useSelector((state) => state.data);
+  const { isDarkMode } = useSelector((state) => state.app);
   const { id, username, profilePicture, tradeCount, location } = activeUser;
   const dispatch = useDispatch();
 
@@ -67,30 +61,28 @@ const UserProfile = ({ navigation }) => {
 
   const renderRow = (index, item1, item2, item3) => {
     return (
-      <View key={`Row ${index}`} style={styles.body}>
-        <View style={styles.row}>
-          {item1 ? (
-            <Image
-              key={`View ${index}`}
-              style={styles.col}
-              source={{ uri: findPhoto(item1) }}
-            />
-          ) : null}
-          {item2 ? (
-            <Image
-              key={`View ${index + 1}`}
-              style={styles.col}
-              source={{ uri: findPhoto(item2) }}
-            />
-          ) : null}
-          {item3 ? (
-            <Image
-              key={`View ${index + 2}`}
-              style={styles.col}
-              source={{ uri: findPhoto(item3) }}
-            />
-          ) : null}
-        </View>
+      <View key={`Row ${index}`} style={styles.itemsRow}>
+        {item1 ? (
+          <Image
+            key={`View ${index}`}
+            style={styles.itemImage}
+            source={{ uri: findPhoto(item1) }}
+          />
+        ) : null}
+        {item2 ? (
+          <Image
+            key={`View ${index + 1}`}
+            style={styles.itemImage}
+            source={{ uri: findPhoto(item2) }}
+          />
+        ) : null}
+        {item3 ? (
+          <Image
+            key={`View ${index + 2}`}
+            style={styles.itemImage}
+            source={{ uri: findPhoto(item3) }}
+          />
+        ) : null}
       </View>
     );
   };
@@ -112,12 +104,14 @@ const UserProfile = ({ navigation }) => {
             <Text style={[styles.profileDetailsText, styles.userLocation]}>
               {`${location?.city}, ${location?.state}`}
             </Text>
-            <Text style={[styles.profileDetailsText, styles.userTrades]}>
+            <View style={styles.tradeCounterContainer}>
               {tradeCount > 10 ? (
                 <Ionicons style={styles.starIcon} size="15px" name="md-star" />
               ) : null}
-              {`${tradeCount} Trades`}
-            </Text>
+              <Text style={[styles.profileDetailsText, styles.userTrades]}>
+                {`${tradeCount} Trades`}
+              </Text>
+            </View>
 
             {username === activeUser.username ? (
               <TouchableOpacity style={styles.button} onPress={signOut}>
@@ -130,25 +124,39 @@ const UserProfile = ({ navigation }) => {
             )}
           </View>
         </View>
-        <Text style={styles.header2}>Open Trades</Text>
-        {openTrades?.map((item, i) => {
-          return (
-            i % 3 === 0 &&
-            renderRow(i, openTrades[i], openTrades[i + 1], openTrades[i + 2])
-          );
-        })}
-        <Text style={styles.header3}>Closed Trades</Text>
-        {closedTrades?.map((item, i) => {
-          return (
-            i % 3 === 0 &&
-            renderRow(
-              i,
-              closedTrades[i],
-              closedTrades[i + 1],
-              closedTrades[i + 2],
-            )
-          );
-        })}
+        <View style={styles.tradesListContainer}>
+          <Text style={styles.tradesListHeader}>Open Trades</Text>
+
+          <View style={styles.tradesListBodyContainer}>
+            {openTrades?.map((item, i) => {
+              return (
+                i % 3 === 0 &&
+                renderRow(
+                  i,
+                  openTrades[i],
+                  openTrades[i + 1],
+                  openTrades[i + 2],
+                )
+              );
+            })}
+          </View>
+        </View>
+        <View style={styles.tradesListContainer}>
+          <Text style={styles.tradesListHeader}>Closed Trades</Text>
+          <View style={styles.tradesListBodyContainer}>
+            {closedTrades?.map((item, i) => {
+              return (
+                i % 3 === 0 &&
+                renderRow(
+                  i,
+                  closedTrades[i],
+                  closedTrades[i + 1],
+                  closedTrades[i + 2],
+                )
+              );
+            })}
+          </View>
+        </View>
       </View>
     );
   };

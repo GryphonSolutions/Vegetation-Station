@@ -85,6 +85,7 @@ export default function SearchBar() {
         onChangeText={(val) => updateSearch(val)}
         value={homeSearchText}
         placeholder="search for plants"
+        placeholderTextColor="#6d6d6d"
       />
       <Pressable
         onPress={() => {
