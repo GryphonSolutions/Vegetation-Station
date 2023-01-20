@@ -42,32 +42,56 @@ const Messages = () => {
     useSelector((state) => state.messages);
   const dispatch = useDispatch();
 
-  const getChats = () => {
-    axios
-      .get(
-        'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
-        {
-          params: { activeUser: String(activeUser.id) },
-        },
-      )
-      .then((res) => {
-        // console.log('ORDERED IN MESSAGES');
-        dispatch(
-          updateChats(
-            Object.entries(res.data).sort(
-              (a, b) => b[1].date.seconds - a[1].date.seconds,
-            ),
-          ),
-        );
-      })
-      .catch((err) => {
-        console.log(err, 'error when fetching chats');
-      });
-  };
+  // const getChats = () => {
+  //   axios
+  //     .get(
+  //       'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
+  //       {
+  //         params: { activeUser: String(activeUser.id) },
+  //       },
+  //     )
+  //     .then((res) => {
+  //       // console.log('ORDERED IN MESSAGES');
+  //       dispatch(
+  //         updateChats(
+  //           Object.entries(res.data).sort(
+  //             (a, b) => b[1].date.seconds - a[1].date.seconds,
+  //           ),
+  //         ),
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log(err, 'error when fetching chats');
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   getChats();
+  // }, [activeUser]);
 
   useEffect(() => {
-    getChats();
-  }, [activeUser]);
+    if (activeUser.id) {
+      const unSub = onSnapshot(
+        doc(db, 'chats', String(activeUser.id)),
+        { includeMetadataChanges: true },
+        (document) => {
+          // console.log(document.data());
+          const newChats = Object.entries(document.data())
+            .sort((a, b) => b[1].date.seconds - a[1].date.seconds)
+            .map((chat) => {
+              chat[1].date = chat[1].date.seconds * 1000;
+              return chat;
+            });
+          // console.log(newChats);
+          dispatch(updateChats(newChats));
+        },
+      );
+
+      return () => {
+        unSub();
+      };
+    }
+  }, []);
 
   const styles = StyleSheet.create({
     headerContainer: {},
