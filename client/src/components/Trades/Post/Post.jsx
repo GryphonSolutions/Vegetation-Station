@@ -149,6 +149,22 @@ const Post = () => {
               searchPlaceholder="Search for species..."
             />
 
+            <Text style={styles.inputLabel}>SIZE</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setPlantSize}
+              value={plantSize}
+              placeholder="Enter description"
+            />
+
+            <Text style={styles.inputLabel}>COLOR</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setPlantColor}
+              value={plantColor}
+              placeholder="Enter Title"
+            />
+
             <Text style={styles.inputLabel}>DESCRIPTIOIN</Text>
             <TextInput
               multiline
