@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { StatusBar } from 'expo-status-bar';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Avatar } from 'react-native-elements';
@@ -33,7 +34,8 @@ import {
   updateCurrentChat,
   updateCurrentCombinedId,
   updateChatIntervalId,
-} from '../../../reducers/messagesReducer.js';
+  updateIsNavShown,
+} from '../../../reducers';
 import * as RootNavigation from '../../NavBar/navigation.js';
 import { db, chatsCol, chatMessagesCol } from '../../../../../server/database';
 
@@ -59,7 +61,7 @@ const Chat = () => {
       alignItems: 'flex-end',
     },
     backButton: {
-      color: '#283618',
+      color: isDarkMode ? 'lightgreen' : 'darkgreen',
     },
     contentContainer: {
       paddingTop: 10,
@@ -112,7 +114,7 @@ const Chat = () => {
         unSub();
       };
     }
-  }, []);
+  }, [currentCombinedId]);
 
   const getMessages = (combinedId) => {
     axios
@@ -272,7 +274,6 @@ const Chat = () => {
                 style={styles.backButton}
                 name="arrow-back-circle-outline"
                 size={40}
-                color={isDarkMode ? 'white' : 'black'}
               />
             </TouchableOpacity>
             <View style={{ alignItems: 'center' }}>
@@ -310,7 +311,7 @@ const Chat = () => {
                     <View
                       key={data.id}
                       style={[
-                        { backgroundColor: '#457dec', alignSelf: 'flex-end' },
+                        { backgroundColor: 'darkgreen', alignSelf: 'flex-end' },
                         styles.messageBubble,
                       ]}
                     >
@@ -343,7 +344,10 @@ const Chat = () => {
         >
           <TextInput
             value={senderInput}
-            onChangeText={(text) => dispatch(updateSenderInput(text))}
+            onChangeText={(text) => {
+              dispatch(updateSenderInput(text));
+              scrollViewRef.current.scrollToEnd({ animated: true });
+            }}
             onSubmitEditing={sendMessage}
             placeholder="message"
             style={styles.textInput}
@@ -356,7 +360,7 @@ const Chat = () => {
             <Ionicons
               name="arrow-up-circle-outline"
               size={35}
-              color={isDarkMode ? 'white' : 'black'}
+              color={isDarkMode ? 'lightgreen' : 'darkgreen'}
             />
           </TouchableOpacity>
         </View>
