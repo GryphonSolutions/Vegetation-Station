@@ -40,7 +40,7 @@ export default function Body() {
     >
       <Image
         style={styles.itemImage}
-        source={{ uri: item?.images[0] }}
+        source={{ uri: item.images[0] }}
         resizeMode="cover"
       />
     </Pressable>
