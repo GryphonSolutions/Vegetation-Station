@@ -50,6 +50,7 @@ export default function Body() {
       <SearchBar />
       <View style={styles.itemsContainer}>
         <FlatList
+          style={{ flex: 1 }}
           data={currentPosts}
           numColumns={3}
           showsVerticalScrollIndicator={false}

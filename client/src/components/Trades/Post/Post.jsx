@@ -23,6 +23,7 @@ import {
   updateSelectedUser,
   updateSearchMessages,
   updateUserMessageSearch,
+  updateIsNavShown,
 } from '../../../reducers';
 import styles from './StyleSheet';
 import plantData from '../../../../../server/data/plants.js';
@@ -70,6 +71,9 @@ const Post = () => {
   const { activeUser, currentPlant, currentPosts } = useSelector(
     (state) => state.data,
   );
+
+  const { isNavShown } = useSelector((state) => state.app);
+
   useEffect(() => {
     const plantNames = plantData.map((plant, index) => {
       return {
@@ -209,6 +213,7 @@ const Post = () => {
               style={styles.button}
               onPress={() => {
                 setShowCamera(true);
+                dispatch(updateIsNavShown());
                 setStatusBarHidden(true, 'slide');
               }}
             >
@@ -368,6 +373,7 @@ const Post = () => {
                   style={styles.buttonCamera}
                   onPress={() => {
                     takePhoto();
+                    dispatch(updateIsNavShown());
                     setShowCamera(false);
                   }}
                 >
@@ -378,6 +384,7 @@ const Post = () => {
                   style={styles.buttonCamera}
                   onPress={() => {
                     setShowCamera(false);
+                    dispatch(updateIsNavShown());
                     setStatusBarHidden(false, 'slide');
                   }}
                 >

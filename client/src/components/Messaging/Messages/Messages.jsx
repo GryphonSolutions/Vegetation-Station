@@ -231,7 +231,7 @@ const Messages = () => {
         </View>
         <View style={styles.contentContainer}>
           {!searchMessages && (
-            <ScrollView style={{ marginBottom: searchMessages ? 118 : 42 }}>
+            <ScrollView style={{ marginBottom: searchMessages ? 76 : 0 }}>
               {chats.length === 0 && (
                 <ListItem
                   containerStyle={{
