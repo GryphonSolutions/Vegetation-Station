@@ -60,6 +60,9 @@ const NewChatList = ({ user }) => {
   const chatExists = (id) => {
     let exists = false;
     chats.forEach((chat) => {
+      console.log(chat[0]);
+      console.log(id);
+      console.log(chat[0] === id);
       if (chat[0] === id) {
         exists = true;
       }
@@ -76,6 +79,8 @@ const NewChatList = ({ user }) => {
     // console.log(combinedId);
     dispatch(updateSelectedUser(user));
     dispatch(updateCurrentCombinedId(combinedId));
+    dispatch(updateSearchMessages(false));
+    dispatch(updateUserMessageSearch(''));
 
     if (!chatExists(combinedId)) {
       axios
@@ -127,14 +132,12 @@ const NewChatList = ({ user }) => {
         )
         .then((res) => {
           // console.log(res);
+          RootNavigation.navigate('Chat');
         })
         .catch((err) => console.log('error creating chatMessages ', err));
+    } else {
+      RootNavigation.navigate('Chat');
     }
-
-    getMessages(combinedId);
-    dispatch(updateSearchMessages(false));
-    dispatch(updateUserMessageSearch(''));
-    RootNavigation.navigate('Chat');
   };
 
   return (

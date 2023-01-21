@@ -244,6 +244,7 @@ const Chat = () => {
 
   const scrollViewRef = useRef();
 
+  console.log('CURRENT CHAT', currentChat);
   return (
     <View
       style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
@@ -305,7 +306,8 @@ const Chat = () => {
                 scrollViewRef.current.scrollToEnd({ animated: true });
               }}
             >
-              {currentChat.messages !== undefined &&
+              {currentChat !== undefined &&
+                currentChat.messages !== undefined &&
                 currentChat.messages.map((data) => {
                   return String(data.senderId) === String(activeUser.id) ? (
                     <View
