@@ -5,7 +5,7 @@ const initialState = {
   userMessageSearch: '',
   senderInput: '',
   currentCombinedId: '',
-  currentChat: {},
+  currentChat: { messages: [] },
   chats: [],
   chatIntervalId: 0,
   messagesIntervalId: 0,
