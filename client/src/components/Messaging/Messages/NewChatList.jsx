@@ -79,6 +79,8 @@ const NewChatList = ({ user }) => {
     // console.log(combinedId);
     dispatch(updateSelectedUser(user));
     dispatch(updateCurrentCombinedId(combinedId));
+    dispatch(updateSearchMessages(false));
+    dispatch(updateUserMessageSearch(''));
 
     if (!chatExists(combinedId)) {
       axios
@@ -136,10 +138,6 @@ const NewChatList = ({ user }) => {
     } else {
       RootNavigation.navigate('Chat');
     }
-
-    // getMessages(combinedId);
-    dispatch(updateSearchMessages(false));
-    dispatch(updateUserMessageSearch(''));
   };
 
   return (
