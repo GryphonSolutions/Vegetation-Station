@@ -27,10 +27,11 @@ const NewChatList = ({ user }) => {
     name: {
       fontFamily: 'JosefinSans-Bold',
       fontWeight: '800',
+      color: isDarkMode ? '#d39b52' : '#283618',
     },
     time: {
       fontWeight: '700',
-      color: 'gray',
+      color: isDarkMode ? 'white' : 'gray',
     },
     titleCont: {
       flexDirection: 'row',
@@ -60,9 +61,6 @@ const NewChatList = ({ user }) => {
   const chatExists = (id) => {
     let exists = false;
     chats.forEach((chat) => {
-      console.log(chat[0]);
-      console.log(id);
-      console.log(chat[0] === id);
       if (chat[0] === id) {
         exists = true;
       }

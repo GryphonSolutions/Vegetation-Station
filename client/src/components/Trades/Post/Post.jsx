@@ -12,6 +12,8 @@ import {
   TextInput,
   ScrollView,
   KeyboardAvoidingView,
+  SafeAreaView,
+  Dimensions,
 } from 'react-native';
 import { Camera, CameraType, takePictureAsync } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
@@ -24,7 +26,9 @@ import {
   updateSearchMessages,
   updateUserMessageSearch,
   updateIsNavShown,
+  updateFilteredCatalog,
 } from '../../../reducers';
+import { getCatalog } from '../../../actions';
 import styles from './StyleSheet';
 import plantData from '../../../../../server/data/plants.js';
 import catalog from '../../../../../server/data/catalog.js';
@@ -72,7 +76,10 @@ const Post = () => {
     (state) => state.data,
   );
 
-  const { isNavShown } = useSelector((state) => state.app);
+  const { isNavShown, isDarkMode } = useSelector((state) => state.app);
+
+  // for image aspect ratio
+  const [aspectRatio, setAspectRatio] = useState(null);
 
   useEffect(() => {
     const plantNames = plantData.map((plant, index) => {
@@ -97,7 +104,6 @@ const Post = () => {
         dispatch(updateSearchMessages(false));
         dispatch(updateUserMessageSearch(''));
       };
-
       return unsubscribe();
     }, []),
   );
@@ -180,176 +186,426 @@ const Post = () => {
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
         formInfo,
       )
-      .then((res) => {
-        // console.log(res);
+      .then(() => {
+        dispatch(getCatalog({ url: 'catalog/listings' }))
+          .unwrap()
+          .then(async (val) => {
+            try {
+              dispatch(updateFilteredCatalog(val));
+              const listings = await val.filter((item) => {
+                return (
+                  (item.isPosted === true || item.isTraded === false) &&
+                  item.poster !== activeUser.username
+                );
+              });
+              dispatch(updateCurrentPosts(listings));
+            } catch (err) {
+              console.error(err);
+            }
+          });
       })
       .catch((err) => {
         console.log(err);
       });
-    dispatch(updateCatalog(formInfo));
+    // dispatch(updateCatalog(formInfo));
   };
+  if (image) {
+    Image.getSize(image, (width, height) => {
+      setAspectRatio(height / width);
+    });
+  }
 
   return (
-    <KeyboardAvoidingView style={styles.page}>
+    <KeyboardAvoidingView style={[styles.page]}>
       {!showCamera && (
-        <ScrollView style={styles.container}>
-          <View style={styles.container}>
-            {catalog[0].isTraded ? (
-              <View>
-                <Text style={styles.title}>Propose A Trade</Text>
-                <Image
-                  source={{ uri: currentPlant.images[0] }}
-                  style={styles.imageContainer}
-                />
-                <Text style={styles.plantTitle}>
-                  Request: {currentPlant.preferredTrade}
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
+          }}
+        >
+          <SafeAreaView />
+          <View style={{ flex: 1 }}>
+            <View
+              style={{
+                flex: 0,
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+                marginVertical: '5%',
+              }}
+            >
+              <Text
+                style={[
+                  {
+                    fontFamily: 'AnonymousPro-Bold',
+                    fontSize: 35,
+                    letterSpacing: 1,
+                    color: isDarkMode ? 'white' : '#283618',
+                  },
+                ]}
+              >
+                Post a Plant
+              </Text>
+            </View>
+            <ScrollView
+              contentContainerStyle={{
+                alignItems: 'center',
+                paddingBottom: 250,
+              }}
+              style={[styles.container]}
+              showsVerticalScrollIndicator={false}
+            >
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  setShowCamera(true);
+                  dispatch(updateIsNavShown());
+                  setStatusBarHidden(true, 'slide');
+                }}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    { color: isDarkMode ? 'white' : 'black' },
+                  ]}
+                >
+                  Take Photo
                 </Text>
-                <Text style={styles.plantDesription}>Offer:</Text>
-              </View>
-            ) : (
-              <Text style={styles.title}>Post A Plant</Text>
-            )}
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                setShowCamera(true);
-                dispatch(updateIsNavShown());
-                setStatusBarHidden(true, 'slide');
-              }}
-            >
-              <Text style={styles.buttonText}>Take Photo</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={pickImage}>
-              <Text style={styles.buttonText}>Select Photo</Text>
-            </TouchableOpacity>
-            {image && (
-              <Image source={{ uri: image }} style={styles.imageContainer} />
-            )}
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={pickImage}>
+                <Text
+                  style={[
+                    styles.buttonText,
+                    { color: isDarkMode ? 'white' : 'black' },
+                  ]}
+                >
+                  Select Photo
+                </Text>
+              </TouchableOpacity>
+              {image && (
+                <Image
+                  source={{ uri: image }}
+                  style={[
+                    styles.imageContainer,
+                    {
+                      width: Dimensions.get('window').width * 0.65,
+                      height:
+                        Dimensions.get('window').width * 0.65 * aspectRatio,
+                      imageHeight: 10,
+                    },
+                  ]}
+                />
+              )}
 
-            <Text style={styles.inputLabel}>TITLE</Text>
-            <TextInput
-              maxLength={20}
-              style={styles.input}
-              onChangeText={setTitle}
-              value={title}
-              placeholder="Enter Title..."
-            />
+              <Text
+                style={[
+                  styles.inputLabel,
+                  { color: isDarkMode ? 'white' : 'black' },
+                ]}
+              >
+                TITLE
+              </Text>
+              <TextInput
+                maxLength={20}
+                style={[
+                  styles.input,
+                  { color: isDarkMode ? '#141312' : '#224722' },
+                ]}
+                onChangeText={setTitle}
+                value={title}
+                placeholder="Enter Title..."
+                placeholderTextColor="grey"
+              />
 
-            <Text style={styles.inputLabel}>PLANT SPECIES</Text>
-            <DropDownPicker
-              style={{
-                width: '66%',
-                marginVertical: 10,
-                marginHorizontal: '17%',
-                backgroundColor: '#d5dec6',
-              }}
-              open={isDropdownOpen}
-              value={dropdownValue}
-              items={dropdownItems}
-              onOpen={onPlantsOpen}
-              setOpen={setIsDropdownOpen}
-              setValue={setDropdownValue}
-              setItems={setDropdownItems}
-              zIndex={3000}
-              zIndexInverse={1000}
-              dropDownContainerStyle={{
-                width: '66%',
-                marginHorizontal: '17%',
-                backgroundColor: '#d5dec6',
-              }}
-              searchable
-              searchPlaceholder="Search for species..."
-            />
+              <Text
+                style={[
+                  styles.inputLabel,
+                  { color: isDarkMode ? 'white' : 'black' },
+                ]}
+              >
+                PLANT SPECIES
+              </Text>
+              <DropDownPicker
+                style={{
+                  width: '100%',
+                  marginVertical: 10,
+                  backgroundColor: '#d5dec6',
+                  borderRadius: '15%',
+                  borderWidth: 0,
+                }}
+                textStyle={{
+                  color: isDarkMode ? '#141312' : '#224722',
+                  paddingHorizontal: 5,
+                  fontSize: 18,
+                  fontFamily: 'JosefinSans',
+                }}
+                placeholderStyle={{
+                  color: 'grey',
+                  fontSize: 18,
+                  fontFamily: 'JosefinSans',
+                }}
+                dropDownContainerStyle={{
+                  width: '100%',
+                  backgroundColor: '#bdcba6',
+                  fontColor: 'white',
+                  borderRadius: '15%',
+                  borderWidth: 0,
+                  padding: 10,
+                }}
+                selectedItemLabelStyle={{
+                  color: 'black',
+                  fontSize: 16,
+                  fontFamily: 'JosefinSans-Bold',
+                }}
+                listItemLabelStyle={{
+                  color: 'black',
+                  fontSize: 16,
+                  fontFamily: 'JosefinSans',
+                }}
+                listItemContainerStyle={{
+                  padding: 8,
+                }}
+                searchContainerStyle={{
+                  paddingBottom: 16,
+                  paddingTop: 8,
+                  borderBottomWidth: 1,
+                  borderBottomColor: '#8a947b',
+                }}
+                searchTextInputStyle={{
+                  fontFamily: 'JosefinSans',
+                }}
+                bottomOffset={100}
+                open={isDropdownOpen}
+                value={dropdownValue}
+                items={dropdownItems}
+                onOpen={onPlantsOpen}
+                setOpen={setIsDropdownOpen}
+                setValue={setDropdownValue}
+                setItems={setDropdownItems}
+                zIndex={3000}
+                zIndexInverse={1000}
+                searchable
+                searchPlaceholder="Search for species..."
+              />
 
-            <Text style={styles.inputLabel}>PREFERED TRADE:</Text>
-            <DropDownPicker
-              style={{
-                width: '66%',
-                marginVertical: 10,
-                marginHorizontal: '17%',
-                backgroundColor: '#d5dec6',
-              }}
-              open={isPreferredOpen}
-              value={preferredValue}
-              items={dropdownItems}
-              onOpen={onPreferredOpen}
-              setOpen={setIsPreferredOpen}
-              setValue={setPreferredValue}
-              setItems={setDropdownItems}
-              zIndex={2000}
-              zIndexInverse={2000}
-              dropDownContainerStyle={{
-                width: '66%',
-                marginHorizontal: '17%',
-                backgroundColor: '#d5dec6',
-              }}
-              searchable
-              searchPlaceholder="Enter preferred species"
-            />
+              <Text
+                style={[
+                  styles.inputLabel,
+                  { color: isDarkMode ? 'white' : 'black' },
+                ]}
+              >
+                PREFERRED TRADE:
+              </Text>
+              <DropDownPicker
+                style={{
+                  width: '100%',
+                  marginVertical: 10,
+                  backgroundColor: '#d5dec6',
+                  borderRadius: '15%',
+                  borderWidth: 0,
+                }}
+                textStyle={{
+                  color: isDarkMode ? '#141312' : '#224722',
+                  paddingHorizontal: 5,
+                  fontSize: 18,
+                  fontFamily: 'JosefinSans',
+                }}
+                placeholderStyle={{
+                  color: 'grey',
+                  fontSize: 18,
+                  fontFamily: 'JosefinSans',
+                }}
+                dropDownContainerStyle={{
+                  width: '100%',
+                  backgroundColor: '#bdcba6',
+                  fontColor: 'white',
+                  borderRadius: '15%',
+                  borderWidth: 0,
+                  padding: 10,
+                  zIndex: 10,
+                }}
+                selectedItemLabelStyle={{
+                  color: 'black',
+                  fontSize: 16,
+                  fontFamily: 'JosefinSans-Bold',
+                }}
+                listItemLabelStyle={{
+                  color: 'black',
+                  fontSize: 16,
+                  fontFamily: 'JosefinSans',
+                }}
+                listItemContainerStyle={{
+                  padding: 8,
+                }}
+                searchContainerStyle={{
+                  paddingBottom: 16,
+                  paddingTop: 8,
+                  borderBottomWidth: 1,
+                  borderBottomColor: '#8a947b',
+                }}
+                searchTextInputStyle={{
+                  fontFamily: 'JosefinSans',
+                }}
+                bottomOffset={100}
+                open={isPreferredOpen}
+                value={preferredValue}
+                items={dropdownItems}
+                onOpen={onPreferredOpen}
+                setOpen={setIsPreferredOpen}
+                setValue={setPreferredValue}
+                setItems={setDropdownItems}
+                zIndex={2000}
+                zIndexInverse={2000}
+                searchable
+                searchPlaceholder="Enter preferred species"
+              />
 
-            <Text style={styles.inputLabel}>SIZE</Text>
-            <DropDownPicker
-              style={{
-                width: '66%',
-                marginVertical: 10,
-                marginHorizontal: '17%',
-                backgroundColor: '#d5dec6',
-              }}
-              open={isSizeDropdownOpen}
-              value={sizeDropdownValue}
-              items={sizeDropdownItems}
-              zIndex={1000}
-              zIndexInverse={3000}
-              onOpen={onSizeOpen}
-              setOpen={setIsSizeDropdownOpen}
-              setValue={setSizeDropdownValue}
-              setItems={setSizeDropdownItems}
-              dropDownContainerStyle={{
-                width: '66%',
-                marginHorizontal: '17%',
-                backgroundColor: '#d5dec6',
-              }}
-              searchPlaceholder="Search for species..."
-            />
+              <Text
+                style={[
+                  styles.inputLabel,
+                  { color: isDarkMode ? 'white' : 'black' },
+                ]}
+              >
+                SIZE
+              </Text>
+              <DropDownPicker
+                style={{
+                  width: '100%',
+                  marginVertical: 10,
+                  backgroundColor: '#d5dec6',
+                  borderRadius: '15%',
+                  borderWidth: 0,
+                }}
+                textStyle={{
+                  color: isDarkMode ? '#141312' : '#224722',
+                  paddingHorizontal: 5,
+                  fontSize: 18,
+                  fontFamily: 'JosefinSans',
+                }}
+                placeholderStyle={{
+                  color: 'grey',
+                  fontSize: 18,
+                  fontFamily: 'JosefinSans',
+                }}
+                dropDownContainerStyle={{
+                  width: '100%',
+                  backgroundColor: '#bdcba6',
+                  fontColor: 'white',
+                  borderRadius: '15%',
+                  borderWidth: 0,
+                  padding: 10,
+                }}
+                selectedItemLabelStyle={{
+                  color: 'black',
+                  fontSize: 16,
+                  fontFamily: 'JosefinSans-Bold',
+                }}
+                listItemLabelStyle={{
+                  color: 'black',
+                  fontSize: 16,
+                  fontFamily: 'JosefinSans',
+                }}
+                listItemContainerStyle={{
+                  padding: 8,
+                }}
+                searchContainerStyle={{
+                  paddingBottom: 16,
+                  paddingTop: 8,
+                  borderBottomWidth: 1,
+                  borderBottomColor: '#8a947b',
+                }}
+                searchTextInputStyle={{
+                  fontFamily: 'JosefinSans',
+                }}
+                bottomOffset={100}
+                open={isSizeDropdownOpen}
+                value={sizeDropdownValue}
+                items={sizeDropdownItems}
+                zIndex={1000}
+                zIndexInverse={3000}
+                onOpen={onSizeOpen}
+                setOpen={setIsSizeDropdownOpen}
+                setValue={setSizeDropdownValue}
+                setItems={setSizeDropdownItems}
+                searchPlaceholder="Search for species..."
+              />
 
-            <Text style={styles.inputLabel}>COLOR</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={setPlantColor}
-              value={plantColor}
-              placeholder="Enter plant color..."
-            />
+              <Text
+                style={[
+                  styles.inputLabel,
+                  { color: isDarkMode ? 'white' : 'black' },
+                ]}
+              >
+                COLOR
+              </Text>
+              <TextInput
+                style={[
+                  styles.input,
+                  { color: isDarkMode ? '#141312' : '#224722' },
+                ]}
+                onChangeText={setPlantColor}
+                value={plantColor}
+                placeholder="Enter plant color..."
+                placeholderTextColor="grey"
+              />
 
-            <Text style={styles.inputLabel}>DESCRIPTIOIN</Text>
-            <TextInput
-              multiline
-              style={styles.inputDescription}
-              onChangeText={setPlantDescription}
-              value={plantDescription}
-              placeholder="Enter description..."
-              maxLength={60}
-            />
+              <Text
+                style={[
+                  styles.inputLabel,
+                  { color: isDarkMode ? 'white' : 'black' },
+                ]}
+              >
+                DESCRIPTION
+              </Text>
+              <TextInput
+                multiline
+                style={[
+                  styles.inputDescription,
+                  { color: isDarkMode ? '#141312' : '#224722' },
+                ]}
+                onChangeText={setPlantDescription}
+                value={plantDescription}
+                placeholder="Enter description..."
+                placeholderTextColor="grey"
+                maxLength={400}
+              />
 
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                // clear out all form data
-                Alert.alert('Plant has been posted');
-                updatePosts();
-                setTitle('');
-                setPlantColor('');
-                setSizeDropdownValue('');
-                setPlantDescription('');
-                setPreferredValue(null);
-                setDropdownValue(null);
-                setImage(null);
-              }}
-            >
-              <Text style={styles.buttonText}>Submit Plant</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, { marginTop: '8%' }]}
+                onPress={() => {
+                  // clear out all form data
+                  Alert.alert('Plant has been posted');
+                  updatePosts();
+                  setTitle('');
+                  setPlantColor('');
+                  setSizeDropdownValue('');
+                  setPlantDescription('');
+                  setPreferredValue(null);
+                  setDropdownValue(null);
+                  setImage(null);
+                }}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    { color: isDarkMode ? 'white' : 'black' },
+                  ]}
+                >
+                  Submit Plant
+                </Text>
+              </TouchableOpacity>
+            </ScrollView>
           </View>
-        </ScrollView>
+        </View>
       )}
+
+      {/*
+
+Separating camera and form
+
+ */}
+
       {
         // show camera
         showCamera && isFocused && (

@@ -221,7 +221,6 @@ const Offers = ({ navigation }) => {
             'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/offers/archive',
           )
           .then(({ data }) => {
-            console.log('OFFERS: ', data);
             dispatch(updateOffers(data));
           })
           .catch((err) => console.error(err));
@@ -242,7 +241,6 @@ const Offers = ({ navigation }) => {
             'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/catalog/listings',
           )
           .then(({ data }) => {
-            console.log('CATALOG: ', data);
             dispatch(updateCatalog(data));
           })
           .catch((err) => console.error(err));
@@ -459,8 +457,22 @@ const Offers = ({ navigation }) => {
       <SafeAreaView style={{ flex: 0 }} />
       <View style={{ flex: 1 }}>
         <View style={[styles.headerContainer]}>
-          <Text style={styles.headerText}>Trade</Text>
-          <Text style={styles.headerText}>Proposals</Text>
+          <Text
+            style={[
+              styles.headerText,
+              { color: isDarkMode ? 'white' : '#283618' },
+            ]}
+          >
+            Trade
+          </Text>
+          <Text
+            style={[
+              styles.headerText,
+              { color: isDarkMode ? 'white' : '#283618' },
+            ]}
+          >
+            Proposals
+          </Text>
         </View>
         <View style={styles.contentContainer}>
           {currentOffers.length ? (

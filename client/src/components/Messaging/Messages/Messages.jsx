@@ -105,7 +105,7 @@ const Messages = () => {
       fontFamily: 'AnonymousPro-Bold',
       fontSize: 35,
       letterSpacing: 1,
-      color: '#283618',
+      color: isDarkMode ? 'white' : '#283618',
     },
     searchButtonContainer: {
       right: '4%',
@@ -114,7 +114,7 @@ const Messages = () => {
       alignItems: 'flex-end',
     },
     searchButton: {
-      color: '#283618',
+      color: isDarkMode ? 'lightgreen' : '#283618',
     },
     searchBarContainer: {
       marginHorizontal: '4%',
@@ -137,7 +137,7 @@ const Messages = () => {
       marginTop: 10,
       paddingVertical: 5,
       alignSelf: 'center',
-      color: '#283618',
+      color: isDarkMode ? 'white' : '#283618',
     },
   });
   // console.log('chats ', chats);
@@ -200,7 +200,7 @@ const Messages = () => {
                     : 'search-circle-outline'
                 }
                 size={40}
-                color={isDarkMode ? 'white' : 'black'}
+                color={isDarkMode ? 'lightgreen' : 'black'}
               />
             </TouchableOpacity>
           </View>
@@ -220,6 +220,7 @@ const Messages = () => {
               ]}
               platform="ios"
               placeholder="search users..."
+              placeholderTextColor={isDarkMode ? 'white' : 'gray'}
               value={userMessageSearch}
               lightTheme={isDarkMode}
               onChangeText={(newVal) => {

@@ -21,6 +21,7 @@ export default StyleSheet.create({
     marginTop: '4%',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: '4%',
   },
   searchBar: {
     flex: 1,
@@ -37,16 +38,14 @@ export default StyleSheet.create({
     marginHorizontal: '4%',
   },
   itemsContainer: {
-    flex: 1,
-    marginTop: 18,
-    alignItems: 'center',
+    flexGrow: 1,
+    paddingBottom: '8%',
   },
   itemImage: {
     width: imageWidth,
     height: undefined,
     aspectRatio: 1,
     borderRadius: imageWidth / 15,
-    // margin: (screenWidth - 30) / 45,
   },
 
   // MODAL

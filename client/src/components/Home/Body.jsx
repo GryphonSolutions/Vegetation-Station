@@ -48,19 +48,17 @@ export default function Body() {
   return (
     <View style={[styles.contentContainer]}>
       <SearchBar />
-      <View style={styles.itemsContainer}>
-        <FlatList
-          style={{ flex: 1 }}
-          data={currentPosts}
-          numColumns={3}
-          showsVerticalScrollIndicator={false}
-          ListEmptyComponent={<Text>There are no plants to show</Text>}
-          renderItem={({ item, index }) => renderImage(item, index)}
-          ItemSeparatorComponent={() => (
-            <View style={{ height: '0.75%', width: '0.75%' }} />
-          )}
-        />
-      </View>
+      <FlatList
+        contentContainerStyle={styles.itemsContainer}
+        data={currentPosts}
+        numColumns={3}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={<Text>There are no plants to show</Text>}
+        renderItem={({ item, index }) => renderImage(item, index)}
+        ItemSeparatorComponent={() => (
+          <View style={{ height: '0.75%', width: '0.75%' }} />
+        )}
+      />
     </View>
   );
 }

@@ -123,17 +123,35 @@ const Profile = ({ navigation }) => {
             />
           </View>
           <View style={styles.profileDetailsContainer}>
-            <Text style={[styles.profileDetailsText, styles.username]}>
+            <Text
+              style={[
+                styles.profileDetailsText,
+                styles.username,
+                { color: isDarkMode ? 'white' : 'black' },
+              ]}
+            >
               {username}
             </Text>
-            <Text style={[styles.profileDetailsText, styles.userLocation]}>
+            <Text
+              style={[
+                styles.profileDetailsText,
+                styles.userLocation,
+                { color: isDarkMode ? 'white' : 'black' },
+              ]}
+            >
               {`${location?.city}, ${location?.state}`}
             </Text>
             <View style={styles.tradeCounterContainer}>
               {tradeCount > 10 ? (
                 <Ionicons style={styles.starIcon} size="15px" name="md-star" />
               ) : null}
-              <Text style={[styles.profileDetailsText, styles.userTrades]}>
+              <Text
+                style={[
+                  styles.profileDetailsText,
+                  styles.userTrades,
+                  { color: isDarkMode ? 'white' : 'black' },
+                ]}
+              >
                 {`${tradeCount} Trades`}
               </Text>
             </View>
@@ -150,7 +168,14 @@ const Profile = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.tradesListContainer}>
-          <Text style={styles.tradesListHeader}>Open Trades</Text>
+          <Text
+            style={[
+              styles.tradesListHeader,
+              { color: isDarkMode ? 'white' : 'black' },
+            ]}
+          >
+            Open Trades
+          </Text>
           <View
             style={{
               borderBottomWidth: 1,
@@ -174,7 +199,14 @@ const Profile = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.tradesListContainer}>
-          <Text style={styles.tradesListHeader}>Closed Trades</Text>
+          <Text
+            style={[
+              styles.tradesListHeader,
+              { color: isDarkMode ? 'white' : 'black' },
+            ]}
+          >
+            Closed Trades
+          </Text>
           <View
             style={{
               borderBottomWidth: 1,
@@ -211,16 +243,19 @@ const Profile = ({ navigation }) => {
             <Ionicons
               style={styles.backButton}
               name="arrow-undo"
+              color={isDarkMode ? 'lightgreen' : '#283618'}
               size={30}
               onPress={() => navigation.navigate('Details')}
             />
           )}
-
-          {activeUser.username === username ? (
-            <Text style={styles.headerText}>User Profile</Text>
-          ) : (
-            <Text style={styles.headerText}>Profile</Text>
-          )}
+          <Text
+            style={[
+              styles.headerText,
+              { color: isDarkMode ? 'white' : 'black' },
+            ]}
+          >
+            Profile
+          </Text>
         </View>
         <View style={styles.contentContainer}>
           <SectionList

@@ -68,7 +68,6 @@ const Login = () => {
         userInfo.password,
       )
         .then((res) => {
-          console.log(res);
           getOneAndSetOne(res.user.email.split('@')[0]);
           setUserInfo({ email: '', password: '' });
           dispatch(updateIsNavShown());
@@ -108,7 +107,14 @@ const Login = () => {
         <KeyboardAwareScrollView>
           <View style={styles.loginInputsContainer}>
             <View>
-              <Text style={styles.inputLabels}>Email</Text>
+              <Text
+                style={[
+                  styles.inputLabels,
+                  { color: isDarkMode ? '#D3D3D3' : '#283618' },
+                ]}
+              >
+                Email
+              </Text>
             </View>
             <TextInput
               placeholder="Enter your email..."
@@ -121,7 +127,14 @@ const Login = () => {
               }}
             />
             <View>
-              <Text style={styles.inputLabels}>Password</Text>
+              <Text
+                style={[
+                  styles.inputLabels,
+                  { color: isDarkMode ? '#D3D3D3' : '#283618' },
+                ]}
+              >
+                Password
+              </Text>
             </View>
             <TextInput
               placeholder="Enter password..."

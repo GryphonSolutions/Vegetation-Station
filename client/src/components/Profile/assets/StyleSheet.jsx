@@ -1,4 +1,5 @@
 import { StyleSheet, StatusBar, PixelRatio, Dimensions } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const screenWidth = Dimensions.get('window').width;
 const imageWidth = (screenWidth * 0.92) / 3.1;

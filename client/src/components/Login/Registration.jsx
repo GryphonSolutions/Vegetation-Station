@@ -38,6 +38,7 @@ const config = {
 const Registration = ({ setRegistration, getOneAndSetOne }) => {
   const [userReg, setUserReg] = useState({});
   const [radarQuery, setRadarQuery] = useState(0);
+  const { isDarkMode } = useSelector((state) => state.app);
 
   const dispatch = useDispatch();
 
@@ -59,7 +60,6 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
         )
         .then((res) => {
           getOneAndSetOne(userReg.email.split('@')[0]);
-          console.log(res);
         })
         .catch((err) => {
           console.error(err.message);
@@ -96,86 +96,131 @@ const Registration = ({ setRegistration, getOneAndSetOne }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAwareScrollView>
-        <View>
-          <Ionicons
-            style={styles.backButton}
-            name="arrow-undo"
-            size="25px"
-            onPress={() => {
-              setRegistration(false);
-            }}
-          />
-        </View>
-        <View>
-          <Text style={styles.regAccLabel}>Register Account</Text>
-        </View>
-        <View style={styles.regInputContainer}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: isDarkMode ? '#141312' : '#f0f4f1',
+      }}
+    >
+      <SafeAreaView style={styles.container}>
+        <KeyboardAwareScrollView>
           <View>
-            <Text style={styles.inputLabels}>Email</Text>
-          </View>
-          <TextInput
-            placeholder="Enter your email..."
-            placeholderTextColor="#283618"
-            style={styles.regInputs}
-            clearButtonMode="always"
-            onChangeText={(text) => {
-              setUserReg({ ...userReg, email: text });
-            }}
-          />
-          <View>
-            <Text style={styles.inputLabels}>Password</Text>
-          </View>
-          <TextInput
-            placeholder="Enter password..."
-            style={styles.regInputs}
-            placeholderTextColor="#283618"
-            secureTextEntry
-            clearButtonMode="always"
-            onChangeText={(text) => {
-              setUserReg({ ...userReg, password: text });
-            }}
-          />
-          <View>
-            <Text style={styles.inputLabels}>Zipcode</Text>
-          </View>
-          <TextInput
-            placeholder="Enter your zipcode..."
-            style={styles.regInputs}
-            placeholderTextColor="#283618"
-            clearButtonMode="always"
-            onChangeText={(zip) => {
-              setRadarQuery(zip);
-            }}
-          />
-          <View>
-            <Text style={styles.inputLabels}>Profile Picture</Text>
-          </View>
-          <TextInput
-            placeholder="Profile picture Url..."
-            style={styles.regInputs}
-            placeholderTextColor="#283618"
-            clearButtonMode="always"
-            onChangeText={(text) => {
-              setUserReg({ ...userReg, profilePicture: text });
-            }}
-          />
-        </View>
-        <View style={{ alignItems: 'center' }}>
-          <View style={styles.regSubmitContainer}>
-            <Button
-              style={styles.buttonText}
-              color="black"
-              title="Submit"
+            <Ionicons
+              style={[
+                styles.backButton,
+                { color: isDarkMode ? '#D3D3D3' : '#283618' },
+              ]}
+              name="arrow-undo"
+              size="25px"
               onPress={() => {
-                getLatLong();
+                setRegistration(false);
               }}
             />
           </View>
-        </View>
-      </KeyboardAwareScrollView>
-    </SafeAreaView>
+          <View>
+            <Text
+              style={[
+                styles.regAccLabel,
+                { color: isDarkMode ? '#dda15e' : '#283618' },
+              ]}
+            >
+              Register Account
+            </Text>
+          </View>
+          <View style={styles.regInputContainer}>
+            <View>
+              <Text
+                style={[
+                  styles.inputLabels,
+                  { color: isDarkMode ? '#D3D3D3' : '#283618' },
+                ]}
+              >
+                Email
+              </Text>
+            </View>
+            <TextInput
+              placeholder="Enter your email..."
+              placeholderTextColor="#283618"
+              style={styles.regInputs}
+              clearButtonMode="always"
+              onChangeText={(text) => {
+                setUserReg({ ...userReg, email: text });
+              }}
+            />
+            <View>
+              <Text
+                style={[
+                  styles.inputLabels,
+                  { color: isDarkMode ? '#D3D3D3' : '#283618' },
+                ]}
+              >
+                Password
+              </Text>
+            </View>
+            <TextInput
+              placeholder="Enter password..."
+              style={styles.regInputs}
+              placeholderTextColor="#283618"
+              secureTextEntry
+              clearButtonMode="always"
+              onChangeText={(text) => {
+                setUserReg({ ...userReg, password: text });
+              }}
+            />
+            <View>
+              <Text
+                style={[
+                  styles.inputLabels,
+                  { color: isDarkMode ? '#D3D3D3' : '#283618' },
+                ]}
+              >
+                Zipcode
+              </Text>
+            </View>
+            <TextInput
+              placeholder="Enter your zipcode..."
+              style={styles.regInputs}
+              placeholderTextColor="#283618"
+              clearButtonMode="always"
+              onChangeText={(zip) => {
+                setRadarQuery(zip);
+              }}
+            />
+            <View>
+              <Text
+                style={[
+                  styles.inputLabels,
+                  { color: isDarkMode ? '#D3D3D3' : '#283618' },
+                ]}
+              >
+                Profile Picture
+              </Text>
+            </View>
+            <TextInput
+              placeholder="Profile picture Url..."
+              style={styles.regInputs}
+              placeholderTextColor="#283618"
+              clearButtonMode="always"
+              onChangeText={(text) => {
+                setUserReg({ ...userReg, profilePicture: text });
+              }}
+            />
+          </View>
+          <View style={{ alignItems: 'center' }}>
+            <View style={styles.regSubmitContainer}>
+              <Button
+                style={styles.buttonText}
+                color="black"
+                title="Submit"
+                onPress={() => {
+                  getLatLong();
+                }}
+              />
+            </View>
+          </View>
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
+    </View>
   );
 };
 
