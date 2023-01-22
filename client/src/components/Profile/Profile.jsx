@@ -55,14 +55,12 @@ const Profile = ({ navigation }) => {
   });
 
   const signOut = () => {
-    persistor.purge();
     dispatch(updateActiveUser({}));
     logout();
     navigation.navigate('Login');
   };
 
   const navMessage = () => {
-    persistor.purge();
     dispatch(updateSearchMessages(true));
     dispatch(updateUserMessageSearch(username));
     navigation.navigate('Messages');
@@ -239,15 +237,15 @@ const Profile = ({ navigation }) => {
       <SafeAreaView style={{ flex: 0 }} />
       <View style={{ flex: 1 }}>
         <View style={styles.headerContainer}>
-          {activeUser.username === username ? null : (
-            <Ionicons
-              style={styles.backButton}
-              name="arrow-undo"
-              color={isDarkMode ? 'lightgreen' : '#283618'}
-              size={30}
-              onPress={() => navigation.navigate('Details')}
-            />
-          )}
+          <Ionicons
+            style={[
+              styles.backButton,
+              { color: isDarkMode ? 'lightgreen' : '#283618' },
+            ]}
+            name="arrow-undo"
+            size={30}
+            onPress={() => navigation.navigate('Details')}
+          />
           <Text
             style={[
               styles.headerText,

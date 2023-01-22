@@ -170,7 +170,7 @@ const Post = () => {
       commonName: dropdownImg[dropdownValue]?.commonName || 'Missing Info',
       images: [
         dropdownImg[dropdownValue]?.imgLink ||
-          'https://t4.ftcdn.net/jpg/00/89/55/15/360_F_89551596_LdHAZRwz3i4EM4J0NHNHy2hEUYDfXc0j.jpg',
+          'https://i.imgur.com/V7qUyTy.png',
       ],
       size: sizeDropdownValue || 'small',
       color: plantColor || 'green',

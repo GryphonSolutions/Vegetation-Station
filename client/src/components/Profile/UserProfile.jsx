@@ -56,7 +56,6 @@ const UserProfile = ({ navigation }) => {
   });
 
   const signOut = () => {
-    persistor.purge();
     dispatch(updateActiveUser({}));
     dispatch(updateIsNavShown());
     navigation.navigate('Login');
@@ -165,23 +164,20 @@ const UserProfile = ({ navigation }) => {
               >
                 <Text style={styles.buttonText}>Sign Out</Text>
               </TouchableOpacity>
-              {isDarkMode ? (
-                <Ionicons
-                  name="sunny"
-                  size="30px"
-                  color="white"
-                  style={{ marginTop: 8 }}
-                  onPress={() => dispatch(updateIsDarkMode())}
-                />
-              ) : (
-                <Ionicons
-                  name="moon"
-                  size="30px"
-                  color="black"
-                  style={{ marginTop: 8 }}
-                  onPress={() => dispatch(updateIsDarkMode())}
-                />
-              )}
+              <Ionicons
+                name={isDarkMode ? 'sunny' : 'moon'}
+                size="30px"
+                color={isDarkMode ? 'white' : 'black'}
+                style={{ marginTop: 8 }}
+                onPress={() => dispatch(updateIsDarkMode())}
+              />
+              <Ionicons
+                name="settings"
+                size="30px"
+                color={isDarkMode ? 'white' : 'black'}
+                style={{ marginTop: 8 }}
+                onPress={() => persistor.purge()}
+              />
             </View>
           </View>
         </View>

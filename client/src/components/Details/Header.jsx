@@ -13,7 +13,6 @@ const Header = () => {
   const { selectedUser, activeUser } = useSelector((state) => state.data);
   const { isDarkMode } = useSelector((state) => state.app);
   const returnHome = () => {
-    persistor.purge();
     navigation.navigate('Home');
   };
   return (
