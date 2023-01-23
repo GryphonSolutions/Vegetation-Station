@@ -159,7 +159,7 @@ const UserProfile = ({ navigation }) => {
             </View>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <TouchableOpacity
-                style={[styles.button, { marginRight: 24 }]}
+                style={[styles.button, { marginRight: 14 }]}
                 onPress={signOut}
               >
                 <Text style={styles.buttonText}>Sign Out</Text>
@@ -168,7 +168,7 @@ const UserProfile = ({ navigation }) => {
                 name={isDarkMode ? 'sunny' : 'moon'}
                 size="30px"
                 color={isDarkMode ? 'white' : 'black'}
-                style={{ marginTop: 8 }}
+                style={{ marginTop: 8, marginRight: 10 }}
                 onPress={() => dispatch(updateIsDarkMode())}
               />
               <Ionicons
