@@ -92,9 +92,9 @@ const Chat = () => {
       fontFamily: 'JosefinSans-Medium',
       fontSize: 16,
       marginHorizontal: '4%',
-      backgroundColor: '#bdcab6',
+      backgroundColor: isDarkMode ? 'black' : '#bdcab6',
       padding: 10,
-      color: '#212b21',
+      color: isDarkMode ? 'white' : '#212b21',
       borderRadius: 30,
     },
   });
@@ -244,7 +244,7 @@ const Chat = () => {
 
   const scrollViewRef = useRef();
 
-  console.log('CURRENT CHAT', currentChat);
+  // console.log('CURRENT CHAT', currentChat);
   return (
     <View
       style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
@@ -290,6 +290,7 @@ const Chat = () => {
                 style={{
                   fontFamily: 'JosefinSans-Medium',
                   fontSize: 15,
+                  color: isDarkMode ? 'white' : 'black',
                 }}
               >
                 {selectedUser.username}
@@ -313,11 +314,21 @@ const Chat = () => {
                     <View
                       key={data.id}
                       style={[
-                        { backgroundColor: 'darkgreen', alignSelf: 'flex-end' },
+                        {
+                          backgroundColor: isDarkMode
+                            ? 'lightgreen'
+                            : 'darkgreen',
+                          alignSelf: 'flex-end',
+                        },
                         styles.messageBubble,
                       ]}
                     >
-                      <Text style={[{ color: 'white' }, styles.messageText]}>
+                      <Text
+                        style={[
+                          { color: isDarkMode ? 'black' : 'white' },
+                          styles.messageText,
+                        ]}
+                      >
                         {data.text}
                       </Text>
                     </View>
@@ -329,7 +340,12 @@ const Chat = () => {
                         styles.messageBubble,
                       ]}
                     >
-                      <Text style={[{ color: 'black' }, styles.messageText]}>
+                      <Text
+                        style={[
+                          { color: isDarkMode ? 'black' : 'black' },
+                          styles.messageText,
+                        ]}
+                      >
                         {data.text}
                       </Text>
                     </View>
@@ -350,6 +366,7 @@ const Chat = () => {
               dispatch(updateSenderInput(text));
               scrollViewRef.current.scrollToEnd({ animated: true });
             }}
+            placeholderTextColor={isDarkMode ? 'white' : '#283618'}
             onSubmitEditing={sendMessage}
             placeholder="message"
             style={styles.textInput}

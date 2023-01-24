@@ -81,7 +81,6 @@ export default function SearchBar() {
       const index2 = sortedUsers.map((e) => e.username).indexOf(b.poster);
       return compare(index1, index2);
     });
-    console.log(catalog, sorted);
     dispatch(updateCurrentPosts(sorted));
   };
 
@@ -100,7 +99,6 @@ export default function SearchBar() {
       howToSort[val]();
       setModalVisible(false);
     }
-    console.log(whatToSort);
   };
   // sortTopSellers();
   return (
@@ -114,9 +112,23 @@ export default function SearchBar() {
             setModalVisible(false);
           }}
         >
-          <SafeAreaView>
-            <View style={styles.modalTitle}>
-              <Text style={styles.modalHeaderText}>Sort By...</Text>
+          <View
+            style={{ flex: 1, backgroundColor: isDarkMode ? 'black' : 'white' }}
+          >
+            <View
+              style={[
+                styles.modalTitle,
+                { color: isDarkMode ? 'white' : 'black' },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.modalHeaderText,
+                  { color: isDarkMode ? 'white' : 'black' },
+                ]}
+              >
+                Sort By...
+              </Text>
             </View>
             <View>
               <View style={styles.modalCats}>
@@ -124,7 +136,10 @@ export default function SearchBar() {
                   onPress={() => {
                     filterChoice('trades');
                   }}
-                  style={styles.modalCatsText}
+                  style={[
+                    styles.modalCatsText,
+                    { color: isDarkMode ? 'white' : '#283618' },
+                  ]}
                 >
                   - Top Traders
                 </Text>
@@ -144,7 +159,10 @@ export default function SearchBar() {
               </View>
               <View style={styles.modalCats}>
                 <Text
-                  style={styles.modalCatsText}
+                  style={[
+                    styles.modalCatsText,
+                    { color: isDarkMode ? 'white' : '#283618' },
+                  ]}
                   onPress={() => {
                     filterChoice('size');
                   }}
@@ -167,7 +185,10 @@ export default function SearchBar() {
               </View>
               <View style={styles.modalCats}>
                 <Text
-                  style={styles.modalCatsText}
+                  style={[
+                    styles.modalCatsText,
+                    { color: isDarkMode ? 'white' : '#283618' },
+                  ]}
                   onPress={() => {
                     filterChoice('alph');
                   }}
@@ -189,7 +210,7 @@ export default function SearchBar() {
                 )}
               </View>
             </View>
-          </SafeAreaView>
+          </View>
         </Modal>
       </View>
 
@@ -204,13 +225,12 @@ export default function SearchBar() {
         onChangeText={(val) => updateSearch(val)}
         value={homeSearchText}
         placeholder="search plants..."
-        placeholderTextColor="#6d6d6d"
+        placeholderTextColor={isDarkMode ? 'white' : '#6d6d6d'}
       />
 
       <Pressable
         onPress={() => {
           setModalVisible(true);
-          console.log('pressed');
         }}
       >
         <MaterialIcons

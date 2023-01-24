@@ -20,6 +20,7 @@ import {
   updateSearchMessages,
   updateUserMessageSearch,
   updateIsNavShown,
+  updateIsDarkMode,
 } from '../../reducers';
 import { getOffers, getCatalog, getPlants, getUsers } from '../../actions';
 import styles from './assets/StyleSheet.jsx';
@@ -55,14 +56,12 @@ const UserProfile = ({ navigation }) => {
   });
 
   const signOut = () => {
-    persistor.purge();
     dispatch(updateActiveUser({}));
     dispatch(updateIsNavShown());
     navigation.navigate('Login');
   };
 
   const navMessage = () => {
-    persistor.purge();
     navigation.navigate('Messages');
   };
 
@@ -121,34 +120,76 @@ const UserProfile = ({ navigation }) => {
             />
           </View>
           <View style={styles.profileDetailsContainer}>
-            <Text style={[styles.profileDetailsText, styles.username]}>
+            <Text
+              style={[
+                styles.profileDetailsText,
+                styles.username,
+                { color: isDarkMode ? 'white' : 'black' },
+              ]}
+            >
               {username}
             </Text>
-            <Text style={[styles.profileDetailsText, styles.userLocation]}>
+            <Text
+              style={[
+                styles.profileDetailsText,
+                styles.userLocation,
+                { color: isDarkMode ? 'white' : 'black' },
+              ]}
+            >
               {`${location?.city}, ${location?.state}`}
             </Text>
-            <View style={styles.tradeCounterContainer}>
+            <View
+              style={
+                (styles.tradeCounterContainer,
+                { color: isDarkMode ? 'white' : 'black' })
+              }
+            >
               {tradeCount > 10 ? (
                 <Ionicons style={styles.starIcon} size="15px" name="md-star" />
               ) : null}
-              <Text style={[styles.profileDetailsText, styles.userTrades]}>
+              <Text
+                style={[
+                  styles.profileDetailsText,
+                  styles.userTrades,
+                  { color: isDarkMode ? 'white' : 'black' },
+                ]}
+              >
                 {`${tradeCount} Trades`}
               </Text>
             </View>
-
-            {username === activeUser.username ? (
-              <TouchableOpacity style={styles.button} onPress={signOut}>
+            <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <TouchableOpacity
+                style={[styles.button, { marginRight: 14 }]}
+                onPress={signOut}
+              >
                 <Text style={styles.buttonText}>Sign Out</Text>
               </TouchableOpacity>
-            ) : (
-              <TouchableOpacity style={styles.button} onPress={navMessage}>
-                <Text style={styles.buttonText}>Message</Text>
-              </TouchableOpacity>
-            )}
+              <Ionicons
+                name={isDarkMode ? 'sunny' : 'moon'}
+                size="30px"
+                color={isDarkMode ? 'white' : 'black'}
+                style={{ marginTop: 8, marginRight: 10 }}
+                onPress={() => dispatch(updateIsDarkMode())}
+              />
+              <Ionicons
+                name="settings"
+                size="30px"
+                color={isDarkMode ? 'white' : 'black'}
+                style={{ marginTop: 8 }}
+                onPress={() => persistor.purge()}
+              />
+            </View>
           </View>
         </View>
         <View style={styles.tradesListContainer}>
-          <Text style={styles.tradesListHeader}>Open Trades</Text>
+          <Text
+            style={[
+              styles.tradesListHeader,
+              { color: isDarkMode ? 'white' : 'black' },
+            ]}
+          >
+            Open Trades
+          </Text>
           <View
             style={{
               borderBottomWidth: 1,
@@ -171,7 +212,14 @@ const UserProfile = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.tradesListContainer}>
-          <Text style={styles.tradesListHeader}>Closed Trades</Text>
+          <Text
+            style={[
+              styles.tradesListHeader,
+              { color: isDarkMode ? 'white' : 'black' },
+            ]}
+          >
+            Closed Trades
+          </Text>
           <View
             style={{
               borderBottomWidth: 1,
@@ -214,7 +262,14 @@ const UserProfile = ({ navigation }) => {
           )}
 
           {activeUser.username === username ? (
-            <Text style={styles.headerText}>User Profile</Text>
+            <Text
+              style={[
+                styles.headerText,
+                { color: isDarkMode ? 'white' : 'black' },
+              ]}
+            >
+              User Profile
+            </Text>
           ) : (
             <Text style={styles.headerText}>Profile</Text>
           )}

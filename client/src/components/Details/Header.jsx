@@ -13,31 +13,25 @@ const Header = () => {
   const { selectedUser, activeUser } = useSelector((state) => state.data);
   const { isDarkMode } = useSelector((state) => state.app);
   const returnHome = () => {
-    persistor.purge();
     navigation.navigate('Home');
   };
   return (
     <View style={styles.headerContainer}>
       <Ionicons
         style={styles.backButton}
+        color={isDarkMode ? 'lightgreen' : 'black'}
         name="arrow-undo"
         size={30}
         onPress={() => returnHome()}
       />
 
       <Text
-        style={[
-          styles.headerText,
-          { color: isDarkMode ? '#d39b52' : '#283618' },
-        ]}
+        style={[styles.headerText, { color: isDarkMode ? 'white' : '#283618' }]}
       >
         Item
       </Text>
       <Text
-        style={[
-          styles.headerText,
-          { color: isDarkMode ? '#d39b52' : '#283618' },
-        ]}
+        style={[styles.headerText, { color: isDarkMode ? 'white' : '#283618' }]}
       >
         Information
       </Text>

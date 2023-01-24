@@ -22,7 +22,7 @@ const ProfileRibbon = () => {
         <View style={styles.profileTextContainer}>
           <Text style={styles.profileUsername}>{username}</Text>
           <View style={styles.tradeCounterContainer}>
-            {tradeCount > 5 ? (
+            {tradeCount > 10 ? (
               <Ionicons name="star" size="20px" style={{ color: 'yellow' }} />
             ) : null}
             <Text style={styles.tradeCount}>{tradeCount} Trades</Text>

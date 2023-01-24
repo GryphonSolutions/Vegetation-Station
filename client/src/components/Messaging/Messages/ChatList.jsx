@@ -32,7 +32,7 @@ const ChatList = ({ chat }) => {
     },
     time: {
       fontFamily: 'JosefinSans',
-      color: 'gray',
+      color: isDarkMode ? 'white' : 'gray',
       fontSize: 16,
     },
     titleCont: {
@@ -44,11 +44,11 @@ const ChatList = ({ chat }) => {
     chatItemText: {
       fontFamily: 'JosefinSans',
       fontSize: 17,
-      color: '#616161',
+      color: isDarkMode ? 'white' : '#616161',
     },
     read: {},
     unread: {
-      borderColor: '#09df08',
+      borderColor: isDarkMode ? 'white' : '#09df08',
       borderStyle: 'solid',
       borderWidth: 3,
     },
@@ -72,7 +72,6 @@ const ChatList = ({ chat }) => {
   };
 
   const getUserInfo = (username) => {
-    console.log(users);
     let userObj = {};
     users.forEach((user) => {
       if (user.username === username) {
@@ -116,6 +115,9 @@ const ChatList = ({ chat }) => {
     RootNavigation.navigate('Chat');
   };
 
+  const timeToNow = formatDistanceToNow(new Date(chat[1].date));
+  const displayNow = timeToNow === 'less than a minute';
+
   return (
     <ListItem
       containerStyle={{
@@ -157,7 +159,7 @@ const ChatList = ({ chat }) => {
             {chat[1].chattingWith.username}
           </ListItem.Title>
           <ListItem.Title style={styles.time}>
-            {formatDistanceToNow(new Date(chat[1].date))}
+            {displayNow ? 'now' : timeToNow}
           </ListItem.Title>
         </View>
         <ListItem.Subtitle

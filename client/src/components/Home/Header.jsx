@@ -9,18 +9,12 @@ export default function Header() {
   return (
     <View style={styles.headerContainer}>
       <Text
-        style={[
-          styles.headerText,
-          { color: isDarkMode ? '#d39b52' : '#283618' },
-        ]}
+        style={[styles.headerText, { color: isDarkMode ? 'white' : '#283618' }]}
       >
         Vegetation
       </Text>
       <Text
-        style={[
-          styles.headerText,
-          { color: isDarkMode ? '#d39b52' : '#283618' },
-        ]}
+        style={[styles.headerText, { color: isDarkMode ? 'white' : '#283618' }]}
       >
         Station
       </Text>

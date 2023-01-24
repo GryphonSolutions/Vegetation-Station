@@ -39,8 +39,6 @@ const Details = () => {
 
   Image.getSize(currentPlant.images[0], (width, height) => {
     setAspectRatio(height / width);
-    console.log(height / width);
-    console.log(Dimensions.get('window').width);
   });
 
   return (
@@ -61,14 +59,38 @@ const Details = () => {
             />
             <View style={styles.innerContentContainer}>
               <View style={styles.postContainer}>
-                <Text style={styles.postTitle}>{postTitle}</Text>
-                <Text style={styles.plantNameText}>{commonName}</Text>
+                <Text
+                  style={[
+                    styles.postTitle,
+                    { color: isDarkMode ? 'lightgrey' : '#283618' },
+                  ]}
+                >
+                  {postTitle}
+                </Text>
+                <Text
+                  style={[
+                    styles.plantNameText,
+                    { color: isDarkMode ? 'lightgrey' : '#283618' },
+                  ]}
+                >
+                  {commonName}
+                </Text>
 
                 <Text style={{ marginBottom: 20 }}>
-                  <Text style={styles.preferredTradesHeader}>
+                  <Text
+                    style={[
+                      styles.preferredTradesHeader,
+                      { color: isDarkMode ? 'lightgrey' : '#283618' },
+                    ]}
+                  >
                     Preferred trades:{' '}
                   </Text>
-                  <Text style={styles.preferredTradesText}>
+                  <Text
+                    style={[
+                      styles.preferredTradesText,
+                      { color: isDarkMode ? 'lightgrey' : '#283618' },
+                    ]}
+                  >
                     {preferredTrade}
                   </Text>
                 </Text>
@@ -81,12 +103,26 @@ const Details = () => {
                     borderColor: '#bbc4b0',
                   }}
                 >
-                  <Text style={styles.postDescriptionText}>{description}</Text>
+                  <Text
+                    style={[
+                      styles.postDescriptionText,
+                      { color: isDarkMode ? 'lightgrey' : '#283618' },
+                    ]}
+                  >
+                    {description}
+                  </Text>
                 </View>
               </View>
               <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.detailPageButton}>
-                  <Text style={styles.buttonText}>Save</Text>
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      { color: isDarkMode ? 'dda15e' : '#283618' },
+                    ]}
+                  >
+                    Save
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.detailPageButton}
@@ -94,7 +130,14 @@ const Details = () => {
                     navigation.navigate('Post');
                   }}
                 >
-                  <Text style={styles.buttonText}>Propose Trade</Text>
+                  <Text
+                    style={[
+                      styles.buttonText,
+                      { color: isDarkMode ? 'dda15e' : '#283618' },
+                    ]}
+                  >
+                    Propose Trade
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.detailPageButton}
@@ -106,7 +149,12 @@ const Details = () => {
                 </TouchableOpacity>
               </View>
               <View style={styles.locationContainer}>
-                <Text style={styles.locationHeaderText}>
+                <Text
+                  style={[
+                    styles.locationHeaderText,
+                    { color: isDarkMode ? 'lightgrey' : '#283618' },
+                  ]}
+                >
                   Trader&apos;s General Location:
                 </Text>
                 {/* <View style={{ height: 200 }}> */}
