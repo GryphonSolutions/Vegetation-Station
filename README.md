@@ -33,24 +33,51 @@ This project was a one-week challenge to design and execute a full-stack web app
 ## Video Demo
 
 <details><summary>Login</summary>
+
+![Login](assets/Login.png)
+![Login](assets/LoginDark.png)
+![Register](assets/Register.png)
+![RegisterDark](assets/RegisterDark.png)
 </details>
 
 <details><summary>Home Page</summary>
+
+![Login](assets/Home.png)
+![Login](assets/HomeDark.png)
 </details>
 
 <details><summary>Plant Details</summary>
+
+![Login](assets/Details.png)
+![Login](assets/DetailsDark.png)
+![Login](assets/Map.png)
+![Login](assets/MapDark.png)
 </details>
 
 <details><summary>Post A Plant</summary>
+
+![Login](assets/Post.png)
+![Login](assets/PostDark.png)
 </details>
 
 <details><summary>Messaging</summary>
+
+![Login](assets/Messages.png)
+![Login](assets/MessagesDark.png)
+![Login](assets/Chats.png)
+![Login](assets/ChatsDark.png)
 </details>
 
 <details><summary>Profiles</summary>
+
+![Login](assets/Profile.png)
+![Login](assets/ProfileDark.png)
 </details>
 
 <details><summary>Trade Proposals</summary>
+
+![Login](assets/Proposals.png)
+![Login](assets/ProposalsDark.png)
 </details>
 
 ## User story and MVP
