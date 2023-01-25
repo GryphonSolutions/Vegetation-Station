@@ -1,7 +1,9 @@
 # Vegetation Station
 
-_The Official Repository for the Vegetation Station Mobile App_\
+_The Official Repository for the Vegetation Station Mobile App_
+
 <img src="client/public/favicon.png" width="200" height="200">
+
 
 ## Introduction
 
@@ -144,7 +146,7 @@ Matt Sigler\
 [![Linkedin: LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/kevinpho/)](https://www.linkedin.com/in/matthew-sigler/)
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/phok1012)](https://github.com/siglerm)
 
-## Technology Used
+## Technologies Used
 
 **Front-end:** &emsp;&nbsp;&nbsp;
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
@@ -167,7 +169,3 @@ Matt Sigler\
 ## Thanks for Reading!
 
 If you've made it all the way down here, we thank you for reading and we hope you enjoy our application.
-
-## MAX's thoughts™
-
-- I thought it was really interesting being able to trade plants. I think that was a really good idea. Maybe trade illegal plants? Could there be a Vegetation Station after Dark?
