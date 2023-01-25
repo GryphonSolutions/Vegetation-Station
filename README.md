@@ -32,54 +32,55 @@ This project was a one-week challenge to design and execute a full-stack web app
 
 - The overall technical challenges we faced was designing and executing such a large-scale application in such a short time while also making it look professional. Our team solved this by implementing redux to manage all of the states that would be utilized throughout the application, react-router to handle the navigation between pages, and firebase to handle authentication for the app.
 
-## Video Demo
+## Video Demos
+<p>
+<img width="200px" src="assets/Demo1.gif"/>
+</p>
 
 <details><summary>Login</summary>
-
-![Login](assets/Login.png)
-![Login](assets/LoginDark.png)
-![Register](assets/Register.png)
-![RegisterDark](assets/RegisterDark.png)
+<p>
+<img width="200px" src="assets/Demo2.gif"/>
+<img src="assets/Login.png"/>
+<img src="assets/Register.png"/>
+<img src="assets/Profile.png"/>
+</p>
 </details>
 
 <details><summary>Home Page</summary>
-
-![Login](assets/Home.png)
-![Login](assets/HomeDark.png)
+<p>
+<img width="200px" src="assets/Demo3.gif"/>
+<img src="assets/Home.png"/>
+</p>
 </details>
 
 <details><summary>Plant Details</summary>
-
-![Login](assets/Details.png)
-![Login](assets/DetailsDark.png)
-![Login](assets/Map.png)
-![Login](assets/MapDark.png)
+<p>
+<img width="200px" src="assets/Demo4.gif"/>
+<img src="assets/Details.png"/>
+<img src="assets/Map.png"/>
+</p>
 </details>
 
 <details><summary>Post A Plant</summary>
-
-![Login](assets/Post.png)
-![Login](assets/PostDark.png)
+<p>
+<img width="200px" src="assets/Demo5.gif"/>
+<img src="assets/Post.png"/>
+</p>
 </details>
 
 <details><summary>Messaging</summary>
-
-![Login](assets/Messages.png)
-![Login](assets/MessagesDark.png)
-![Login](assets/Chats.png)
-![Login](assets/ChatsDark.png)
-</details>
-
-<details><summary>Profiles</summary>
-
-![Login](assets/Profile.png)
-![Login](assets/ProfileDark.png)
+<p>
+<img width="200px" src="assets/Demo6.gif"/>
+<img src="assets/Messages.png"/>
+<img src="assets/Chats.png"/>
+</p>
 </details>
 
 <details><summary>Trade Proposals</summary>
-
-![Login](assets/Proposals.png)
-![Login](assets/ProposalsDark.png)
+<p>
+<img width="200px" src="assets/Demo7.gif"/>
+<img src="assets/Proposals.png"/>
+</p>
 </details>
 
 ## User story and MVP
