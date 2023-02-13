@@ -11,21 +11,6 @@ const {
 } = require('firebase/firestore');
 const { db, chatsCol, chatMessagesCol } = require('../database');
 
-// module.exports.getFromChatsDB = async (parameters) => {
-//   console.log('Chats model');
-//   const allDocs = [];
-//   try {
-//     const data = await getDoc(chatsCol);
-//     data.forEach((document) => {
-//       allDocs.push(document.data());
-//     });
-//     return Promise.resolve(allDocs);
-//   } catch (err) {
-//     console.error(err);
-//     return Promise.reject(err);
-//   }
-// };
-
 module.exports.getFromChatsDB = async (parameters) => {
   const docRef = doc(db, 'chats', parameters);
   try {
@@ -58,24 +43,6 @@ module.exports.postToChatsDB = async (parameters) => {
   }
 };
 
-// module.exports.updateChatsDB = async (parameters) => {
-//   const { id, currentCombinedId, read, text } = parameters;
-//   const docRef = doc(db, 'chats', id);
-//   try {
-//     await updateDoc(docRef, {
-//       [`${currentCombinedId}.lastMessage`]: text,
-//       [`${currentCombinedId}.date`]: serverTimestamp(),
-//       [`${currentCombinedId}.read`]: read,
-//     });
-//     return Promise.resolve();
-//   } catch (err) {
-//     console.error(err);
-//     return Promise.reject(err);
-//   }
-// };
-
-// USE ABOVE TO REVERT BACK TO ORIGINAL UPDATE CHATS QUERY
-
 module.exports.updateChatsDB = async (parameters) => {
   const { id, currentCombinedId, read, text, time } = parameters;
   const docRef = doc(db, 'chats', id);
@@ -103,16 +70,5 @@ module.exports.updateChatsDB = async (parameters) => {
       console.error(err);
       return Promise.reject(err);
     }
-  }
-};
-
-module.exports.deleteFromChatsDB = async (parameters) => {
-  try {
-    // Query Here
-    await deleteDoc();
-    return Promise.resolve();
-  } catch (err) {
-    console.error(err);
-    return Promise.reject(err);
   }
 };

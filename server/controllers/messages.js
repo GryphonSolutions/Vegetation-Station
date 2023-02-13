@@ -41,13 +41,3 @@ module.exports.updateMessages = async (req, res) => {
     res.sendStatus(400);
   }
 };
-
-module.exports.deleteFromMessages = async (req, res) => {
-  try {
-    await deleteFromMessagesDB(req.body);
-    res.sendStatus(204);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(400);
-  }
-};

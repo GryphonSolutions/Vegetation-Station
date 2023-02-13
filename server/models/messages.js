@@ -23,17 +23,6 @@ module.exports.getFromMessagesDB = async (parameters) => {
   }
 };
 
-// module.exports.getFromMessagesDB = async (parameters) => {
-//   // const docRef = doc(db, 'chatMessages', parameters);
-//   try {
-//     const data = await onSnapshot(doc(db, 'chatMessages', parameters));
-//     return Promise.resolve(data);
-//   } catch (err) {
-//     console.error(err);
-//     return Promise.reject(err);
-//   }
-// };
-
 module.exports.postToMessagesDB = async (parameters) => {
   const id = parameters;
   try {
@@ -57,17 +46,6 @@ module.exports.updateMessagesDB = async (parameters) => {
         date: String(new Date().getTime()),
       }),
     });
-    return Promise.resolve();
-  } catch (err) {
-    console.error(err);
-    return Promise.reject(err);
-  }
-};
-
-module.exports.deleteFromMessagesDB = async (parameters) => {
-  try {
-    // Query Here
-    await deleteDoc();
     return Promise.resolve();
   } catch (err) {
     console.error(err);
