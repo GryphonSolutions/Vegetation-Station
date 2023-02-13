@@ -1,7 +1,9 @@
 # Vegetation Station
 
-_The Official Repository for the Vegetation Station Mobile App_\
+_The Official Repository for the Vegetation Station Mobile App_
+
 <img src="client/public/favicon.png" width="200" height="200">
+
 
 ## Introduction
 
@@ -30,27 +32,55 @@ This project was a one-week challenge to design and execute a full-stack web app
 
 - The overall technical challenges we faced was designing and executing such a large-scale application in such a short time while also making it look professional. Our team solved this by implementing redux to manage all of the states that would be utilized throughout the application, react-router to handle the navigation between pages, and firebase to handle authentication for the app.
 
-## Video Demo
+## Video Demos
+<p>
+<img width="200px" src="assets/Demo1.gif"/>
+</p>
 
 <details><summary>Login</summary>
+<p>
+<img width="200px" src="assets/Demo2.gif"/>
+<img src="assets/Login.png"/>
+<img src="assets/Register.png"/>
+<img src="assets/Profile.png"/>
+</p>
 </details>
 
 <details><summary>Home Page</summary>
+<p>
+<img width="200px" src="assets/Demo3.gif"/>
+<img src="assets/Home.png"/>
+</p>
 </details>
 
 <details><summary>Plant Details</summary>
+<p>
+<img width="200px" src="assets/Demo4.gif"/>
+<img src="assets/Details.png"/>
+<img src="assets/Map.png"/>
+</p>
 </details>
 
 <details><summary>Post A Plant</summary>
+<p>
+<img width="200px" src="assets/Demo5.gif"/>
+<img src="assets/Post.png"/>
+</p>
 </details>
 
 <details><summary>Messaging</summary>
-</details>
-
-<details><summary>Profiles</summary>
+<p>
+<img width="200px" src="assets/Demo6.gif"/>
+<img src="assets/Messages.png"/>
+<img src="assets/Chats.png"/>
+</p>
 </details>
 
 <details><summary>Trade Proposals</summary>
+<p>
+<img width="200px" src="assets/Demo7.gif"/>
+<img src="assets/Proposals.png"/>
+</p>
 </details>
 
 ## User story and MVP
@@ -117,7 +147,7 @@ Matt Sigler\
 [![Linkedin: LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/kevinpho/)](https://www.linkedin.com/in/matthew-sigler/)
 [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/phok1012)](https://github.com/siglerm)
 
-## Technology Used
+## Technologies Used
 
 **Front-end:** &emsp;&nbsp;&nbsp;
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
@@ -140,7 +170,3 @@ Matt Sigler\
 ## Thanks for Reading!
 
 If you've made it all the way down here, we thank you for reading and we hope you enjoy our application.
-
-## MAX's thoughts™
-
-- I thought it was really interesting being able to trade plants. I think that was a really good idea. Maybe trade illegal plants? Could there be a Vegetation Station after Dark?
