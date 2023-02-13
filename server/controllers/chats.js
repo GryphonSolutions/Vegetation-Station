@@ -40,13 +40,3 @@ module.exports.updateChats = async (req, res) => {
     res.sendStatus(400);
   }
 };
-
-module.exports.deleteFromChats = async (req, res) => {
-  try {
-    await deleteFromChatsDB(req.body);
-    res.sendStatus(204);
-  } catch (err) {
-    console.error(err);
-    res.sendStatus(400);
-  }
-};

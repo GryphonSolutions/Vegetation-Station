@@ -14,6 +14,4 @@ messagesRouter.post('/data', postToMessages);
 
 messagesRouter.patch('/data', updateMessages);
 
-messagesRouter.delete('/data', deleteFromMessages);
-
 module.exports = messagesRouter;

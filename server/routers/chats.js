@@ -9,6 +9,4 @@ chatsRouter.post('/data', postToChats);
 
 chatsRouter.patch('/data', updateChats);
 
-chatsRouter.delete('/data', deleteFromChats);
-
 module.exports = chatsRouter;

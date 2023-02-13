@@ -82,13 +82,10 @@ const ChatList = ({ chat }) => {
   };
 
   const navigateTo = (combinedId, username) => {
-    // console.log(combinedId);
     dispatch(updateSearchMessages(false));
     dispatch(updateUserMessageSearch(''));
     dispatch(updateSelectedUser(getUserInfo(username)));
     dispatch(updateCurrentCombinedId(combinedId));
-    // pull chat data from collection chats based on the combinedId
-    // update state for chats
     getMessages(combinedId);
     if (chat[1].read === false) {
       axios
@@ -136,7 +133,6 @@ const ChatList = ({ chat }) => {
       <Avatar
         size={60}
         rounded
-        // containerStyle={chat[1].read ? styles.read : styles.unread}
         source={{
           uri: `${chat[1].chattingWith.profilePicture}`,
         }}
