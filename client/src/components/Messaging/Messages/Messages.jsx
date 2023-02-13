@@ -48,14 +48,12 @@ const Messages = () => {
         doc(db, 'chats', String(activeUser.id)),
         { includeMetadataChanges: true },
         (document) => {
-          // console.log(document.data());
           const newChats = Object.entries(document.data())
             .sort((a, b) => b[1].date.seconds - a[1].date.seconds)
             .map((chat) => {
               chat[1].date = chat[1].date.seconds * 1000;
               return chat;
             });
-          // console.log(newChats);
           dispatch(updateChats(newChats));
         },
       );
@@ -113,7 +111,6 @@ const Messages = () => {
       color: isDarkMode ? 'white' : '#283618',
     },
   });
-  // console.log('chats ', chats);
 
   const searchResultsChats = chats.filter((chat) => {
     if (
@@ -128,11 +125,6 @@ const Messages = () => {
   const checkFilterChatsLength = searchResultsChats.length > 0;
 
   const searchResultsUsers = users.filter((user) => {
-    // console.log(
-    //   user.username,
-    //   activeUser.username,
-    //   user.username !== activeUser.username,
-    // );
     if (
       user.username.toLowerCase().includes(userMessageSearch.toLowerCase()) &&
       user.username !== activeUser.username
