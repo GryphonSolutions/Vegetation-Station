@@ -50,7 +50,6 @@ const NewChatList = ({ user }) => {
         },
       )
       .then((res) => {
-        // console.log('MESSAGES DATA ', res.data);
         dispatch(updateCurrentChat(res.data));
       })
       .catch((err) => {
@@ -74,7 +73,6 @@ const NewChatList = ({ user }) => {
     const combinedId =
       activeUserId > userId ? activeUserId + userId : userId + activeUserId;
 
-    // console.log(combinedId);
     dispatch(updateSelectedUser(user));
     dispatch(updateCurrentCombinedId(combinedId));
     dispatch(updateSearchMessages(false));
@@ -145,7 +143,6 @@ const NewChatList = ({ user }) => {
         marginVertical: 2,
         borderRadius: '8%',
       }}
-      // bottomDivider
       onPress={() => {
         navigateTo(user.id, user.username, user.profilePicture);
         dispatch(updateSelectedUser(user));
