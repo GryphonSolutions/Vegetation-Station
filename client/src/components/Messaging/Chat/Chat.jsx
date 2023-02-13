@@ -105,7 +105,6 @@ const Chat = () => {
         doc(db, 'chatMessages', currentCombinedId),
         { includeMetadataChanges: true },
         (document) => {
-          // console.log(document.data());
           dispatch(updateCurrentChat(document.data()));
         },
       );
@@ -125,28 +124,15 @@ const Chat = () => {
         },
       )
       .then((res) => {
-        // console.log('MESSAGES DATA ', res.data);
-        // dispatch(updateCurrentChat(res.data));
+        dispatch(updateCurrentChat(res.data));
       })
       .catch((err) => {
         console.log(err, 'error fetching messages');
       });
   };
 
-  // useEffect(() => {
-  //   // console.log('USE EFFECT');
-  //   // console.log(currentCombinedId);
-  //   if (currentCombinedId !== '') {
-  //     setInterval(() => {
-  //       getMessages(currentCombinedId);
-  //     }, 5000);
-  //   }
-  // }, []);
-
   const sendMessage = () => {
     Keyboard.dismiss();
-    // console.log(senderInput);
-    // update messages
     axios
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/messages/data',
@@ -159,13 +145,11 @@ const Chat = () => {
         },
       )
       .then((res) => {
-        // console.log(res);
         getMessages(currentCombinedId);
       })
       .catch((err) => {
         console.log(err);
       });
-    // update chats for active user (time, lastMessage, read = true)
     axios
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
@@ -185,8 +169,6 @@ const Chat = () => {
       .catch((err) => {
         console.log(err);
       });
-    // update chats for recipient (time, lastMessage, read = false)
-    // id is currently hard coded
     axios
       .patch(
         'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
@@ -210,32 +192,7 @@ const Chat = () => {
     dispatch(updateSenderInput(''));
   };
 
-  // const getChats = () => {
-  //   axios
-  //     .get(
-  //       'http://ec2-54-177-159-203.us-west-1.compute.amazonaws.com:8080/api/chats/data',
-  //       {
-  //         params: { activeUser: String(activeUser.id) },
-  //       },
-  //     )
-  //     .then((res) => {
-  //       // console.log('ORDERED IN CHATS');
-  //       dispatch(
-  //         updateChats(
-  //           Object.entries(res.data).sort(
-  //             (a, b) => b[1].date.seconds - a[1].date.seconds,
-  //           ),
-  //         ),
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       console.log(err, 'error when fetching chats');
-  //     });
-  // };
-
   const backToMessages = () => {
-    // console.log('Go back to messages');
-    // getChats();
     dispatch(updateSenderInput(''));
     dispatch(updateCurrentCombinedId(''));
     dispatch(updateCurrentChat({}));
@@ -244,7 +201,6 @@ const Chat = () => {
 
   const scrollViewRef = useRef();
 
-  // console.log('CURRENT CHAT', currentChat);
   return (
     <View
       style={{ flex: 1, backgroundColor: isDarkMode ? '#141312' : '#f0f4f1' }}
